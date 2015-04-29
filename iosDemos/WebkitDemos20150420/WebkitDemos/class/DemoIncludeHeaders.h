@@ -17,6 +17,9 @@
 
 #import <UIKit/UIKit.h>
 
+///< 2015-04-23 正则表达式 demo"
+#import "DemoRegularExpController.h"
+
 ///< 2015-03-23 消息通知 demo"
 #import "DemoMessageCenterController.h"
 

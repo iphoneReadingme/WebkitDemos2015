@@ -213,7 +213,10 @@
 	
 	NSMutableArray *webkitList = [NSMutableArray array];
 	
-	///< 2015-03-23 消息通知 demo"
+	///< 2015-04-23 正则表达式 demo
+	[webkitList addObject:[DemoRegularExpController class]];
+	
+	///< 2015-03-23 消息通知 demo
 	[webkitList addObject:[DemoMessageCenterController class]];
 	
 

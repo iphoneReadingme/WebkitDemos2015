@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B0AFCC71AE8DC5E00238079 /* DemoRegularExpController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B0AFCC41AE8DC5E00238079 /* DemoRegularExpController.mm */; };
+		5B0AFCC81AE8DC5E00238079 /* DemoRegularExpView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B0AFCC61AE8DC5E00238079 /* DemoRegularExpView.mm */; };
 		5B408E751AE5F5E600CE34D6 /* DemoIphoneNumberController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B408E6E1AE5F5E600CE34D6 /* DemoIphoneNumberController.mm */; };
 		5B408E761AE5F5E600CE34D6 /* DemoIphoneNumberHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B408E701AE5F5E600CE34D6 /* DemoIphoneNumberHelper.mm */; };
 		5B408E771AE5F5E600CE34D6 /* DemoIphoneNumberView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B408E721AE5F5E600CE34D6 /* DemoIphoneNumberView.mm */; };
@@ -65,6 +67,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5B0AFCC31AE8DC5E00238079 /* DemoRegularExpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoRegularExpController.h; sourceTree = "<group>"; };
+		5B0AFCC41AE8DC5E00238079 /* DemoRegularExpController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoRegularExpController.mm; sourceTree = "<group>"; };
+		5B0AFCC51AE8DC5E00238079 /* DemoRegularExpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoRegularExpView.h; sourceTree = "<group>"; };
+		5B0AFCC61AE8DC5E00238079 /* DemoRegularExpView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoRegularExpView.mm; sourceTree = "<group>"; };
 		5B408E6D1AE5F5E600CE34D6 /* DemoIphoneNumberController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoIphoneNumberController.h; sourceTree = "<group>"; };
 		5B408E6E1AE5F5E600CE34D6 /* DemoIphoneNumberController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoIphoneNumberController.mm; sourceTree = "<group>"; };
 		5B408E6F1AE5F5E600CE34D6 /* DemoIphoneNumberHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoIphoneNumberHelper.h; sourceTree = "<group>"; };
@@ -175,6 +181,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5B0AFCC21AE8DC5E00238079 /* DemoRegularExpressions */ = {
+			isa = PBXGroup;
+			children = (
+				5B0AFCC31AE8DC5E00238079 /* DemoRegularExpController.h */,
+				5B0AFCC41AE8DC5E00238079 /* DemoRegularExpController.mm */,
+				5B0AFCC51AE8DC5E00238079 /* DemoRegularExpView.h */,
+				5B0AFCC61AE8DC5E00238079 /* DemoRegularExpView.mm */,
+			);
+			path = DemoRegularExpressions;
+			sourceTree = "<group>";
+		};
 		5B408E6B1AE5F5E600CE34D6 /* ABAddressBook */ = {
 			isa = PBXGroup;
 			children = (
@@ -411,6 +428,7 @@
 		5BCF30E71AE539D60015B6A3 /* Src20150113 */ = {
 			isa = PBXGroup;
 			children = (
+				5B0AFCC21AE8DC5E00238079 /* DemoRegularExpressions */,
 				5B408EA81AE5F90900CE34D6 /* UCWeb */,
 				5B408E6B1AE5F5E600CE34D6 /* ABAddressBook */,
 				5BCF31111AE53A5F0015B6A3 /* DemoShakeController */,
@@ -565,6 +583,7 @@
 				5B408E751AE5F5E600CE34D6 /* DemoIphoneNumberController.mm in Sources */,
 				5B408EC31AE5F90A00CE34D6 /* NSDate+String.m in Sources */,
 				5B408E9D1AE5F8A000CE34D6 /* FEEmojiIconDataFactory.mm in Sources */,
+				5B0AFCC71AE8DC5E00238079 /* DemoRegularExpController.mm in Sources */,
 				5BCF31051AE539D60015B6A3 /* RootViewController.mm in Sources */,
 				5B408ECA1AE5F90A00CE34D6 /* NSMutableString+ExceptionSafe.m in Sources */,
 				5BCBF9A41AE4F9CF00BE201E /* main.m in Sources */,
@@ -581,6 +600,7 @@
 				5B408EA71AE5F8A000CE34D6 /* FEShapeParameterInfo.mm in Sources */,
 				5BCF310C1AE539D60015B6A3 /* UIUserNotificationSettings+Extension.m in Sources */,
 				5B408EC61AE5F90A00CE34D6 /* NSDictionary+ExceptionSafe.mm in Sources */,
+				5B0AFCC81AE8DC5E00238079 /* DemoRegularExpView.mm in Sources */,
 				5B408EC81AE5F90A00CE34D6 /* NSMutableArray+ExceptionSafe.mm in Sources */,
 				5B408EA31AE5F8A000CE34D6 /* FEFestivalParameterInfo.mm in Sources */,
 				5B408EC51AE5F90A00CE34D6 /* NSArray+ExceptionSafe.mm in Sources */,
