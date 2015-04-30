@@ -80,12 +80,20 @@
 #pragma mark -
 #pragma mark 子视图对象
 
-- (void)addSubViewObject
+- (CGRect)getViewRect
 {
 	CGRect frame = [self.view bounds];
-	frame.origin.y += 20;
-	frame.size.height -= 20;
-	frame.size.height -= 40;
+	
+	frame.origin.y += 44;
+	frame.size.height -= 20 + frame.origin.y;
+	
+	return frame;
+}
+
+- (void)addSubViewObject
+{
+	CGRect frame = [self getViewRect];
+	
 	self.subDemoView = [[[DemoViewCoreTextDraw alloc] initWithFrame:frame] autorelease];
 	[self.view addSubview:_subDemoView];
 }

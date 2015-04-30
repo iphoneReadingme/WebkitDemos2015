@@ -83,7 +83,7 @@
 	// MARK: 添加观察者接口
 	[self addAppObserver];
 	
-	CGRect rect = CGRectMake(0, 60, frame.size.width, frame.size.height - kKeyButtonHeight -20);
+	CGRect rect = CGRectMake(0, 0, frame.size.width, frame.size.height);
 	[self addSimpleParagraphView:rect];
 	
 	rect = CGRectMake(0, frame.size.height - kKeyButtonHeight -10, frame.size.width, kKeyButtonHeight);

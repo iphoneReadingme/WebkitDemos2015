@@ -81,7 +81,7 @@
 	self.firstLineHeadIndent = 0;
 	self.paragraphSpacing = 0;
 	self.paragraphSpacingBefore = 0;
-	self.lineSpace = g_fontAndRowSpace[2].fontSize;
+	self.lineSpace = g_fontAndRowSpace[2].rowSpace;
 	self.textAlignment = kCTLeftTextAlignment;
 	self.contentInset = UIEdgeInsetsMake(0, 15, 4, 12); // {top, left, bottom, right}
 	

@@ -43,7 +43,7 @@
 	if (self) {
 		// Initialization code.
 		[self forTest];
-		self.backgroundColor = [UIColor grayColor];
+		self.backgroundColor = [UIColor whiteColor];
 		[self addSomeViews:[self bounds]];
 		
     }

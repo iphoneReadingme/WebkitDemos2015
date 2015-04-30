@@ -10,7 +10,7 @@
 
 ///< 数据文件路径
 #define kHardcodeNovelDataPath           @"resource/Novel/part.txt"
-#define kNumPageCharCount               150
+#define kNumPageCharCount               300
 
 @interface TextPageViewController ()
 {
@@ -139,12 +139,13 @@
 - (NSString*)getPageContentText:(int)pageIndex
 {
 	NSMutableString* pageContent = nil;
+	NSInteger nCharCount = [_chapterText length];
 	
 	NSRange range = NSMakeRange(pageIndex*kNumPageCharCount, kNumPageCharCount);
-	if (range.location + range.length < [_chapterText length])
+	if (range.location + range.length < nCharCount)
 	{
 		NSString* message = [_chapterText substringWithRange:range];
-		pageContent = [NSMutableString stringWithFormat:@"　　当前页面 第[%d]页\n%@", pageIndex+1, message];
+		pageContent = [NSMutableString stringWithFormat:@"　　[共%d页]当前页面 第[%d]页\n%@", nCharCount/kNumPageCharCount, pageIndex+1, message];
 		[pageContent appendFormat:@"\n\n%d", pageIndex+1];
 	}
 	
