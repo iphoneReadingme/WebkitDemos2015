@@ -110,7 +110,7 @@
 		UIImageView* pView = [[UIImageView alloc] initWithFrame:rect];
 		pView.backgroundColor = [UIColor redColor];
 
-		[self setCellColor:cell cellForRowAtIndexPath:indexPath];
+//		[self setCellColor:cell cellForRowAtIndexPath:indexPath];
     }
     
 	
@@ -228,13 +228,15 @@
 		///< 2015-01-13 关键帧动画测试demo
 	[webkitList addObject:[DemoViewCAKeyAnimationController class]];
 	
+	///< 文字排版绘制
+	[webkitList addObject:[DemoCoreTextDrawController class]];
+	
 #ifdef Disenbale_Add_Controller
 	
 //	[webkitList addObject:[WebViewController class]];
 	[webkitList addObject:[AnimationViewController class]];
 //	[webkitList addObject:[MapKitViewController class]];
 	[webkitList addObject:[DemoViewCALayerController class]];
-	[webkitList addObject:[DemoCoreTextDrawController class]];
 //	[webkitList addObject:[DemoUIPageViewController class]];
 	[webkitList addObject:[PageAppViewController class]];
 //	[webkitList addObject:[DemoUIDeviceVIewController class]];
@@ -248,8 +250,8 @@
 //	createGlobalEventConnection( @selector(hiddenNavigationBar), self, @selector(hiddenNavigationBar));
 //	createGlobalEventConnection( @selector(showNavigationBar), self, @selector(showNavigationBar));
 	
-	BOOL bwantsFullScreenLayout = self.wantsFullScreenLayout;
-	NSLog(@"bwantsFullScreenLayout=%d", bwantsFullScreenLayout);
+	//BOOL bwantsFullScreenLayout = self.wantsFullScreenLayout;
+	//NSLog(@"bwantsFullScreenLayout=%d", bwantsFullScreenLayout);
 	
 	self.title = @"返回";
 	

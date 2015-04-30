@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B05D36B1AF1CF10000CBAD1 /* ColorPickerView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B05D35A1AF1CF10000CBAD1 /* ColorPickerView.mm */; };
+		5B05D36C1AF1CF10000CBAD1 /* DemoCoreTextDrawController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B05D35C1AF1CF10000CBAD1 /* DemoCoreTextDrawController.mm */; };
+		5B05D36D1AF1CF10000CBAD1 /* DemoSettingView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B05D35E1AF1CF10000CBAD1 /* DemoSettingView.mm */; };
+		5B05D36E1AF1CF10000CBAD1 /* DemoViewCoreTextDraw.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B05D3601AF1CF10000CBAD1 /* DemoViewCoreTextDraw.mm */; };
+		5B05D36F1AF1CF10000CBAD1 /* DemoViewSimpleParagraph.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B05D3631AF1CF10000CBAD1 /* DemoViewSimpleParagraph.mm */; };
+		5B05D3A61AF1DBDA000CBAD1 /* NBChapterPagesInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B05D3A11AF1DBDA000CBAD1 /* NBChapterPagesInfo.m */; };
+		5B05D3A71AF1DBDA000CBAD1 /* NBPageItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B05D3A31AF1DBDA000CBAD1 /* NBPageItem.m */; };
+		5B05D3A81AF1DBDA000CBAD1 /* PageSplitRender.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B05D3A51AF1DBDA000CBAD1 /* PageSplitRender.mm */; };
+		5B05D3B01AF1E019000CBAD1 /* NBBookLayoutConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B05D3AE1AF1E019000CBAD1 /* NBBookLayoutConfig.mm */; };
 		5B0AFCC71AE8DC5E00238079 /* DemoRegularExpController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B0AFCC41AE8DC5E00238079 /* DemoRegularExpController.mm */; };
 		5B0AFCC81AE8DC5E00238079 /* DemoRegularExpView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B0AFCC61AE8DC5E00238079 /* DemoRegularExpView.mm */; };
 		5B408E751AE5F5E600CE34D6 /* DemoIphoneNumberController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B408E6E1AE5F5E600CE34D6 /* DemoIphoneNumberController.mm */; };
@@ -67,6 +76,27 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5B05D3591AF1CF10000CBAD1 /* ColorPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPickerView.h; sourceTree = "<group>"; };
+		5B05D35A1AF1CF10000CBAD1 /* ColorPickerView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ColorPickerView.mm; sourceTree = "<group>"; };
+		5B05D35B1AF1CF10000CBAD1 /* DemoCoreTextDrawController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoCoreTextDrawController.h; sourceTree = "<group>"; };
+		5B05D35C1AF1CF10000CBAD1 /* DemoCoreTextDrawController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoCoreTextDrawController.mm; sourceTree = "<group>"; };
+		5B05D35D1AF1CF10000CBAD1 /* DemoSettingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoSettingView.h; sourceTree = "<group>"; };
+		5B05D35E1AF1CF10000CBAD1 /* DemoSettingView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoSettingView.mm; sourceTree = "<group>"; };
+		5B05D35F1AF1CF10000CBAD1 /* DemoViewCoreTextDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoViewCoreTextDraw.h; sourceTree = "<group>"; };
+		5B05D3601AF1CF10000CBAD1 /* DemoViewCoreTextDraw.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoViewCoreTextDraw.mm; sourceTree = "<group>"; };
+		5B05D3611AF1CF10000CBAD1 /* DemoViewCoreTextDrawMacroDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoViewCoreTextDrawMacroDefine.h; sourceTree = "<group>"; };
+		5B05D3621AF1CF10000CBAD1 /* DemoViewSimpleParagraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoViewSimpleParagraph.h; sourceTree = "<group>"; };
+		5B05D3631AF1CF10000CBAD1 /* DemoViewSimpleParagraph.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoViewSimpleParagraph.mm; sourceTree = "<group>"; };
+		5B05D39E1AF1DBDA000CBAD1 /* NBDrawResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBDrawResult.h; sourceTree = "<group>"; };
+		5B05D3A01AF1DBDA000CBAD1 /* NBChapterPagesInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBChapterPagesInfo.h; sourceTree = "<group>"; };
+		5B05D3A11AF1DBDA000CBAD1 /* NBChapterPagesInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBChapterPagesInfo.m; sourceTree = "<group>"; };
+		5B05D3A21AF1DBDA000CBAD1 /* NBPageItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBPageItem.h; sourceTree = "<group>"; };
+		5B05D3A31AF1DBDA000CBAD1 /* NBPageItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPageItem.m; sourceTree = "<group>"; };
+		5B05D3A41AF1DBDA000CBAD1 /* PageSplitRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageSplitRender.h; sourceTree = "<group>"; };
+		5B05D3A51AF1DBDA000CBAD1 /* PageSplitRender.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PageSplitRender.mm; sourceTree = "<group>"; };
+		5B05D3AD1AF1E019000CBAD1 /* NBBookLayoutConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBBookLayoutConfig.h; sourceTree = "<group>"; };
+		5B05D3AE1AF1E019000CBAD1 /* NBBookLayoutConfig.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NBBookLayoutConfig.mm; sourceTree = "<group>"; };
+		5B05D3AF1AF1E019000CBAD1 /* NovelBoxConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NovelBoxConfig.h; sourceTree = "<group>"; };
 		5B0AFCC31AE8DC5E00238079 /* DemoRegularExpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoRegularExpController.h; sourceTree = "<group>"; };
 		5B0AFCC41AE8DC5E00238079 /* DemoRegularExpController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoRegularExpController.mm; sourceTree = "<group>"; };
 		5B0AFCC51AE8DC5E00238079 /* DemoRegularExpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoRegularExpView.h; sourceTree = "<group>"; };
@@ -181,6 +211,66 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5B05D3551AF1CF10000CBAD1 /* Src20150501 */ = {
+			isa = PBXGroup;
+			children = (
+				5B05D3561AF1CF10000CBAD1 /* viewCoreTextDraw20131129 */,
+			);
+			path = Src20150501;
+			sourceTree = "<group>";
+		};
+		5B05D3561AF1CF10000CBAD1 /* viewCoreTextDraw20131129 */ = {
+			isa = PBXGroup;
+			children = (
+				5B05D3591AF1CF10000CBAD1 /* ColorPickerView.h */,
+				5B05D35A1AF1CF10000CBAD1 /* ColorPickerView.mm */,
+				5B05D35B1AF1CF10000CBAD1 /* DemoCoreTextDrawController.h */,
+				5B05D35C1AF1CF10000CBAD1 /* DemoCoreTextDrawController.mm */,
+				5B05D35D1AF1CF10000CBAD1 /* DemoSettingView.h */,
+				5B05D35E1AF1CF10000CBAD1 /* DemoSettingView.mm */,
+				5B05D35F1AF1CF10000CBAD1 /* DemoViewCoreTextDraw.h */,
+				5B05D3601AF1CF10000CBAD1 /* DemoViewCoreTextDraw.mm */,
+				5B05D3611AF1CF10000CBAD1 /* DemoViewCoreTextDrawMacroDefine.h */,
+				5B05D3621AF1CF10000CBAD1 /* DemoViewSimpleParagraph.h */,
+				5B05D3631AF1CF10000CBAD1 /* DemoViewSimpleParagraph.mm */,
+				5B05D39D1AF1DBD9000CBAD1 /* NBPageRender */,
+			);
+			path = viewCoreTextDraw20131129;
+			sourceTree = "<group>";
+		};
+		5B05D39D1AF1DBD9000CBAD1 /* NBPageRender */ = {
+			isa = PBXGroup;
+			children = (
+				5B05D39E1AF1DBDA000CBAD1 /* NBDrawResult.h */,
+				5B05D3AC1AF1E019000CBAD1 /* NBBookLayoutConfig */,
+				5B05D39F1AF1DBDA000CBAD1 /* NBPageItem */,
+				5B05D3A41AF1DBDA000CBAD1 /* PageSplitRender.h */,
+				5B05D3A51AF1DBDA000CBAD1 /* PageSplitRender.mm */,
+			);
+			path = NBPageRender;
+			sourceTree = "<group>";
+		};
+		5B05D39F1AF1DBDA000CBAD1 /* NBPageItem */ = {
+			isa = PBXGroup;
+			children = (
+				5B05D3A01AF1DBDA000CBAD1 /* NBChapterPagesInfo.h */,
+				5B05D3A11AF1DBDA000CBAD1 /* NBChapterPagesInfo.m */,
+				5B05D3A21AF1DBDA000CBAD1 /* NBPageItem.h */,
+				5B05D3A31AF1DBDA000CBAD1 /* NBPageItem.m */,
+			);
+			path = NBPageItem;
+			sourceTree = "<group>";
+		};
+		5B05D3AC1AF1E019000CBAD1 /* NBBookLayoutConfig */ = {
+			isa = PBXGroup;
+			children = (
+				5B05D3AD1AF1E019000CBAD1 /* NBBookLayoutConfig.h */,
+				5B05D3AE1AF1E019000CBAD1 /* NBBookLayoutConfig.mm */,
+				5B05D3AF1AF1E019000CBAD1 /* NovelBoxConfig.h */,
+			);
+			path = NBBookLayoutConfig;
+			sourceTree = "<group>";
+		};
 		5B0AFCC21AE8DC5E00238079 /* DemoRegularExpressions */ = {
 			isa = PBXGroup;
 			children = (
@@ -420,6 +510,7 @@
 				5BCF30E41AE539D60015B6A3 /* DemoIncludeHeaders.h */,
 				5BCF30E51AE539D60015B6A3 /* RootViewController.h */,
 				5BCF30E61AE539D60015B6A3 /* RootViewController.mm */,
+				5B05D3551AF1CF10000CBAD1 /* Src20150501 */,
 				5BCF30E71AE539D60015B6A3 /* Src20150113 */,
 			);
 			path = class;
@@ -577,6 +668,7 @@
 				5BCF311C1AE53A5F0015B6A3 /* DemoShakeView.mm in Sources */,
 				5BCF310A1AE539D60015B6A3 /* DemoMessageCenterController.mm in Sources */,
 				5B408E9F1AE5F8A000CE34D6 /* FEEmojiView.mm in Sources */,
+				5B05D3B01AF1E019000CBAD1 /* NBBookLayoutConfig.mm in Sources */,
 				5B408E9E1AE5F8A000CE34D6 /* FEEmojiLabel.mm in Sources */,
 				5B408E9C1AE5F8A000CE34D6 /* DemoViewCAKeyView.mm in Sources */,
 				5B408EA61AE5F8A000CE34D6 /* FEJSONParameterAnalyzer.mm in Sources */,
@@ -586,7 +678,9 @@
 				5B0AFCC71AE8DC5E00238079 /* DemoRegularExpController.mm in Sources */,
 				5BCF31051AE539D60015B6A3 /* RootViewController.mm in Sources */,
 				5B408ECA1AE5F90A00CE34D6 /* NSMutableString+ExceptionSafe.m in Sources */,
+				5B05D36D1AF1CF10000CBAD1 /* DemoSettingView.mm in Sources */,
 				5BCBF9A41AE4F9CF00BE201E /* main.m in Sources */,
+				5B05D36B1AF1CF10000CBAD1 /* ColorPickerView.mm in Sources */,
 				5B408EA11AE5F8A000CE34D6 /* FEEmojiParameterInfo.mm in Sources */,
 				5BCBF9AA1AE4F9CF00BE201E /* WebkitDemos.xcdatamodeld in Sources */,
 				5B408EC21AE5F90A00CE34D6 /* JSONKit.m in Sources */,
@@ -597,22 +691,28 @@
 				5BCF30DB1AE539A50015B6A3 /* AppDelegate.m in Sources */,
 				5B408E771AE5F5E600CE34D6 /* DemoIphoneNumberView.mm in Sources */,
 				5B408EA41AE5F8A000CE34D6 /* FEParameterDataProvider.mm in Sources */,
+				5B05D36F1AF1CF10000CBAD1 /* DemoViewSimpleParagraph.mm in Sources */,
 				5B408EA71AE5F8A000CE34D6 /* FEShapeParameterInfo.mm in Sources */,
 				5BCF310C1AE539D60015B6A3 /* UIUserNotificationSettings+Extension.m in Sources */,
 				5B408EC61AE5F90A00CE34D6 /* NSDictionary+ExceptionSafe.mm in Sources */,
+				5B05D3A81AF1DBDA000CBAD1 /* PageSplitRender.mm in Sources */,
 				5B0AFCC81AE8DC5E00238079 /* DemoRegularExpView.mm in Sources */,
 				5B408EC81AE5F90A00CE34D6 /* NSMutableArray+ExceptionSafe.mm in Sources */,
 				5B408EA31AE5F8A000CE34D6 /* FEFestivalParameterInfo.mm in Sources */,
+				5B05D3A61AF1DBDA000CBAD1 /* NBChapterPagesInfo.m in Sources */,
 				5B408EC51AE5F90A00CE34D6 /* NSArray+ExceptionSafe.mm in Sources */,
 				5B408ECB1AE5F90A00CE34D6 /* NSString+ExceptionSafe.m in Sources */,
 				5BCF311A1AE53A5F0015B6A3 /* DemoAccelerometerManager.mm in Sources */,
 				5B408E761AE5F5E600CE34D6 /* DemoIphoneNumberHelper.mm in Sources */,
 				5B408EA01AE5F8A000CE34D6 /* FEEmojiViewController.mm in Sources */,
 				5B408EC41AE5F90A00CE34D6 /* NSDateUtility.m in Sources */,
+				5B05D36C1AF1CF10000CBAD1 /* DemoCoreTextDrawController.mm in Sources */,
 				5B408EC71AE5F90A00CE34D6 /* NSHTTPCookieStorage+ExceptionSafe.m in Sources */,
 				5B408EA51AE5F8A000CE34D6 /* FECDParmFetcher.mm in Sources */,
+				5B05D3A71AF1DBDA000CBAD1 /* NBPageItem.m in Sources */,
 				5B408ECC1AE5F90A00CE34D6 /* UCFNDCollection.mm in Sources */,
 				5BCF30DC1AE539A50015B6A3 /* DetailViewController.m in Sources */,
+				5B05D36E1AF1CF10000CBAD1 /* DemoViewCoreTextDraw.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

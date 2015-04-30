@@ -32,6 +32,11 @@
 ///< 2015-01-13 关键帧动画测试
 #import "DemoViewCAKeyAnimationController.h"
 
+
+// 2013-11-29
+#import "DemoCoreTextDrawController.h"
+
+
 #ifdef Disenbale_Add_Controller
 // 2014-01-07
 //#import "DemoUIDeviceVIewController.h"
@@ -39,8 +44,7 @@
 // 2013-12-16
 #import "PageAppViewController.h"
 #import "DemoUIPageViewController.h"
-// 2013-11-29
-#import "DemoCoreTextDrawController.h"
+
 // 2013-06-06
 #import "DemoViewCALayerController.h"
 
