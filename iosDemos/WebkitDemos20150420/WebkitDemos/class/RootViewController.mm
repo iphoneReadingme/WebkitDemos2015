@@ -228,6 +228,8 @@
 		///< 2015-01-13 关键帧动画测试demo
 	[webkitList addObject:[DemoViewCAKeyAnimationController class]];
 	
+	[webkitList addObject:[PageAppViewController class]];
+	
 	///< 文字排版绘制
 	[webkitList addObject:[DemoCoreTextDrawController class]];
 	
@@ -238,7 +240,6 @@
 //	[webkitList addObject:[MapKitViewController class]];
 	[webkitList addObject:[DemoViewCALayerController class]];
 //	[webkitList addObject:[DemoUIPageViewController class]];
-	[webkitList addObject:[PageAppViewController class]];
 //	[webkitList addObject:[DemoUIDeviceVIewController class]];
 	
 #endif

@@ -38,7 +38,7 @@ typedef NS_ENUM(NSInteger, FEServerCmdType)
 #endif
 
 ///< 数据文件路径
-#define kHardcodeFestivalEmojiDataPath           @"res/LocalFiles/FestivalEmoji/FestivalEmojiData"
+#define kHardcodeFestivalEmojiDataPath           @"resource/LocalFiles/FestivalEmoji/FestivalEmojiData"
 
 
 ///< 图形和坐标

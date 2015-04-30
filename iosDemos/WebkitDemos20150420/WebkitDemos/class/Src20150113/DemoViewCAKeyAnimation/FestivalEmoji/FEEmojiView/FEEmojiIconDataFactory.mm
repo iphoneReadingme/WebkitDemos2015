@@ -24,9 +24,6 @@
 
 
 
-#define kHardcodeFestivalEmojiDataPath      @"res/LocalFiles/FestivalEmoji/FestivalEmojiData"
-
-
 @interface FEEmojiIconDataFactory ()
 
 
