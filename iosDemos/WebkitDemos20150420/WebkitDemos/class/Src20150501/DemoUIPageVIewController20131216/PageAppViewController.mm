@@ -122,7 +122,7 @@ TextPageViewControllerDelegate
     // UIPageViewController对象要显示的页数据封装成为一个NSArray。
     // 因为我们定义UIPageViewController对象显示样式为显示一页（options参数指定）。
     // 如果要显示2页，NSArray中，应该有2个相应页数据。
-    TextPageViewController *initialViewController =[self getPageViewControllerForPageIndex:7];// 得到第一页
+    TextPageViewController *initialViewController =[self getPageViewControllerForPageIndex:21];// 得到第一页
     NSArray *viewControllers =[NSArray arrayWithObject:initialViewController];
     [_pageController setViewControllers:viewControllers
                               direction:UIPageViewControllerNavigationDirectionForward // 将导航方向设置为向前模式：

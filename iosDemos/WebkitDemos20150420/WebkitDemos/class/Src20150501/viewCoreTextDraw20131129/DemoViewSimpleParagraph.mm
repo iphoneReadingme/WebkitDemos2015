@@ -354,5 +354,32 @@ kCTWritingDirectionNatural = -1,            //普通书写方向，一般习惯�
 kCTWritingDirectionLeftToRight = 0,         //从左到右写
 kCTWritingDirectionRightToLeft = 1          //从右到左写
 
+
+换行模式：
+kCTLineBreakByWordWrapping = 0,        //出现在单词边界时起作用，如果该单词不在能在一行里显示时，整体换行。此为段的默认值。
+kCTLineBreakByCharWrapping = 1,        //当一行中最后一个位置的大小不能容纳一个字符时，才进行换行。
+kCTLineBreakByClipping = 2,            //超出画布边缘部份将被截除。
+kCTLineBreakByTruncatingHead = 3,      //截除前面部份，只保留后面一行的数据。前部份以...代替。
+kCTLineBreakByTruncatingTail = 4,      //截除后面部份，只保留前面一行的数据，后部份以...代替。
+kCTLineBreakByTruncatingMiddle = 5     //在一行中显示段文字的前面和后面文字，中间文字使用...代替。
+
+@constant   kCTLineBreakByWordWrapping
+Wrapping occurs at word boundaries, unless the word itself doesn't fit on a single line.
+
+@constant   kCTLineBreakByCharWrapping
+Wrapping occurs before the first character that doesn't fit.
+
+@constant   kCTLineBreakByClipping
+Lines are simply not drawn past the edge of the frame.
+
+@constant   kCTLineBreakByTruncatingHead
+Each line is displayed so that the end fits in the frame and the missing text is indicated by some kind of ellipsis glyph.
+
+@constant   kCTLineBreakByTruncatingTail
+Each line is displayed so that the beginning fits in the container and the missing text is indicated by some kind of ellipsis glyph.
+
+@constant   kCTLineBreakByTruncatingMiddle
+Each line is displayed so that the beginning and end fit in the container and the missing text is indicated by some kind of ellipsis glyph in the middle.
+
 #endif
 
