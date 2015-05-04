@@ -25,7 +25,8 @@
 
 @property (nonatomic, retain) NBBookLayoutConfig * layoutConfig;
 
-- (void)setText:(NSString*)text;
+- (void)setPageContentText:(NSString*)text;
+- (void)setCurChapterName:(NSString*)chapterName;
 
 @end
 

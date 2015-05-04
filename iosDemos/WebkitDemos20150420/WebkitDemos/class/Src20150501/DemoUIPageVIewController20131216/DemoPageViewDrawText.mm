@@ -13,7 +13,9 @@
 @interface DemoPageViewDrawText ()
 
 
+@property (nonatomic, retain) PageSplitRender * pageRender;
 @property (nonatomic, copy) NSString * pageText;
+@property (nonatomic, copy) NSString * chapterName;
 
 - (void)addSomeViews:(CGRect)frame;
 - (void)forTest;
@@ -59,7 +61,10 @@
 
 -(void)releaseObject
 {
+	self.pageRender = nil;
 	self.layoutConfig = nil;
+	self.pageText = nil;
+	self.chapterName = nil;
 }
 
 // =================================================================
@@ -86,12 +91,15 @@
 #pragma mark-
 
 
-- (void)setText:(NSString*)text
+- (void)setPageContentText:(NSString*)text
 {
 	self.pageText = text;
 }
 
-
+- (void)setCurChapterName:(NSString*)chapterName
+{
+	self.chapterName = chapterName;
+}
 
 // =================================================================
 #pragma mark- == Core Animation之多种动画效果
@@ -147,12 +155,16 @@
 		return;
 	}
     
-	int nFontSize = _layoutConfig.fontSize;
+//	int nFontSize = _layoutConfig.fontSize;
 	
 	// Initialize a graphics context in iOS.
 	CGContextRef context = UIGraphicsGetCurrentContext();
 	
-	[self drawInContext:context withRect:rect font:nFontSize withText:_pageText];
+//	[self drawInContext:context withRect:rect font:nFontSize withText:_pageText];
+	self.pageRender = [[[PageSplitRender alloc] initWithLayoutConfig:self.layoutConfig chapterName:kChapterNameText chapterText:_pageText] autorelease];
+	NBDrawResult drawState = NBDrawSuccesful;
+	drawState = [self.pageRender drawInContext:context withRect:rect withStart:(int)0 withLength:(int)[_pageText length]];
+	
 }
 
 - (CGFloat)getLineSpace

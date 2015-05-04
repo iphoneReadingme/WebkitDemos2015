@@ -18,11 +18,24 @@
 #import <UIKit/UIKit.h>
 
 
+
+@protocol TextPageViewControllerDelegate <NSObject>
+
+@optional
+- (void)setCurChapterName:(NSString*)chapterName;
+
+@end
+
+
+
 @interface TextPageViewController : UIViewController
 {
 }
 
-+ (TextPageViewController*)getPageViewControllerForPageIndex:(NSUInteger)pageIndex;
+@property (nonatomic, assign) id<TextPageViewControllerDelegate> delegate;
+
+
++ (TextPageViewController*)getPageViewControllerForPageIndex:(NSUInteger)pageIndex withDelegate:(id<TextPageViewControllerDelegate>)delegate;
 
 - (NSInteger)pageIndex;
 

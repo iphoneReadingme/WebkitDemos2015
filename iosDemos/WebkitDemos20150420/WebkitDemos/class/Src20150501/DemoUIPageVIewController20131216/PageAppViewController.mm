@@ -7,7 +7,9 @@
 
 ///< 私有方法
 @interface PageAppViewController(/*PageAppViewController_Private*/)
-<UIPageViewControllerDataSource>
+<UIPageViewControllerDataSource,
+TextPageViewControllerDelegate
+>
 {
 	
 }
@@ -130,14 +132,22 @@
     // 在页面上，显示UIPageViewController对象的View
     [self addChildViewController:_pageController];
     [[self view] addSubview:[_pageController view]];
+//	[[self navigationController] navigationBar]
 }
 
 // 得到相应的VC对象
 - (TextPageViewController *)getPageViewControllerForPageIndex:(NSUInteger)index
 {
     // 创建一个新的控制器类，并且分配给相应的数据
-    TextPageViewController *dataViewController = [TextPageViewController getPageViewControllerForPageIndex:index];
+    TextPageViewController *dataViewController = [TextPageViewController getPageViewControllerForPageIndex:index withDelegate:self];
     return dataViewController;
+}
+
+#pragma mark - == TextPageViewControllerDelegate
+
+- (void)setCurChapterName:(NSString*)chapterName
+{
+	self.navigationController.title = chapterName;
 }
 
 #pragma mark- ==UIPageViewControllerDataSource
