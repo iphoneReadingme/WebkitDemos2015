@@ -154,14 +154,14 @@ TextPageViewControllerDelegate
 - (UIViewController *)pageViewController:(UIPageViewController *)pvc viewControllerBeforeViewController:(TextPageViewController *)vc
 {
     NSUInteger index = vc.pageIndex;
-	NSLog(@"==index=%d, viewControllerBeforeViewController==", index);
+	NSLog(@"==[per page] index=%d, viewControllerBeforeViewController==", index);
     return [self getPageViewControllerForPageIndex:(index - 1)];
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pvc viewControllerAfterViewController:(TextPageViewController *)vc
 {
     NSUInteger index = vc.pageIndex;
-	NSLog(@"==index=%d, viewControllerAfterViewController==", index);
+	NSLog(@"==[next page] index=%d, viewControllerAfterViewController==", index);
     return [self getPageViewControllerForPageIndex:(index + 1)];
 }
 

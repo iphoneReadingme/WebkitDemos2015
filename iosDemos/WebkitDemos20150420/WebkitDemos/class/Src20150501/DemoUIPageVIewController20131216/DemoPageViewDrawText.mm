@@ -86,7 +86,6 @@
 //	[self addButtons];
 }
 
-
 // =================================================================
 #pragma mark-
 
@@ -167,6 +166,7 @@
 	
 }
 
+#if 0
 - (CGFloat)getLineSpace
 {
 	CGFloat lineSpace = 4.0f;
@@ -311,6 +311,7 @@
 	CFRelease(contentFrame);
 	CFRelease(framePath);
 }
+#endif
 
 @end
 
