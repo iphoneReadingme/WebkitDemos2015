@@ -144,8 +144,11 @@
 	NSRange range = NSMakeRange(pageIndex*kNumPageCharCount, kNumPageCharCount);
 	if (range.location + range.length < nCharCount)
 	{
+		NSString* chapterName = [NSString stringWithFormat:@"【共%d页】当前页面 第【%d】页，", [_chapterText length]/kNumPageCharCount, _pageIndex+1];
+		
 		NSString* message = [_chapterText substringWithRange:range];
-		pageContent = [NSMutableString stringWithFormat:@"%@", message];
+		//pageContent = [NSMutableString stringWithFormat:@"%@", message];
+		pageContent = [NSMutableString stringWithFormat:@"%@%@", chapterName, message];
 		[pageContent appendFormat:@"\n%d", pageIndex+1];
 	}
 	
