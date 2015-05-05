@@ -43,6 +43,7 @@ TextPageViewControllerDelegate
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+	self.view.accessibilityLabel = @"PageAppViewController.view";
 	
     // 设置UIPageViewController的配置项
 	[self addUIPageViewController];
@@ -92,9 +93,9 @@ TextPageViewControllerDelegate
 - (CGRect)getViewRect
 {
 	CGRect frame = [self.view bounds];
-	frame.origin.y += 20;
-	frame.size.height -= 20;
-	frame.size.height -= 44;
+	frame.origin.y += kStatusBarHeight;
+	frame.size.height -= kStatusBarHeight;
+	frame.size.height -= kNavigationBarHeight;
 	
 	return frame;
 }

@@ -7,8 +7,8 @@
  *
  * Author		: yangfs@ucweb.com
  *
- * Created by yangfs on 2013-06-06.
- * History		: modify: 2013-06-06.
+ * Created by yangfs on   2015-05-05.
+ * History		: modify: 2015-05-05.
  *
  ******************************************************************************
  **/
@@ -20,6 +20,9 @@
 
 
 #define kPageStartIndex                 1
+
+#define kStatusBarHeight                20
+#define kNavigationBarHeight            44
 
 ///< 数据文件路径
 //#define kHardcodeNovelDataPath           @"resource/Novel/part.txt"

@@ -512,6 +512,7 @@
 {
 	///< 2. 换行模式
     CTLineBreakMode lineBreak = kCTLineBreakByWordWrapping; //出现在单词边界时起作用，如果该单词不在能在一行里显示时，整体换行。此为段的默认值。
+	lineBreak = kCTLineBreakByCharWrapping;
     CTParagraphStyleSetting lineBreakModeSet;
     lineBreakModeSet.spec = kCTParagraphStyleSpecifierLineBreakMode;
     lineBreakModeSet.value = &lineBreak;
@@ -520,6 +521,7 @@
     ///< 3. 创建文本对齐方式
     CTTextAlignment textAlignment = kCTJustifiedTextAlignment;//这种对齐方式会自动调整，使左右始终对齐
 	textAlignment = textStyle.textAlignment;
+//	textAlignment = kCTTextAlignmentNatural;
     CTParagraphStyleSetting alignmentSet;
     alignmentSet.spec=kCTParagraphStyleSpecifierAlignment;//指定为对齐属性
     alignmentSet.value=&textAlignment;

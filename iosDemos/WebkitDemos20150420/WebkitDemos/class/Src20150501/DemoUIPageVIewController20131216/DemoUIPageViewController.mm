@@ -42,6 +42,8 @@
 {
 	[super viewDidLoad];
 	
+	self.view.accessibilityLabel = @"DemoUIPageViewController.view";
+	
 	[self addSubViewObject];
 	
 	PageAppViewController* controller = [[PageAppViewController alloc] init];

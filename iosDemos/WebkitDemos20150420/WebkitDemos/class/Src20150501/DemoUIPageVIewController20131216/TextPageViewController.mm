@@ -10,7 +10,7 @@
 #define kKeyMaxCountOfPage    100
 
 
-#define kNumPageCharCount               300
+#define kNumPageCharCount               190
 
 @interface TextPageViewController ()
 {
@@ -78,6 +78,8 @@
 {
 	[super viewDidLoad];
 	
+	self.view.accessibilityLabel = @"TextPageViewController.view";
+	
 	if (_chapterText == nil)
 	{
 		self.chapterText = [self readPageTextFromFile];
@@ -144,7 +146,7 @@
 	NSRange range = NSMakeRange(pageIndex*kNumPageCharCount, kNumPageCharCount);
 	if (range.location + range.length < nCharCount)
 	{
-		NSString* chapterName = [NSString stringWithFormat:@"【共%d页】当前页面 第【%d】页，", [_chapterText length]/kNumPageCharCount, _pageIndex+1];
+		NSString* chapterName = [NSString stringWithFormat:@"【共%d页】当前页面 第【%d】页，\n", [_chapterText length]/kNumPageCharCount, _pageIndex+1];
 		
 		NSString* message = [_chapterText substringWithRange:range];
 		//pageContent = [NSMutableString stringWithFormat:@"%@", message];
@@ -159,8 +161,8 @@
 {
 	CGRect frame = [self.view bounds];
 	
-	frame.origin.y += 44;
-	frame.size.height -= 20 + frame.origin.y;
+	frame.origin.y += kNavigationBarHeight;
+	frame.size.height -= kStatusBarHeight + frame.origin.y;
 	
 	return frame;
 }

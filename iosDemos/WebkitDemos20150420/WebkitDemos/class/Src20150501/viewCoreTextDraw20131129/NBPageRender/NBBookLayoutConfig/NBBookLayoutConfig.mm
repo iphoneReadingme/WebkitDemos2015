@@ -84,6 +84,7 @@
 	self.lineSpace = g_fontAndRowSpace[2].rowSpace;
 	self.textAlignment = kCTLeftTextAlignment;
 	self.contentInset = UIEdgeInsetsMake(0, 15, 4, 12); // {top, left, bottom, right}
+	self.contentInset = UIEdgeInsetsMake(0, 20, 4, 20);
 	
 	// #ff333333, 0x33 = 51
 	self.pageTextColor = [UIColor colorWithRed:51/255.0f green:51/255.0f blue:51/255.0f alpha:1];
