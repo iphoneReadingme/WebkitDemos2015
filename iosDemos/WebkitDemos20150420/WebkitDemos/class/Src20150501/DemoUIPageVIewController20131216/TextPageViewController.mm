@@ -3,13 +3,13 @@
 #import "NBBookLayoutConfig.h"
 #import "DemoPageViewDrawText.h"
 #import "TextPageViewController.h"
-#import "DemoViewCoreTextDrawMacroDefine.h"
+//#import "DemoViewCoreTextDrawMacroDefine.h"
+#import "DemoTextPageMacroDefine.h"
 
 
 #define kKeyMaxCountOfPage    100
 
-///< 数据文件路径
-#define kHardcodeNovelDataPath           @"resource/Novel/part.txt"
+
 #define kNumPageCharCount               300
 
 @interface TextPageViewController ()

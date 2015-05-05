@@ -118,6 +118,7 @@
 		5B0AFCC41AE8DC5E00238079 /* DemoRegularExpController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoRegularExpController.mm; sourceTree = "<group>"; };
 		5B0AFCC51AE8DC5E00238079 /* DemoRegularExpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoRegularExpView.h; sourceTree = "<group>"; };
 		5B0AFCC61AE8DC5E00238079 /* DemoRegularExpView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoRegularExpView.mm; sourceTree = "<group>"; };
+		5B29E3461AF868D9008481F7 /* DemoTextPageMacroDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoTextPageMacroDefine.h; sourceTree = "<group>"; };
 		5B408E6D1AE5F5E600CE34D6 /* DemoIphoneNumberController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoIphoneNumberController.h; sourceTree = "<group>"; };
 		5B408E6E1AE5F5E600CE34D6 /* DemoIphoneNumberController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoIphoneNumberController.mm; sourceTree = "<group>"; };
 		5B408E6F1AE5F5E600CE34D6 /* DemoIphoneNumberHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoIphoneNumberHelper.h; sourceTree = "<group>"; };
@@ -302,6 +303,7 @@
 				5B05D3EF1AF1FC90000CBAD1 /* PageAppViewController.mm */,
 				5B05D3F01AF1FC90000CBAD1 /* TextPageViewController.h */,
 				5B05D3F11AF1FC90000CBAD1 /* TextPageViewController.mm */,
+				5B29E3461AF868D9008481F7 /* DemoTextPageMacroDefine.h */,
 			);
 			path = DemoUIPageVIewController20131216;
 			sourceTree = "<group>";
