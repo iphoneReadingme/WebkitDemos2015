@@ -19,10 +19,15 @@
 //#import <UIKit/UIKit.h>
 
 
+#define kKeyMaxCountOfPage    100
+
+#define kNumPageCharCount               219
+
 #define kPageStartIndex                 1
 
 #define kStatusBarHeight                20
 #define kNavigationBarHeight            44
+#define kChapterTitleHeight             24
 
 ///< 数据文件路径
 //#define kHardcodeNovelDataPath           @"resource/Novel/part.txt"

@@ -20,7 +20,7 @@
 		5B05D3F31AF1FC90000CBAD1 /* DemoUIPageViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B05D3EB1AF1FC90000CBAD1 /* DemoUIPageViewController.mm */; };
 		5B05D3F41AF1FC90000CBAD1 /* DemoPageViewDrawText.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B05D3ED1AF1FC90000CBAD1 /* DemoPageViewDrawText.mm */; };
 		5B05D3F51AF1FC90000CBAD1 /* PageAppViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B05D3EF1AF1FC90000CBAD1 /* PageAppViewController.mm */; };
-		5B05D3F61AF1FC90000CBAD1 /* TextPageViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B05D3F11AF1FC90000CBAD1 /* TextPageViewController.mm */; };
+		5B05D3F61AF1FC90000CBAD1 /* NBPageContainerViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B05D3F11AF1FC90000CBAD1 /* NBPageContainerViewController.mm */; };
 		5B05D3F81AF20264000CBAD1 /* resource in Resources */ = {isa = PBXBuildFile; fileRef = 5B05D3F71AF20264000CBAD1 /* resource */; };
 		5B0AFCC71AE8DC5E00238079 /* DemoRegularExpController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B0AFCC41AE8DC5E00238079 /* DemoRegularExpController.mm */; };
 		5B0AFCC81AE8DC5E00238079 /* DemoRegularExpView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B0AFCC61AE8DC5E00238079 /* DemoRegularExpView.mm */; };
@@ -111,8 +111,8 @@
 		5B05D3ED1AF1FC90000CBAD1 /* DemoPageViewDrawText.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoPageViewDrawText.mm; sourceTree = "<group>"; };
 		5B05D3EE1AF1FC90000CBAD1 /* PageAppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageAppViewController.h; sourceTree = "<group>"; };
 		5B05D3EF1AF1FC90000CBAD1 /* PageAppViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PageAppViewController.mm; sourceTree = "<group>"; };
-		5B05D3F01AF1FC90000CBAD1 /* TextPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextPageViewController.h; sourceTree = "<group>"; };
-		5B05D3F11AF1FC90000CBAD1 /* TextPageViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TextPageViewController.mm; sourceTree = "<group>"; };
+		5B05D3F01AF1FC90000CBAD1 /* NBPageContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBPageContainerViewController.h; sourceTree = "<group>"; };
+		5B05D3F11AF1FC90000CBAD1 /* NBPageContainerViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NBPageContainerViewController.mm; sourceTree = "<group>"; };
 		5B05D3F71AF20264000CBAD1 /* resource */ = {isa = PBXFileReference; lastKnownFileType = folder; path = resource; sourceTree = "<group>"; };
 		5B0AFCC31AE8DC5E00238079 /* DemoRegularExpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoRegularExpController.h; sourceTree = "<group>"; };
 		5B0AFCC41AE8DC5E00238079 /* DemoRegularExpController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoRegularExpController.mm; sourceTree = "<group>"; };
@@ -301,8 +301,8 @@
 				5B05D3ED1AF1FC90000CBAD1 /* DemoPageViewDrawText.mm */,
 				5B05D3EE1AF1FC90000CBAD1 /* PageAppViewController.h */,
 				5B05D3EF1AF1FC90000CBAD1 /* PageAppViewController.mm */,
-				5B05D3F01AF1FC90000CBAD1 /* TextPageViewController.h */,
-				5B05D3F11AF1FC90000CBAD1 /* TextPageViewController.mm */,
+				5B05D3F01AF1FC90000CBAD1 /* NBPageContainerViewController.h */,
+				5B05D3F11AF1FC90000CBAD1 /* NBPageContainerViewController.mm */,
 				5B29E3461AF868D9008481F7 /* DemoTextPageMacroDefine.h */,
 			);
 			path = DemoUIPageVIewController20131216;
@@ -721,7 +721,7 @@
 				5B408ECA1AE5F90A00CE34D6 /* NSMutableString+ExceptionSafe.m in Sources */,
 				5B05D36D1AF1CF10000CBAD1 /* DemoSettingView.mm in Sources */,
 				5BCBF9A41AE4F9CF00BE201E /* main.m in Sources */,
-				5B05D3F61AF1FC90000CBAD1 /* TextPageViewController.mm in Sources */,
+				5B05D3F61AF1FC90000CBAD1 /* NBPageContainerViewController.mm in Sources */,
 				5B05D36B1AF1CF10000CBAD1 /* ColorPickerView.mm in Sources */,
 				5B408EA11AE5F8A000CE34D6 /* FEEmojiParameterInfo.mm in Sources */,
 				5BCBF9AA1AE4F9CF00BE201E /* WebkitDemos.xcdatamodeld in Sources */,

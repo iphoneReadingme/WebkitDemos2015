@@ -1,15 +1,29 @@
 
 
-#import "TextPageViewController.h"
+#import "NBPageContainerViewController.h"
 #import "PageAppViewController.h"
 //#import "DemoViewCoreTextDrawMacroDefine.h"
 #import "DemoTextPageMacroDefine.h"
 
 
+
+@interface PageAppView : UIView
+
+@end
+
+@implementation PageAppView
+
+- (void)removeFromSuperview
+{
+	[super removeFromSuperview];
+}
+
+@end
+
 ///< 私有方法
 @interface PageAppViewController(/*PageAppViewController_Private*/)
 <UIPageViewControllerDataSource,
-TextPageViewControllerDelegate
+NBPageContainerViewControllerDelegate
 >
 {
 	
@@ -43,6 +57,9 @@ TextPageViewControllerDelegate
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+	
+	PageAppView* pView = [[[PageAppView alloc] initWithFrame:[self.view frame]] autorelease];
+	self.view = pView;
 	self.view.accessibilityLabel = @"PageAppViewController.view";
 	
     // 设置UIPageViewController的配置项
@@ -124,7 +141,7 @@ TextPageViewControllerDelegate
     // UIPageViewController对象要显示的页数据封装成为一个NSArray。
     // 因为我们定义UIPageViewController对象显示样式为显示一页（options参数指定）。
     // 如果要显示2页，NSArray中，应该有2个相应页数据。
-    TextPageViewController *initialViewController =[self getPageViewControllerForPageIndex:kPageStartIndex];// 得到第一页
+    UIViewController *initialViewController =[self getPageViewControllerForPageIndex:kPageStartIndex];// 得到第一页
     NSArray *viewControllers =[NSArray arrayWithObject:initialViewController];
     [_pageController setViewControllers:viewControllers
                               direction:UIPageViewControllerNavigationDirectionForward // 将导航方向设置为向前模式：
@@ -138,14 +155,13 @@ TextPageViewControllerDelegate
 }
 
 // 得到相应的VC对象
-- (TextPageViewController *)getPageViewControllerForPageIndex:(NSUInteger)index
+- (UIViewController *)getPageViewControllerForPageIndex:(NSInteger)index
 {
     // 创建一个新的控制器类，并且分配给相应的数据
-    TextPageViewController *dataViewController = [TextPageViewController getPageViewControllerForPageIndex:index withDelegate:self];
-    return dataViewController;
+    return [NBPageContainerViewController getPageViewControllerForPageIndex:index withDelegate:self];;
 }
 
-#pragma mark - == TextPageViewControllerDelegate
+#pragma mark - == NBPageContainer ViewControllerDelegate
 
 - (void)setCurChapterName:(NSString*)chapterName
 {
@@ -153,16 +169,29 @@ TextPageViewControllerDelegate
 }
 
 #pragma mark- ==UIPageViewControllerDataSource
-- (UIViewController *)pageViewController:(UIPageViewController *)pvc viewControllerBeforeViewController:(TextPageViewController *)vc
+
+- (NSInteger)getCurPageIndex:(UIViewController *)vc
 {
-    NSUInteger index = vc.pageIndex;
+	NSInteger pageIndex = -1;
+	if ([vc isKindOfClass:[NBPageContainerViewController class]])
+	{
+		NBPageContainerViewController* controller = (NBPageContainerViewController*)vc;
+		pageIndex = controller.pageIndex;
+	}
+	
+	return pageIndex;
+}
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pvc viewControllerBeforeViewController:(UIViewController *)vc
+{
+	NSInteger index = [self getCurPageIndex:vc];
 	NSLog(@"==[per page] index=%d, viewControllerBeforeViewController==", index);
     return [self getPageViewControllerForPageIndex:(index - 1)];
 }
 
-- (UIViewController *)pageViewController:(UIPageViewController *)pvc viewControllerAfterViewController:(TextPageViewController *)vc
+- (UIViewController *)pageViewController:(UIPageViewController *)pvc viewControllerAfterViewController:(UIViewController *)vc
 {
-    NSUInteger index = vc.pageIndex;
+	NSInteger index = [self getCurPageIndex:vc];
 	NSLog(@"==[next page] index=%d, viewControllerAfterViewController==", index);
     return [self getPageViewControllerForPageIndex:(index + 1)];
 }

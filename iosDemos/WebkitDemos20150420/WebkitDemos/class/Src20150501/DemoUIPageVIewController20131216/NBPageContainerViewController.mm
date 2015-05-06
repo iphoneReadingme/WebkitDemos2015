@@ -2,31 +2,28 @@
 
 #import "NBBookLayoutConfig.h"
 #import "DemoPageViewDrawText.h"
-#import "TextPageViewController.h"
+#import "NBPageContainerViewController.h"
 //#import "DemoViewCoreTextDrawMacroDefine.h"
 #import "DemoTextPageMacroDefine.h"
 
 
-#define kKeyMaxCountOfPage    100
 
-
-#define kNumPageCharCount               190
-
-@interface TextPageViewController ()
+@interface NBPageContainerViewController ()
 {
-    NSUInteger _pageIndex;
+    NSInteger _pageIndex;
 }
 
 @property (nonatomic, retain) DemoPageViewDrawText* pageView;
+@property (nonatomic, retain) UILabel* chapterTitle;
 @property (nonatomic, copy) NSString * chapterText;
 
 @end
 
-@implementation TextPageViewController
+@implementation NBPageContainerViewController
 
-+ (TextPageViewController*)getPageViewControllerForPageIndex:(NSUInteger)pageIndex withDelegate:(id<TextPageViewControllerDelegate>)delegate
++ (NBPageContainerViewController*)getPageViewControllerForPageIndex:(NSInteger)pageIndex withDelegate:(id<NBPageContainerViewControllerDelegate>)delegate
 {
-    if (pageIndex < kKeyMaxCountOfPage)
+    if (-1 < pageIndex && pageIndex < kKeyMaxCountOfPage)
     {
 		return [[[self alloc] initWithPageIndex:pageIndex withDelegate:delegate] autorelease];
     }
@@ -52,7 +49,7 @@
 	self.chapterText = nil;
 }
 
-- (id)initWithPageIndex:(NSInteger)pageIndex withDelegate:(id<TextPageViewControllerDelegate>)delegate
+- (id)initWithPageIndex:(NSInteger)pageIndex withDelegate:(id<NBPageContainerViewControllerDelegate>)delegate
 {
     self = [super init];
     if (self)
@@ -146,12 +143,12 @@
 	NSRange range = NSMakeRange(pageIndex*kNumPageCharCount, kNumPageCharCount);
 	if (range.location + range.length < nCharCount)
 	{
-		NSString* chapterName = [NSString stringWithFormat:@"【共%d页】当前页面 第【%d】页，\n", [_chapterText length]/kNumPageCharCount, _pageIndex+1];
+//		NSString* chapterName = [NSString stringWithFormat:@"【共%d页】当前页面 第【%d】页，\n", [_chapterText length]/kNumPageCharCount, _pageIndex+1];
 		
 		NSString* message = [_chapterText substringWithRange:range];
-		//pageContent = [NSMutableString stringWithFormat:@"%@", message];
-		pageContent = [NSMutableString stringWithFormat:@"%@%@", chapterName, message];
-		[pageContent appendFormat:@"\n%d", pageIndex+1];
+		pageContent = [NSMutableString stringWithFormat:@"%@", message];
+//		pageContent = [NSMutableString stringWithFormat:@"%@%@", chapterName, message];
+//		[pageContent appendFormat:@"\n%d", pageIndex+1];
 	}
 	
 	return pageContent;
@@ -171,13 +168,22 @@
 {
 	CGRect frame = [self getViewRect];
 	
-	NBBookLayoutConfig* layoutConfig = [NBBookLayoutConfig bookLayoutConfigWithFontSize:18 andWidth:frame.size.width andHeight:frame.size.height];
+	CGRect titleRect = frame;
+	titleRect.size.height = kChapterTitleHeight;
+	[self addTitleLabel:titleRect];
 	
-	self.pageView = [[[DemoPageViewDrawText alloc] initWithFrame:frame] autorelease];
+	CGRect pageRect = frame;
+	pageRect.origin.y = titleRect.origin.y + titleRect.size.height;
+	pageRect.size.height -= titleRect.size.height;
+	
+	NBBookLayoutConfig* layoutConfig = [NBBookLayoutConfig bookLayoutConfigWithFontSize:18 andWidth:pageRect.size.width andHeight:pageRect.size.height];
+	
+	self.pageView = [[[DemoPageViewDrawText alloc] initWithFrame:pageRect] autorelease];
 	_pageView.layoutConfig = layoutConfig;
 	
 	[_pageView setPageContentText:[self getPageContentText:_pageIndex]];
-	NSString* chapterName = [NSString stringWithFormat:@"【共%d页】当前页面 第【%d】页\n", [_chapterText length]/kNumPageCharCount, _pageIndex+1];
+	
+	NSString* chapterName = [NSString stringWithFormat:@"【共%d页】当前页面 第【%d】页", [_chapterText length]/kNumPageCharCount, _pageIndex+1];
 	[_pageView setCurChapterName:chapterName];
 	[self showChapterName:chapterName];
 	
@@ -186,12 +192,31 @@
 	[self.view addSubview:_pageView];
 }
 
+- (void)addTitleLabel:(CGRect)frame
+{
+	CGRect rect = frame;
+	
+	UILabel* titleLabel = [[UILabel alloc] initWithFrame:rect];
+	titleLabel.font = [UIFont systemFontOfSize:17];
+	titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+	titleLabel.backgroundColor = [UIColor whiteColor];
+	titleLabel.textAlignment = NSTextAlignmentLeft;///< 水平居左
+	titleLabel.text = @"chapter title";
+	titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	titleLabel.numberOfLines = 0;
+	
+	_chapterTitle = titleLabel;
+	[self.view addSubview:titleLabel];
+}
+
 - (void)showChapterName:(NSString*)chapterName
 {
 	if ([_delegate respondsToSelector:@selector(setCurChapterName:)])
 	{
 		[_delegate setCurChapterName:chapterName];
 	}
+	
+	_chapterTitle.text = chapterName;
 }
 
 @end
