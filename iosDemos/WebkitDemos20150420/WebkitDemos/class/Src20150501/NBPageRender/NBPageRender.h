@@ -1,7 +1,7 @@
 /*
  **************************************************************************************
  * Copyright (C) 2005-2011 UC Mobile Limited. All Rights Reserved
- * File			: PageSplitRender.h
+ * File			: NBPageRender.h
  *
  * Description	: 章节分页并渲染
  *
@@ -17,7 +17,7 @@
 //#import "NBProviderDataStructures.h"
 #import "NBDrawResult.h"
 
-@interface PageSplitRender : NSObject
+@interface NBPageRender : NSObject
 
 + (NBChapterPagesInfo*)splittingPagesForString:(NSString*)content withChapterName:(NSString*)chapterName andLayoutConfig:(NBBookLayoutConfig*)config;
 

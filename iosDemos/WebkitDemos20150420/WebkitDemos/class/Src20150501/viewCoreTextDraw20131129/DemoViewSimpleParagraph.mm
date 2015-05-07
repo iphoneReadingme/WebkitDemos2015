@@ -4,7 +4,7 @@
 
 #import "DemoViewSimpleParagraph.h"
 #import "DemoViewCoreTextDrawMacroDefine.h"
-#import "PageSplitRender.h"
+#import "NBPageRender.h"
 
 
 #define			FONTNAME			@"STHeitiSC-Light"
@@ -192,7 +192,7 @@
 		return nil;
 	}
 	CTFramesetterRef framesetter = nil;
-	framesetter = [PageSplitRender formatString:contentStr withChapterName:chapterName andLayoutConfig:self.layoutConfig];
+	framesetter = [NBPageRender formatString:contentStr withChapterName:chapterName andLayoutConfig:self.layoutConfig];
 	
 	return 	framesetter;
 }

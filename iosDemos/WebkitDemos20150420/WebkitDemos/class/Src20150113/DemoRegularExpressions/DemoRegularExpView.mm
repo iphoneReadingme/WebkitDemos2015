@@ -8,6 +8,8 @@
 
 @property (nonatomic, retain) UIView *bgAnimationView;
 
+@property (nonatomic, retain) UILabel* chapterTitle;
+
 - (void)addButtons;
 
 @end
@@ -31,7 +33,7 @@
 	if (self) {
 		// Initialization code.
 		[self forTest];
-		self.backgroundColor = [UIColor clearColor];
+		self.backgroundColor = [UIColor grayColor];
 		[self addSubViews:frame];
     }
     return self;
@@ -56,6 +58,9 @@
 	self.contentSize = size;
 	
 	[self addButtons];
+	
+	CGRect rect = CGRectMake(20, 160, 280, 800);
+	[self addTitleLabel:rect];
 }
 
 - (void)addBgView:(CGRect)frame
@@ -64,6 +69,69 @@
 	UIView* pView = [[[UIView alloc] initWithFrame:rect] autorelease];
 	pView.backgroundColor = [UIColor whiteColor];
 	[self addSubview:pView];
+}
+
+- (void)addTitleLabel:(CGRect)frame
+{
+	CGRect rect = frame;
+	
+	UILabel* titleLabel = [[UILabel alloc] initWithFrame:rect];
+	titleLabel.font = [UIFont systemFontOfSize:17];
+	titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+	titleLabel.backgroundColor = [UIColor whiteColor];
+	titleLabel.textAlignment = NSTextAlignmentLeft;///< 水平居左
+	titleLabel.text = @"chapter title";
+	titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	titleLabel.numberOfLines = 0;
+	
+	_chapterTitle = titleLabel;
+	[self addSubview:titleLabel];
+	
+	[self setTextStyle];
+}
+
+NSString* kKeyString = @"These two documents provide the perfect starting point for iOS and Mac app development. Follow either road map to learn how to get and use Xcode to create your first app. You will learn how to use Xcode to test and debug your source code, analyze to improve your app’s performance, perform source control operations, archive your app, and submit your app to the App Store.\
+fluid (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)str;(void)setAttributes:(NSDictionary*)attrs range:(NSRange)range;\
+这是坐落在东北一一个叫小杨村的偏僻山村，四面环山。春夏之时满山花开，秋季挂满野果的果树映红整个山坡。这个小村大多数人都姓杨，几百年来都是如此的平静宁和。村民淳朴憨厚，与世无争。虽然生活过得紧紧巴巴，但他们过得却很快乐。\
+这一年夏天，村儿里那条宽十多米自东向西横穿小村的小河突然一阵翻腾，一个光秃秃的脑袋冒了出来。看他的样子也就十一二岁，又黑又瘦的小脸天真透着点邪气，尤其是他的眼睛，大而明亮洋溢着精灵，但是随着他眼珠不停转动，又显示出这个小家伙的古怪。\
+当他看见一名二十多岁，穿着短裤的女孩在不远处小路上经过时眼睛一亮，嘴角勾起一抹笑容，无论是谁看见他的笑容都会产生一种亲切感，那是一种来自内心的感觉。\
+“杨美丽？”嘀咕完游到岸边穿上衣服悄悄跟在后面。在经过一片高粱地的时候，杨美丽突然钻了进去。";
+
+
+- (void)setTextStyle
+{
+	//hyphenationFactor 连字符属性，取值 0 到 1 之间，开启断词功能
+	
+//	NSString *strstr = @"These two documents provide the perfect starting point for iOS and Mac app development. Follow either road map to learn how to get and use Xcode to create your first app. You will learn how to use Xcode to test and debug your source code, analyze to improve your app’s performance, perform source control operations, archive your app, and submit your app to the App Store.";
+	
+	NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+	
+	style.alignment = NSTextAlignmentLeft;
+	style.firstLineHeadIndent = 0;
+	style.lineSpacing = 7;
+	style.paragraphSpacing = 5.6f;
+	style.paragraphSpacingBefore = 0;
+	style.hyphenationFactor = 0.9f;
+	style.lineBreakMode = NSLineBreakByWordWrapping;
+//	style.lineBreakMode = NSLineBreakByCharWrapping; ///< 连字符无效果
+	
+	//	style.headIndent = 10;//头部缩进，相当于左padding
+	//	style.tailIndent = -10;//相当于右padding
+	//	style.lineHeightMultiple = 1.5;//行间距是多少倍
+	
+	//NSMutableAttributedString设置属性
+	UIFont* fontObj = nil;
+	fontObj = [UIFont fontWithName:@"STHeitiSC-Medium" size:17];
+	NSDictionary *attrs2 = @{
+							 NSLigatureAttributeName: @(0),
+							 NSParagraphStyleAttributeName:style,
+							 //NSFontAttributeName:fontObj
+							 NSFontAttributeName:[UIFont systemFontOfSize: 15]
+							 //,NSUnderlineStyleAttributeName:@(NSUnderlineStyleSingle)
+							 };
+	
+	_chapterTitle.attributedText = [[NSAttributedString alloc] initWithString: kKeyString attributes: attrs2];
+	
 }
 
 // =================================================================
@@ -157,6 +225,7 @@
 }
 
 #pragma mark - == 摇一摇相关
+
 
 @end
 

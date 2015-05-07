@@ -4,7 +4,7 @@
 
 #import "DemoPageViewDrawText.h"
 #import "DemoViewCoreTextDrawMacroDefine.h"
-#import "PageSplitRender.h"
+#import "NBPageRender.h"
 
 
 #define			FONTNAME			@"STHeitiSC-Light"
@@ -13,7 +13,7 @@
 @interface DemoPageViewDrawText ()
 
 
-@property (nonatomic, retain) PageSplitRender * pageRender;
+@property (nonatomic, retain) NBPageRender * pageRender;
 @property (nonatomic, copy) NSString * pageText;
 @property (nonatomic, copy) NSString * chapterName;
 
@@ -160,7 +160,7 @@
 	CGContextRef context = UIGraphicsGetCurrentContext();
 	
 //	[self drawInContext:context withRect:rect font:nFontSize withText:_pageText];
-	self.pageRender = [[[PageSplitRender alloc] initWithLayoutConfig:self.layoutConfig chapterName:kChapterNameText chapterText:_pageText] autorelease];
+	self.pageRender = [[[NBPageRender alloc] initWithLayoutConfig:self.layoutConfig chapterName:kChapterNameText chapterText:_pageText] autorelease];
 	NBDrawResult drawState = NBDrawSuccesful;
 	drawState = [self.pageRender drawInContext:context withRect:rect withStart:(int)0 withLength:(int)[_pageText length]];
 	
@@ -196,7 +196,7 @@
 		return nil;
 	}
 	CTFramesetterRef framesetter = nil;
-	framesetter = [PageSplitRender formatString:contentStr withChapterName:chapterName andLayoutConfig:self.layoutConfig];
+	framesetter = [NBPageRender formatString:contentStr withChapterName:chapterName andLayoutConfig:self.layoutConfig];
 	
 	return 	framesetter;
 }
