@@ -68,7 +68,7 @@ typedef NS_ENUM(NSUInteger, DTCoreTextLayoutFrameDrawingOptions)
 	NSAttributedString *_attributedStringFragment;
 }
 
-
+- (CTFramesetterRef)getFramesetter;
 /**
  @name Creating Layout Frames
  */

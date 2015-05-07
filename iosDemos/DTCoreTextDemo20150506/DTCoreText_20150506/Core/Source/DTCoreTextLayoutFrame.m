@@ -31,6 +31,11 @@ static BOOL _DTCoreTextLayoutFramesShouldDrawDebugFrames = NO;
 	CGFloat _longestLayoutLineWidth;
 }
 
+- (CTFramesetterRef)getFramesetter
+{
+	return _framesetter;
+}
+
 // makes a frame for a specific part of the attributed string of the layouter
 - (id)initWithFrame:(CGRect)frame layouter:(DTCoreTextLayouter *)layouter range:(NSRange)range
 {

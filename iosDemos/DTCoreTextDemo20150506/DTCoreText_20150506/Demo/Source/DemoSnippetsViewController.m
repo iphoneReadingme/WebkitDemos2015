@@ -6,6 +6,8 @@
 //  Copyright 2011 Drobnik.com. All rights reserved.
 //
 
+#import "DemoShowTextView.h"
+
 #import "DemoSnippetsViewController.h"
 #import "DemoTextViewController.h"
 #import "DemoAboutViewController.h"
@@ -67,6 +69,13 @@ NSString * const AttributedTextCellReuseIdentifier = @"AttributedTextCellReuseId
 #endif
 	
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"About" style:UIBarButtonItemStyleBordered target:self action:@selector(showAbout:)];
+	
+	CGRect rect = CGRectZero;
+	rect.origin.x = 20;
+	rect.size.width = 160;
+	rect.size.height = 200;
+	DemoShowTextView* pView = [[DemoShowTextView alloc] initWithFrame:rect];
+	[self.view addSubview:pView];
 }
 
 
@@ -89,6 +98,7 @@ NSString * const AttributedTextCellReuseIdentifier = @"AttributedTextCellReuseId
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	return 0;
 	return [_snippets count];
 }
 
@@ -175,6 +185,7 @@ NSString * const AttributedTextCellReuseIdentifier = @"AttributedTextCellReuseId
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
 {
 	NSDictionary *rowSnippet = [_snippets objectAtIndex:indexPath.row];
+	NSLog(@"[==rowSnippet==]:%@", rowSnippet);
 	
 	DemoTextViewController *viewController = [[DemoTextViewController alloc] init];
 	viewController.fileName = [rowSnippet objectForKey:@"File"];
