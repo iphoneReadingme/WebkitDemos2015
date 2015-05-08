@@ -70,32 +70,9 @@
 		_frame = frame;
 		_attrString = [attrString mutableCopy];
 		
-		///< 创建framesetter
-		_framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)_attrString);
-		
-		
-		
 		if (_stringRange.length==0 || NSMaxRange(_stringRange) > stringLength)
 		{
 			_stringRange.length = stringLength - _stringRange.location;
-		}
-		
-		CFRange cfRange = CFRangeMake(_stringRange.location, _stringRange.length);
-		
-		
-		if (_framesetter)
-		{
-			CGMutablePathRef path = CGPathCreateMutable();
-			CGPathAddRect(path, NULL, frame);
-			
-			_textFrame = CTFramesetterCreateFrame(_framesetter, cfRange, path, NULL);
-			
-			CGPathRelease(path);
-		}
-		else
-		{
-			// Strange, should have gotten a valid framesetter
-			return nil;
 		}
 		
 		_justifyRatio = 0.6f;
@@ -124,7 +101,78 @@
 
 - (CTFramesetterRef)getFramesetter
 {
+	[self _createFramesetter];
+	
 	return _framesetter;
+}
+
+///< 根据 attrString 创建相关frame
+- (void)framesetterCreateDefaultFrame
+{
+	[self _createFramesetter];
+	
+	CFRange cfRange = CFRangeMake(_stringRange.location, _stringRange.length);
+	
+	if (_framesetter)
+	{
+		CGMutablePathRef path = CGPathCreateMutable();
+		CGPathAddRect(path, NULL, _frame);
+		
+		_textFrame = CTFramesetterCreateFrame(_framesetter, cfRange, path, NULL);
+		
+		CGPathRelease(path);
+	}
+	else
+	{
+		// Strange, should have gotten a valid framesetter
+		//return nil;
+		assert(false);
+	}
+}
+
+- (void)_createFramesetter
+{
+	if (nil == _framesetter)
+	{
+		///< 创建framesetter
+		_framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)_attrString);
+	}
+}
+
+- (BOOL)createRangeFrameWithRange:(NSRange)strRange rect:(CGRect)rect out:(CTFrameRef &)rangeFrame
+{
+	BOOL bRet = NO;
+	do
+	{
+		[self _createFramesetter];
+		
+		if (nil == _framesetter)
+		{
+			break;
+		}
+		
+		if (strRange.length < 1
+			|| strRange.location + strRange.length > _stringRange.length
+			)
+		{
+			break;
+		}
+		
+		CFRange cfRange = CFRangeMake(strRange.location, strRange.length);
+		
+		CGMutablePathRef framePath = CGPathCreateMutable();
+		if (nil == framePath)
+		{
+			break;
+		}
+		CGPathAddRect(framePath, &CGAffineTransformIdentity, rect);
+		rangeFrame = CTFramesetterCreateFrame(_framesetter, cfRange, framePath, NULL);
+		
+		bRet = (rangeFrame != nil);
+		
+	}while (0);
+	
+	return bRet;
 }
 
 #pragma mark - Building the Lines
@@ -531,10 +579,9 @@
 	// at this point we can correct the frame if it is open-ended
 	if (_frame.size.height == CGFLOAT_HEIGHT_UNKNOWN)
 	{
-		NBTextLine *lastLine = [_lines lastObject];
-		
 		CGFloat totalPadding = 0;
-		
+//		NBTextLine *lastLine = [_lines lastObject];
+//
 //		for (DTTextBlock *oneTextBlock in lastLine.textBlocks)
 //		{
 //			totalPadding += oneTextBlock.padding.bottom;

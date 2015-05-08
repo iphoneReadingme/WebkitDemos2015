@@ -15,13 +15,18 @@
  **/
 
 
-#import <UIKit/UIKit.h>
 
+#import <Foundation/Foundation.h>
+#import "NBTextLayoutFrame.h"
 
 
 @interface NBTextLayouter : NSObject
-{
-}
+
+
+- (instancetype)initWithLayoutFrame:(NBTextLayoutFrame*)nbTextFrame;
+
+///< 创建指定区域内的frame
+- (BOOL)createRangeFrameWithRange:(NSRange)strRange rect:(CGRect)rect out:(CTFrameRef &)rangeFrame;
 
 @end
 

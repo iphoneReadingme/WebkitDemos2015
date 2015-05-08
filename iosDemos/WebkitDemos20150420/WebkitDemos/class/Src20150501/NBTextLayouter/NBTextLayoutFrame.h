@@ -15,7 +15,7 @@
  **/
 
 
-#import <UIKit/UIKit.h>
+#import <CoreText/CoreText.h>
 
 
 
@@ -29,6 +29,9 @@
 @property(nonatomic, assign) NSInteger numberOfLines;
 
 - (instancetype)initWithFrame:(CGRect)frame with:(NSAttributedString *)attrString range:(NSRange)range;
+
+///< 创建指定区域内的frame
+- (BOOL)createRangeFrameWithRange:(NSRange)strRange rect:(CGRect)rect out:(CTFrameRef &)rangeFrame;
 
 - (CTFramesetterRef)getFramesetter;
 
