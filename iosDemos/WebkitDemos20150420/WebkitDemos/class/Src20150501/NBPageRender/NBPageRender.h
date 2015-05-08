@@ -38,7 +38,7 @@
 - (NBDrawResult)drawInContext:(CGContextRef)context withRect:(CGRect)rect withStart:(int)nTextStartLocation withLength:(int)nPageTextLength;
 
 /*格式化绘画样式*/
-+ (CTFramesetterRef)formatString:(NSString *)contentStr withChapterName:(NSString*)chapterName andLayoutConfig:(NBBookLayoutConfig*)config;
++ (NSMutableAttributedString*)formatString:(NSString *)contentStr withChapterName:(NSString*)chapterName andLayoutConfig:(NBBookLayoutConfig*)config;
 
 @end
 

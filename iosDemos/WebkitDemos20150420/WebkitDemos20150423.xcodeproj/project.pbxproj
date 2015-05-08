@@ -56,6 +56,12 @@
 		5B7D8FDB1AFB13A0006CDDE3 /* NBChapterPagesInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7D8FD31AFB13A0006CDDE3 /* NBChapterPagesInfo.m */; };
 		5B7D8FDC1AFB13A0006CDDE3 /* NBPageItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7D8FD51AFB13A0006CDDE3 /* NBPageItem.m */; };
 		5B7D8FDD1AFB13A0006CDDE3 /* NBPageRender.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B7D8FD71AFB13A0006CDDE3 /* NBPageRender.mm */; };
+		5B7D8FE21AFB5D7C006CDDE3 /* NSString+Paragraphs.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B7D8FE11AFB5D7C006CDDE3 /* NSString+Paragraphs.mm */; };
+		5B7D90051AFB77D0006CDDE3 /* NBParagraphStyle.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B7D90041AFB77D0006CDDE3 /* NBParagraphStyle.mm */; };
+		5B7D90081AFB7A32006CDDE3 /* NSDictionary+NBCoreText.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B7D90071AFB7A32006CDDE3 /* NSDictionary+NBCoreText.mm */; };
+		5B7D900C1AFB9258006CDDE3 /* NBFontDescriptor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B7D900B1AFB9258006CDDE3 /* NBFontDescriptor.mm */; };
+		5B7D900F1AFB933E006CDDE3 /* NBFontCollection.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B7D900E1AFB933E006CDDE3 /* NBFontCollection.mm */; };
+		5B7D90121AFB9B9A006CDDE3 /* NBConstants.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B7D90111AFB9B9A006CDDE3 /* NBConstants.mm */; };
 		5BCBF9A41AE4F9CF00BE201E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCBF9A31AE4F9CF00BE201E /* main.m */; };
 		5BCBF9AA1AE4F9CF00BE201E /* WebkitDemos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5BCBF9A81AE4F9CF00BE201E /* WebkitDemos.xcdatamodeld */; };
 		5BCBF9B31AE4F9CF00BE201E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BCBF9B11AE4F9CF00BE201E /* Main.storyboard */; };
@@ -188,6 +194,19 @@
 		5B7D8FD51AFB13A0006CDDE3 /* NBPageItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPageItem.m; sourceTree = "<group>"; };
 		5B7D8FD61AFB13A0006CDDE3 /* NBPageRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBPageRender.h; sourceTree = "<group>"; };
 		5B7D8FD71AFB13A0006CDDE3 /* NBPageRender.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NBPageRender.mm; sourceTree = "<group>"; };
+		5B7D8FE01AFB5D7C006CDDE3 /* NSString+Paragraphs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Paragraphs.h"; sourceTree = "<group>"; };
+		5B7D8FE11AFB5D7C006CDDE3 /* NSString+Paragraphs.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSString+Paragraphs.mm"; sourceTree = "<group>"; };
+		5B7D90031AFB77D0006CDDE3 /* NBParagraphStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBParagraphStyle.h; sourceTree = "<group>"; };
+		5B7D90041AFB77D0006CDDE3 /* NBParagraphStyle.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NBParagraphStyle.mm; sourceTree = "<group>"; };
+		5B7D90061AFB7A32006CDDE3 /* NSDictionary+NBCoreText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+NBCoreText.h"; sourceTree = "<group>"; };
+		5B7D90071AFB7A32006CDDE3 /* NSDictionary+NBCoreText.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSDictionary+NBCoreText.mm"; sourceTree = "<group>"; };
+		5B7D90091AFB7C5E006CDDE3 /* NBCompatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBCompatibility.h; sourceTree = "<group>"; };
+		5B7D900A1AFB9258006CDDE3 /* NBFontDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBFontDescriptor.h; sourceTree = "<group>"; };
+		5B7D900B1AFB9258006CDDE3 /* NBFontDescriptor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NBFontDescriptor.mm; sourceTree = "<group>"; };
+		5B7D900D1AFB933E006CDDE3 /* NBFontCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBFontCollection.h; sourceTree = "<group>"; };
+		5B7D900E1AFB933E006CDDE3 /* NBFontCollection.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NBFontCollection.mm; sourceTree = "<group>"; };
+		5B7D90101AFB9B9A006CDDE3 /* NBConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBConstants.h; sourceTree = "<group>"; };
+		5B7D90111AFB9B9A006CDDE3 /* NBConstants.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NBConstants.mm; sourceTree = "<group>"; };
 		5BCBF99E1AE4F9CF00BE201E /* WebkitDemos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebkitDemos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BCBF9A21AE4F9CF00BE201E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5BCBF9A31AE4F9CF00BE201E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -462,6 +481,8 @@
 				5B7D8FC11AFB0DE2006CDDE3 /* NBTextLayoutFrame.mm */,
 				5B7D8FC21AFB0DE2006CDDE3 /* NBTextLine.h */,
 				5B7D8FC31AFB0DE2006CDDE3 /* NBTextLine.mm */,
+				5B7D90021AFB77D0006CDDE3 /* NBParagraphStyle */,
+				5B7D8FDF1AFB5D7C006CDDE3 /* Utils */,
 			);
 			path = NBTextLayouter;
 			sourceTree = "<group>";
@@ -497,6 +518,33 @@
 				5B7D8FD51AFB13A0006CDDE3 /* NBPageItem.m */,
 			);
 			path = NBPageItem;
+			sourceTree = "<group>";
+		};
+		5B7D8FDF1AFB5D7C006CDDE3 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				5B7D90091AFB7C5E006CDDE3 /* NBCompatibility.h */,
+				5B7D90101AFB9B9A006CDDE3 /* NBConstants.h */,
+				5B7D90111AFB9B9A006CDDE3 /* NBConstants.mm */,
+				5B7D900D1AFB933E006CDDE3 /* NBFontCollection.h */,
+				5B7D900E1AFB933E006CDDE3 /* NBFontCollection.mm */,
+				5B7D900A1AFB9258006CDDE3 /* NBFontDescriptor.h */,
+				5B7D900B1AFB9258006CDDE3 /* NBFontDescriptor.mm */,
+				5B7D90061AFB7A32006CDDE3 /* NSDictionary+NBCoreText.h */,
+				5B7D90071AFB7A32006CDDE3 /* NSDictionary+NBCoreText.mm */,
+				5B7D8FE01AFB5D7C006CDDE3 /* NSString+Paragraphs.h */,
+				5B7D8FE11AFB5D7C006CDDE3 /* NSString+Paragraphs.mm */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		5B7D90021AFB77D0006CDDE3 /* NBParagraphStyle */ = {
+			isa = PBXGroup;
+			children = (
+				5B7D90031AFB77D0006CDDE3 /* NBParagraphStyle.h */,
+				5B7D90041AFB77D0006CDDE3 /* NBParagraphStyle.mm */,
+			);
+			path = NBParagraphStyle;
 			sourceTree = "<group>";
 		};
 		5BCBF9951AE4F9CF00BE201E = {
@@ -736,6 +784,7 @@
 				5B408EA21AE5F8A000CE34D6 /* FEFestivalAdaptor.mm in Sources */,
 				5B7D8FDB1AFB13A0006CDDE3 /* NBChapterPagesInfo.m in Sources */,
 				5B05D3F51AF1FC90000CBAD1 /* PageAppViewController.mm in Sources */,
+				5B7D90081AFB7A32006CDDE3 /* NSDictionary+NBCoreText.mm in Sources */,
 				5B408EC91AE5F90A00CE34D6 /* NSMutableDictionary+ExceptionSafe.mm in Sources */,
 				5B05D3F41AF1FC90000CBAD1 /* DemoPageViewDrawText.mm in Sources */,
 				5BCF311C1AE53A5F0015B6A3 /* DemoShakeView.mm in Sources */,
@@ -761,8 +810,10 @@
 				5B408EC21AE5F90A00CE34D6 /* JSONKit.m in Sources */,
 				5BCF30DD1AE539A50015B6A3 /* MasterViewController.m in Sources */,
 				5BCF310B1AE539D60015B6A3 /* DemoMessageCenterView.mm in Sources */,
+				5B7D90121AFB9B9A006CDDE3 /* NBConstants.mm in Sources */,
 				5B408E9B1AE5F8A000CE34D6 /* DemoViewCAKeyAnimationController.mm in Sources */,
 				5BCF311B1AE53A5F0015B6A3 /* DemoShakeController.mm in Sources */,
+				5B7D900F1AFB933E006CDDE3 /* NBFontCollection.mm in Sources */,
 				5BCF30DB1AE539A50015B6A3 /* AppDelegate.m in Sources */,
 				5B408E771AE5F5E600CE34D6 /* DemoIphoneNumberView.mm in Sources */,
 				5B408EA41AE5F8A000CE34D6 /* FEParameterDataProvider.mm in Sources */,
@@ -780,8 +831,10 @@
 				5B408ECB1AE5F90A00CE34D6 /* NSString+ExceptionSafe.m in Sources */,
 				5BCF311A1AE53A5F0015B6A3 /* DemoAccelerometerManager.mm in Sources */,
 				5B408E761AE5F5E600CE34D6 /* DemoIphoneNumberHelper.mm in Sources */,
+				5B7D8FE21AFB5D7C006CDDE3 /* NSString+Paragraphs.mm in Sources */,
 				5B05D3F21AF1FC90000CBAD1 /* DemoPageView.mm in Sources */,
 				5B408EA01AE5F8A000CE34D6 /* FEEmojiViewController.mm in Sources */,
+				5B7D90051AFB77D0006CDDE3 /* NBParagraphStyle.mm in Sources */,
 				5B408EC41AE5F90A00CE34D6 /* NSDateUtility.m in Sources */,
 				5B05D36C1AF1CF10000CBAD1 /* DemoCoreTextDrawController.mm in Sources */,
 				5B408EC71AE5F90A00CE34D6 /* NSHTTPCookieStorage+ExceptionSafe.m in Sources */,
@@ -789,6 +842,7 @@
 				5B408ECC1AE5F90A00CE34D6 /* UCFNDCollection.mm in Sources */,
 				5BCF30DC1AE539A50015B6A3 /* DetailViewController.m in Sources */,
 				5B7D8FDD1AFB13A0006CDDE3 /* NBPageRender.mm in Sources */,
+				5B7D900C1AFB9258006CDDE3 /* NBFontDescriptor.mm in Sources */,
 				5B05D3F31AF1FC90000CBAD1 /* DemoUIPageViewController.mm in Sources */,
 				5B05D36E1AF1CF10000CBAD1 /* DemoViewCoreTextDraw.mm in Sources */,
 			);

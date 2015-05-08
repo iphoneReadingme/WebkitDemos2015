@@ -17,6 +17,7 @@
 //#import "NovelBoxConfig.h"
 //#import "iUCCommon.h"
 //#import "DDLog.h"
+#import "NBTextLayoutFrame.h"
 #import "NSArray+ExceptionSafe.h"
 
 
@@ -57,12 +58,13 @@
 
 
 @interface NBPageRender ()
-{
-    CTFramesetterRef  m_frameSetter;
-}
-@property (nonatomic, retain) NBBookLayoutConfig * layoutConfig;
-@property (nonatomic, retain) NSString * chapterTextContent;
-@property (nonatomic, retain) NSString * chapterName;
+
+@property (nonatomic, retain) NBBookLayoutConfig *layoutConfig;
+@property (nonatomic, retain) NSString *chapterTextContent;
+@property (nonatomic, retain) NSString *chapterName;
+
+@property (nonatomic, retain) NBTextLayoutFrame  *nblayoutFrame;
+@property (nonatomic, retain) NSAttributedString *attributedString;
 
 @end
 
@@ -142,7 +144,9 @@
 		NSString* frameShowText = [NBPageRender getShowTextOfChapter:content withChapterName:chapterName andLayoutConfig:config];
 		UIEdgeInsets contentInset = config.contentInset;
 		
-		CTFramesetterRef framesetter = [NBPageRender formatString:content withChapterName:chapterName andLayoutConfig:config];
+		NSMutableAttributedString* attr = [NBPageRender formatString:content withChapterName:chapterName andLayoutConfig:config];
+		CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attr);
+		
 		CFIndex textRangeStart = 0;
 		BOOL bBreak = NO;
 		for(size_t i = 0; i < INT16_MAX; i++)
@@ -266,7 +270,7 @@
 }
 
 /*格式化绘画样式*/
-+ (CTFramesetterRef)formatString:(NSString *)contentStr withChapterName:(NSString*)chapterName andLayoutConfig:(NBBookLayoutConfig*)config
++ (NSMutableAttributedString*)formatString:(NSString *)contentStr withChapterName:(NSString*)chapterName andLayoutConfig:(NBBookLayoutConfig*)config
 {
 	if (config == nil || ([contentStr length] < 1))
 	{
@@ -293,9 +297,7 @@
 	NSRange range = NSMakeRange(nStart, nTextLength);
 	[NBPageRender formatChapterContent:attributedString with:range andLayoutConfig:config];
 	
-	///< 创建framesetter
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((DTCFAttributedStringRef)attributedString);
-    return framesetter;
+	return attributedString;
 }
 
 + (void)formatChapterTitle:(NSMutableAttributedString*)attributedString with:(NSRange)range andLayoutConfig:(NBBookLayoutConfig*)config
@@ -628,7 +630,11 @@
         if (contentStr)
         {
             self.chapterTextContent = contentStr;
-			m_frameSetter = [NBPageRender formatString:contentStr withChapterName:chapterName andLayoutConfig:config];
+			
+			
+			NSMutableAttributedString* attr = [NBPageRender formatString:contentStr withChapterName:chapterName andLayoutConfig:config];
+			
+			_nblayoutFrame = [[NBTextLayoutFrame alloc] initWithFrame:CGRectZero with:attr range:NSMakeRange(0, [attr length])];
         }
     }
     
@@ -640,19 +646,23 @@
     self.layoutConfig = nil;
 	self.chapterName = nil;
     self.chapterTextContent = nil;
-    if (m_frameSetter)
-    {
-        CFRelease(m_frameSetter);
-        m_frameSetter = nil;
-    }
-    
+	[self destoryFrame];
+	
     [super dealloc];
+}
+
+- (void)destoryFrame
+{
+	[_nblayoutFrame release];
+	_nblayoutFrame = nil;
 }
 
 - (NBDrawResult)drawInContext:(CGContextRef)context withRect:(CGRect)rect withStart:(int)nTextStartLocation withLength:(int)nPageTextLength
 {
     //HTIME_DUMP_IF("NBPageRender:drawInContext", 20);
-	if (nil == m_frameSetter)
+	
+	CTFramesetterRef framesetter = [_nblayoutFrame getFramesetter];
+	if (nil == framesetter)
 	{
 		return NBDrawFailedFrameNotInit;
 	}
@@ -678,8 +688,6 @@
     CGContextSetTextMatrix(context, CGAffineTransformIdentity);
 	CGContextTranslateCTM(context, 0, rect.size.height);
 	CGContextScaleCTM(context, 1.0, -1.0);
-	
-    CTFramesetterRef framesetter = m_frameSetter;
 	
 	UIEdgeInsets contentInset = frameConfig.contentInset;
 	// 由于在绘制文字时, 坐标系会沿X轴发生翻转, 故Y方向需要调换
