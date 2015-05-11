@@ -16,7 +16,8 @@
 #import "NBPageItem.h"
 //#import "NovelBoxConfig.h"
 //#import "iUCCommon.h"
-//#import "DDLog.h"
+
+#import "NBTextLayouter.h"
 #import "NBTextLayoutFrame.h"
 #import "NSArray+ExceptionSafe.h"
 
@@ -64,6 +65,7 @@
 @property (nonatomic, retain) NSString *chapterName;
 
 @property (nonatomic, retain) NBTextLayoutFrame  *nblayoutFrame;
+@property (nonatomic, retain) NBTextLayouter     *textLayout;
 @property (nonatomic, retain) NSAttributedString *attributedString;
 
 @end
@@ -132,6 +134,15 @@
     return pagesInfo;
 }
 
+- (void)framesetterCreate
+{
+}
+
+- (void)createFrame:(NBTextLayoutFrame *)layoutFrame
+{
+	
+}
+
 // 返回 NBPageItem array
 + (NSMutableArray*)_splittingPagesForString:(NSString*)content withChapterName:(NSString*)chapterName andLayoutConfig:(NBBookLayoutConfig*)config
 {
@@ -145,7 +156,11 @@
 		UIEdgeInsets contentInset = config.contentInset;
 		
 		NSMutableAttributedString* attr = [NBPageRender formatString:content withChapterName:chapterName andLayoutConfig:config];
-		CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attr);
+		
+		NBTextLayoutFrame *layoutFrame = [[NBTextLayoutFrame alloc] initWithFrame:CGRectZero with:attr range:NSMakeRange(0, [attr length])];
+		
+		NBTextLayouter* textLayout = [[NBTextLayouter alloc] initWithLayoutFrame:layoutFrame];
+		
 		
 		CFIndex textRangeStart = 0;
 		BOOL bBreak = NO;
@@ -158,10 +173,15 @@
 			
 			CGRect columnFrame = CGRectMake(i*config.pageWidth, 0, config.pageWidth, config.pageHeight);
 			columnFrame = UIEdgeInsetsInsetRect(columnFrame, edgeInsets);
-			CGMutablePathRef framePath = CGPathCreateMutable();
-			CGPathAddRect(framePath, &CGAffineTransformIdentity, columnFrame);
-			CFRange textRange = CFRangeMake(textRangeStart, 0);
-			CTFrameRef pageFrame = CTFramesetterCreateFrame(framesetter, textRange, framePath, NULL);
+			NSRange textRange = NSMakeRange(textRangeStart, 0);
+			
+			CTFrameRef pageFrame = nil;
+			BOOL bRet = [textLayout createRangeFrameWithRange:textRange rect:columnFrame ctframe:pageFrame];
+			if (!bRet)
+			{
+				continue;
+			}
+			
 			CFRange visibleRange = CTFrameGetVisibleStringRange(pageFrame);
 			NBPageItem *item = [[[NBPageItem alloc] init] autorelease];
 			item.startInChapter = textRangeStart;
@@ -193,10 +213,6 @@
 			{
 				CFRelease(pageFrame);
 			}
-			if (framePath != nil)
-			{
-				CFRelease(framePath);
-			}
 			
 			if (bBreak)
 			{
@@ -204,10 +220,8 @@
 			}
 		}
 		
-		if (framesetter != nil)
-		{
-			CFRelease(framesetter);
-		}
+		[layoutFrame release];
+		[textLayout release];
 	}
 	
     return pageArray;
@@ -631,10 +645,23 @@
         {
             self.chapterTextContent = contentStr;
 			
+			UIEdgeInsets contentInset = config.contentInset;
+			
+			// 由于在绘制文字时, 坐标系会沿X轴发生翻转, 故Y方向需要调换
+			UIEdgeInsets edgeInsets = contentInset;
+			edgeInsets.top = contentInset.bottom;
+			edgeInsets.bottom = contentInset.top;
+			
+			CGRect columnFrame = CGRectMake(0, 0, config.pageWidth, config.pageHeight);
+			columnFrame = UIEdgeInsetsInsetRect(columnFrame, edgeInsets);
 			
 			NSMutableAttributedString* attr = [NBPageRender formatString:contentStr withChapterName:chapterName andLayoutConfig:config];
 			
-			_nblayoutFrame = [[NBTextLayoutFrame alloc] initWithFrame:CGRectZero with:attr range:NSMakeRange(0, [attr length])];
+			_nblayoutFrame = [[NBTextLayoutFrame alloc] initWithFrame:columnFrame with:attr range:NSMakeRange(0, [attr length])];
+			
+			_textLayout = [[NBTextLayouter alloc] initWithLayoutFrame:_nblayoutFrame];
+			
+			[_textLayout buildSuggestLines:0 withRect:columnFrame];
         }
     }
     
@@ -682,41 +709,46 @@
 		bLastPage = YES;
 	}
 	
-	CFRange textRange = CFRangeMake(nTextStartLocation, nPageTextLength);
-	
-	//翻转坐标系统（文本原来是倒的要翻转下）
-    CGContextSetTextMatrix(context, CGAffineTransformIdentity);
-	CGContextTranslateCTM(context, 0, rect.size.height);
-	CGContextScaleCTM(context, 1.0, -1.0);
-	
 	UIEdgeInsets contentInset = frameConfig.contentInset;
 	// 由于在绘制文字时, 坐标系会沿X轴发生翻转, 故Y方向需要调换
 	UIEdgeInsets edgeInsets = contentInset;
 	edgeInsets.top = contentInset.bottom;
 	edgeInsets.bottom = contentInset.top;
 	
-    CGRect columnFrame = rect;
-    columnFrame.size = CGSizeMake(frameConfig.pageWidth, frameConfig.pageHeight);
-    columnFrame = UIEdgeInsetsInsetRect(columnFrame, edgeInsets);
+	CGRect columnFrame = rect;
+	columnFrame.size = CGSizeMake(frameConfig.pageWidth, frameConfig.pageHeight);
+	columnFrame = UIEdgeInsetsInsetRect(columnFrame, edgeInsets);
 	//assert(rect.size.height == frameConfig.pageHeight);
 	//DDLogVerbose(@"==columnFrame=(%@)", NSStringFromCGRect(columnFrame));
 	
-    CGMutablePathRef framePath = CGPathCreateMutable();
-    CGPathAddRect(framePath, &CGAffineTransformIdentity, columnFrame);
-    CTFrameRef pageFrame = CTFramesetterCreateFrame(framesetter, textRange, framePath, NULL);
-//    CTFrameDraw(pageFrame, context);
+	NSRange textRange = NSMakeRange(nTextStartLocation, nPageTextLength);
+	[_textLayout buildSuggestLines:textRange.location withRect:columnFrame];
 	
-	[self CTLinesDraw:pageFrame with:context withRect:columnFrame with:bLastPage];
+	//翻转坐标系统（文本原来是倒的要翻转下）
+    CGContextSetTextMatrix(context, CGAffineTransformIdentity);
+	CGContextTranslateCTM(context, 0, rect.size.height);
+	CGContextScaleCTM(context, 1.0, -1.0);
+	
+	CTFrameRef pageFrame = nil;
+	BOOL bRet = [_textLayout createRangeFrameWithRange:textRange rect:columnFrame ctframe:pageFrame];
+	if (!bRet)
+	{
+		return NBDrawSuccesful;
+	}
+	
+//    CTFrameDraw(pageFrame, context);
+//	[self showPageEveryLineText:pageFrame with:frameShowText withChapterName:self.chapterName];
+//	[self drawPageFrameEdgeRect:context withRect:columnFrame withFrame:pageFrame];
+//	[self drawLineOfTextLine:context withRect:columnFrame withFrame:pageFrame with:bLastPage];
+//	[self CTLinesDraw:pageFrame with:context withRect:columnFrame with:bLastPage];
+	
+	[_textLayout drawLinesWith:context inRect:columnFrame];
 	
 	if (pageFrame)
 	{
 		CFRelease(pageFrame);
 	}
-	if (framePath)
-	{
-		CFRelease(framePath);
-	}
-    
+	
     return NBDrawSuccesful;
 }
 
@@ -774,7 +806,7 @@
 	NSArray *lines = (NSArray*)CTFrameGetLines(pageFrame);
 	
 	NSInteger nLineCount = [lines count];
-	CGPoint lineOrigins[nLineCount];
+	CGPoint lineOrigins[20];
 	
 	if (nLineCount > 0)
 	{
@@ -824,7 +856,7 @@
 
 ///< 测试接口
 #pragma mark -==页面文字排版测试
-//#define ENABLE_Check_Page_Param   // 启用页面参数查看宏
+#define ENABLE_Check_Page_Param   // 启用页面参数查看宏
 ///< 测试代码：(显示当前页面的排版文字)
 ///< [self showPageEveryLineText:pageFrame with:frameShowText withChapterName:self.chapterName];
 ///< 绘制文字时格式化： framesetter = [NBPageRender formatString:self.chapterTextContent withChapterName:self.chapterName andLayoutConfig:frameConfig];
@@ -1070,7 +1102,7 @@
 	for (; y < 50; y += 5)
 	{
 		CGContextSetRGBStrokeColor(context, 0, 0, 1.0, 1.0);
-		DDLogVerbose(@"==(x,y)=(%d,%d)", x, y);
+		NSLog(@"==(x,y)=(%d,%d)", x, y);
 		// Draw a single line from left to right
 		CGContextMoveToPoint(context, x, y);
 		CGContextAddLineToPoint(context, rect.size.width - x, y);
@@ -1093,7 +1125,7 @@
 	for (; y < rect.size.height; y += 5)
 	{
 		CGContextSetRGBStrokeColor(context, 0, 0, 1.0, 1.0);
-		DDLogVerbose(@"==(x,y)=(%d,%d)", x, y);
+		NSLog(@"==(x,y)=(%d,%d)", x, y);
 		// Draw a single line from left to right
 		CGContextMoveToPoint(context, x, y);
 		CGContextAddLineToPoint(context, rect.size.width - x, y);

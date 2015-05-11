@@ -84,6 +84,9 @@
  ---------------------------------------------------------------------------------------
  */
 
+
+@property (nonatomic, assign) CGFloat lineSpace;
+
 /**
  The indentation of the first line of the receiver.
  */

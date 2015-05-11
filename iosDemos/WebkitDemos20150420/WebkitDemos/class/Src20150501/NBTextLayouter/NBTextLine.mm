@@ -40,6 +40,9 @@
 {
 	[self destoryGlyphRuns];
 	
+	[_text release];
+	_text = nil;
+	
 	CFRelease(_line);
 	
 	[super dealloc];
@@ -199,6 +202,12 @@
 
 
 #pragma mark - Properties
+
+- (NSArray *)getGlyphRuns
+{
+	return self.glyphRuns;
+}
+
 - (NSArray *)glyphRuns
 {
 	@synchronized(self)
@@ -468,6 +477,19 @@
 	}
 	
 	return tmpRect;
+}
+
+- (NSString*)getLineText
+{
+	return nil;
+}
+
+- (void)drawLinesWith:(CGContextRef)context inRect:(CGRect)rect
+{
+	CGPoint linePtOrigin = _baselineOrigin;
+	
+	CGContextSetTextPosition(context, linePtOrigin.x, linePtOrigin.y);
+	CTLineDraw(_line, context);
 }
 
 @end

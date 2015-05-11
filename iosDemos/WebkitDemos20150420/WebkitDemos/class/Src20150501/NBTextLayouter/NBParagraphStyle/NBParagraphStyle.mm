@@ -16,6 +16,7 @@
 
 @implementation NBParagraphStyle
 {
+	CGFloat _lineSpace;
 	CGFloat _firstLineHeadIndent;
 	CGFloat _defaultTabInterval;
 	CGFloat _paragraphSpacingBefore;
@@ -59,7 +60,7 @@
 	retStyle.minimumLineHeight = paragraphStyle.minimumLineHeight;
 	retStyle.maximumLineHeight = paragraphStyle.maximumLineHeight;
 	
-	retStyle.alignment = DTNSTextAlignmentToCTTextAlignment(paragraphStyle.alignment);
+	retStyle.alignment = [NBParagraphStyle NSTextAlignmentToCTTextAlignment:paragraphStyle.alignment];
 	
 	switch (paragraphStyle.baseWritingDirection)
 	{
@@ -90,7 +91,7 @@
 		
 		for (NSTextTab *textTab in tabStops)
 		{
-			CTTextAlignment alignment = DTNSTextAlignmentToCTTextAlignment(textTab.alignment);
+			CTTextAlignment alignment = [NBParagraphStyle NSTextAlignmentToCTTextAlignment:textTab.alignment];
 			CGFloat location = textTab.location;
 			
 			CTTextTabRef tab = CTTextTabCreate(alignment, location, NULL);
@@ -120,6 +121,7 @@
 	if ((self = [super init]))
 	{
 		// defaults
+		_lineSpace = 0;
 		_firstLineHeadIndent = 0.0;
 		_defaultTabInterval = 36.0;
 		_baseWritingDirection = kCTWritingDirectionNatural;
@@ -145,6 +147,9 @@
 		CTParagraphStyleGetValueForSpecifier(ctParagraphStyle, kCTParagraphStyleSpecifierFirstLineHeadIndent, sizeof(_firstLineHeadIndent), &_firstLineHeadIndent);
 		CTParagraphStyleGetValueForSpecifier(ctParagraphStyle, kCTParagraphStyleSpecifierHeadIndent, sizeof(_headIndent), &_headIndent);
 		CTParagraphStyleGetValueForSpecifier(ctParagraphStyle, kCTParagraphStyleSpecifierTailIndent, sizeof(_tailIndent), &_tailIndent);
+		
+		
+		CTParagraphStyleGetValueForSpecifier(ctParagraphStyle, kCTParagraphStyleSpecifierLineSpacingAdjustment, sizeof(_lineSpace), &_lineSpace);
 		
 		// paragraph spacing
 		CTParagraphStyleGetValueForSpecifier(ctParagraphStyle, kCTParagraphStyleSpecifierParagraphSpacing, sizeof(_paragraphSpacing), &_paragraphSpacing);
@@ -181,6 +186,7 @@
 	
 	CTParagraphStyleSetting settings[] = 
 	{
+		{kCTParagraphStyleSpecifierDefaultTabInterval, sizeof(_lineSpace), &_lineSpace},
 		{kCTParagraphStyleSpecifierAlignment, sizeof(_alignment), &_alignment},
 		{kCTParagraphStyleSpecifierFirstLineHeadIndent, sizeof(_firstLineHeadIndent), &_firstLineHeadIndent},
 		{kCTParagraphStyleSpecifierDefaultTabInterval, sizeof(_defaultTabInterval), &_defaultTabInterval},
@@ -213,7 +219,9 @@
 - (NSParagraphStyle *)NSParagraphStyle
 {
 	NSMutableParagraphStyle *mps = [[NSMutableParagraphStyle alloc] init];
-
+	
+	[mps setFirstLineHeadIndent:_lineSpace];
+	
 	[mps setFirstLineHeadIndent:_firstLineHeadIndent];
 
 	[mps setParagraphSpacing:_paragraphSpacing];
@@ -226,7 +234,7 @@
 	[mps setMaximumLineHeight:_maximumLineHeight];
 	[mps setLineHeightMultiple:_lineHeightMultiple];
 	
-	[mps setAlignment:DTNSTextAlignmentFromCTTextAlignment(_alignment)];
+	[mps setAlignment:[NBParagraphStyle NSTextAlignmentFromCTTextAlignment:_alignment]];
 	
 	switch (_baseWritingDirection)
 	{
@@ -259,7 +267,7 @@
 			CTTextTabRef tab = (__bridge CTTextTabRef)(object);
 			
 			CTTextAlignment alignment = CTTextTabGetAlignment(tab);
-			NSTextAlignment nsAlignment = DTNSTextAlignmentFromCTTextAlignment(alignment);
+			NSTextAlignment nsAlignment = [NBParagraphStyle NSTextAlignmentFromCTTextAlignment:alignment];
 			CGFloat location = (CGFloat)CTTextTabGetLocation(tab);
 			
 			NSTextTab *textTab = [[NSTextTab alloc] initWithTextAlignment:nsAlignment location:location options:[NSDictionary dictionary]];
@@ -429,6 +437,11 @@
 	NBParagraphStyle *otherStyle = object;
 	
 	
+	if (_lineSpace != otherStyle->_lineSpace)
+	{
+		return NO;
+	}
+	
 	if (_firstLineHeadIndent != otherStyle->_firstLineHeadIndent)
 	{
 		return NO;
@@ -509,6 +522,14 @@
 	if (tabStops != _tabStops)
 	{
 		_tabStops = [tabStops mutableCopy]; // keep mutability
+	}
+}
+
+- (void)setLineSpace:(CGFloat)lineSpace
+{
+	if (_lineSpace != lineSpace)
+	{
+		_lineSpace = lineSpace;
 	}
 }
 
@@ -616,6 +637,135 @@
 	}
 }
 
+#if DTCORETEXT_SUPPORT_NS_ATTRIBUTES
+
++ (CTTextAlignment)NSTextAlignmentToCTTextAlignment:(NSTextAlignment)nsTextAlignment
+{
+	switch (nsTextAlignment)
+	{
+#if TARGET_OS_IPHONE
+		case NSTextAlignmentLeft:
+		{
+			return kCTTextAlignmentLeft;
+		}
+			
+		case NSTextAlignmentRight:
+		{
+			return kCTTextAlignmentRight;
+		}
+			
+		case NSTextAlignmentCenter:
+		{
+			return kCTTextAlignmentCenter;
+		}
+			
+		case NSTextAlignmentJustified:
+		{
+			return kCTTextAlignmentJustified;
+		}
+			
+		case NSTextAlignmentNatural:
+		{
+			return kCTTextAlignmentNatural;
+		}
+#else
+		case NSLeftTextAlignment:
+		{
+			return kCTTextAlignmentLeft;
+		}
+			
+		case NSRightTextAlignment:
+		{
+			return kCTTextAlignmentRight;
+		}
+			
+		case NSCenterTextAlignment:
+		{
+			return kCTTextAlignmentCenter;
+		}
+			
+		case NSJustifiedTextAlignment:
+		{
+			return kCTTextAlignmentJustified;
+		}
+			
+		case NSNaturalTextAlignment:
+		{
+			return kCTTextAlignmentNatural;
+		}
+#endif
+			
+		default:
+		{
+			//DTLogError(@"Unknown alignment %d", (int)nsTextAlignment);
+			return kCTTextAlignmentLeft;
+		}
+	}
+}
+
++ (NSTextAlignment)NSTextAlignmentFromCTTextAlignment:(CTTextAlignment)ctTextAlignment
+{
+#if TARGET_OS_IPHONE
+	switch (ctTextAlignment)
+	{
+		case kCTTextAlignmentLeft:
+		{
+			return NSTextAlignmentLeft;
+		}
+			
+		case kCTTextAlignmentRight:
+		{
+			return NSTextAlignmentRight;
+		}
+			
+		case kCTTextAlignmentCenter:
+		{
+			return NSTextAlignmentCenter;
+		}
+			
+		case kCTTextAlignmentJustified:
+		{
+			return NSTextAlignmentJustified;
+		}
+			
+		case kCTTextAlignmentNatural:
+		{
+			return NSTextAlignmentNatural;
+		}
+	}
+#else
+	switch (ctTextAlignment)
+	{
+		case kCTTextAlignmentLeft:
+		{
+			return NSLeftTextAlignment;
+		}
+			
+		case kCTTextAlignmentRight:
+		{
+			return NSRightTextAlignment;
+		}
+			
+		case kCTTextAlignmentCenter:
+		{
+			return NSCenterTextAlignment;
+		}
+			
+		case kCTTextAlignmentJustified:
+		{
+			return NSJustifiedTextAlignment;
+		}
+			
+		case kCTTextAlignmentNatural:
+		{
+			return NSNaturalTextAlignment;
+		}
+	}
+#endif
+}
+#endif
+
+@synthesize lineSpace = _lineSpace;
 @synthesize firstLineHeadIndent = _firstLineHeadIndent;
 @synthesize defaultTabInterval = _defaultTabInterval;
 @synthesize paragraphSpacingBefore = _paragraphSpacingBefore;

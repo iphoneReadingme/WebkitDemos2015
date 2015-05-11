@@ -43,6 +43,8 @@
 }
 
 
+@property (nonatomic, copy) NSString *text;
+
 @property (nonatomic, assign) CGRect frame;
 
 @property (nonatomic, assign) CGFloat ascent;
@@ -71,6 +73,11 @@
 - (BOOL)isHorizontalRule;
 
 - (NSArray *)stringIndices;
+- (NSArray *)getGlyphRuns;
+- (NSString*)getLineText;
+
+- (void)drawLinesWith:(CGContextRef)context inRect:(CGRect)rect;
+
 
 @end
 
