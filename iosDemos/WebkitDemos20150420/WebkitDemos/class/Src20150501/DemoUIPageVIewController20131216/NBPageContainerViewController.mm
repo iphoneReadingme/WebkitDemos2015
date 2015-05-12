@@ -5,6 +5,8 @@
 #import "NBPageContainerViewController.h"
 //#import "DemoViewCoreTextDrawMacroDefine.h"
 #import "DemoTextPageMacroDefine.h"
+//#import "NBPageItem.h"
+//#import "NBChapterPagesInfo.h"
 
 
 
@@ -13,9 +15,8 @@
     NSInteger _pageIndex;
 }
 
-@property (nonatomic, retain) DemoPageViewDrawText* pageView;
-@property (nonatomic, retain) UILabel* chapterTitle;
-@property (nonatomic, copy) NSString * chapterText;
+@property (nonatomic, retain) DemoPageViewDrawText  *pageView;
+@property (nonatomic, retain) UILabel               *chapterTitle;
 
 @end
 
@@ -46,7 +47,6 @@
 {
 	self.delegate = nil;
 	self.pageView = nil;
-	self.chapterText = nil;
 }
 
 - (id)initWithPageIndex:(NSInteger)pageIndex withDelegate:(id<NBPageContainerViewControllerDelegate>)delegate
@@ -77,12 +77,15 @@
 	
 	self.view.accessibilityLabel = @"TextPageViewController.view";
 	
-	if (_chapterText == nil)
-	{
-		self.chapterText = [self readPageTextFromFile];
-	}
-	
 	[self addSubViewObject];
+	
+	///< 分页
+	NSString* chapterName = [self getChapterName:_pageIndex];
+	[_pageView setPageContentText:[self getPageContentText:_pageIndex]];
+	
+	[_pageView setCurChapterName:chapterName];
+	[self showChapterName:chapterName];
+	
 }
 
 #pragma mark -
@@ -102,58 +105,6 @@
 #pragma mark 子视图对象
 
 
-#pragma mark - == 读取文件数据
-
-- (NSString*)getFilePath
-{
-	return [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:kHardcodeNovelDataPath];
-}
-
-- (NSString*)readPageTextFromFile
-{
-	NSString* pageText = nil;
-	
-	do
-	{
-		NSString *filePath = [self getFilePath];
-		NSData* fileData = [NSData dataWithContentsOfFile:filePath];
-		if ([fileData length] < 1)
-		{
-			break;
-		}
-		
-		NSString* result = [[[NSString alloc] initWithData:fileData encoding:NSUTF8StringEncoding] autorelease];
-		if ([result length] < 1)
-		{
-			break;
-		}
-		
-		pageText = result;
-		
-	}while (0);
-	
-	return pageText;
-}
-
-- (NSString*)getPageContentText:(int)pageIndex
-{
-	NSMutableString* pageContent = nil;
-	NSInteger nCharCount = [_chapterText length];
-	
-	NSRange range = NSMakeRange(pageIndex*kNumPageCharCount, kNumPageCharCount);
-	if (range.location + range.length < nCharCount)
-	{
-//		NSString* chapterName = [NSString stringWithFormat:@"【共%d页】当前页面 第【%d】页，\n", [_chapterText length]/kNumPageCharCount, _pageIndex+1];
-		
-		NSString* message = [_chapterText substringWithRange:range];
-		pageContent = [NSMutableString stringWithFormat:@"%@", message];
-//		pageContent = [NSMutableString stringWithFormat:@"%@%@", chapterName, message];
-//		[pageContent appendFormat:@"\n%d", pageIndex+1];
-	}
-	
-	return pageContent;
-}
-
 - (CGRect)getViewRect
 {
 	CGRect frame = [self.view bounds];
@@ -162,6 +113,21 @@
 	frame.size.height -= kStatusBarHeight + frame.origin.y;
 	
 	return frame;
+}
+
+- (CGRect)getPageViewFrame
+{
+	CGRect frame = [self getViewRect];
+	
+	CGRect titleRect = frame;
+	titleRect.size.height = kChapterTitleHeight;
+	
+	CGRect pageRect = frame;
+	
+	pageRect.origin.y = titleRect.origin.y + titleRect.size.height;
+	pageRect.size.height -= titleRect.size.height;
+	
+	return pageRect;
 }
 
 - (void)addSubViewObject
@@ -176,16 +142,10 @@
 	pageRect.origin.y = titleRect.origin.y + titleRect.size.height;
 	pageRect.size.height -= titleRect.size.height;
 	
-	NBBookLayoutConfig* layoutConfig = [NBBookLayoutConfig bookLayoutConfigWithFontSize:18 andWidth:pageRect.size.width andHeight:pageRect.size.height];
+//	NBBookLayoutConfig* layoutConfig = [NBBookLayoutConfig bookLayoutConfigWithFontSize:18 andWidth:pageRect.size.width andHeight:pageRect.size.height];
 	
 	self.pageView = [[[DemoPageViewDrawText alloc] initWithFrame:pageRect] autorelease];
-	_pageView.layoutConfig = layoutConfig;
-	
-	[_pageView setPageContentText:[self getPageContentText:_pageIndex]];
-	
-	NSString* chapterName = [NSString stringWithFormat:@"【共%d页】当前页面 第【%d】页", [_chapterText length]/kNumPageCharCount, _pageIndex+1];
-	[_pageView setCurChapterName:chapterName];
-	[self showChapterName:chapterName];
+	_pageView.layoutConfig = [self getLayoutConfig];
 	
 	_pageView.layer.borderColor = [UIColor redColor].CGColor;
 	_pageView.layer.borderWidth = 2;
@@ -217,6 +177,42 @@
 	}
 	
 	_chapterTitle.text = chapterName;
+}
+
+- (NSString*)getPageContentText:(int)pageIndex
+{
+	NSString* contentText = nil;
+	
+	if ([_delegate respondsToSelector:@selector(getPageContentText:)])
+	{
+		contentText = [_delegate getPageContentText:pageIndex];
+	}
+	
+	return contentText;
+}
+
+- (NSString*)getChapterName:(int)pageIndex
+{
+	NSString* chapterName = nil;
+	
+	if ([_delegate respondsToSelector:@selector(getChapterName:)])
+	{
+		chapterName = [_delegate getChapterName:pageIndex];
+	}
+	
+	return chapterName;
+}
+
+- (NBBookLayoutConfig*)getLayoutConfig
+{
+	NBBookLayoutConfig* config = nil;
+	
+	if ([_delegate respondsToSelector:@selector(getLayoutConfig)])
+	{
+		config = [_delegate getLayoutConfig];
+	}
+	
+	return config;
 }
 
 @end

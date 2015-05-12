@@ -25,13 +25,12 @@
 
 - (instancetype)initWithLayoutFrame:(NBTextLayoutFrame*)nbTextFrame;
 
+//- (void)layoutVisibleString:(NBTextLayoutFrame*)nbTextFrame inRect:(CGRect)rect;
+
 ///< 创建指定区域内的frame
-- (BOOL)createRangeFrameWithRange:(NSRange)strRange rect:(CGRect)rect ctframe:(CTFrameRef &)rangeFrame;
+- (BOOL)createFrameInRect:(CGRect)frame withRange:(NSRange)textRange;
 
-- (void)layoutVisibleString:(NBTextLayoutFrame*)nbTextFrame inRect:(CGRect)rect;
-
-- (NSArray *)getLines;
-- (BOOL)buildSuggestLines:(NSUInteger)start withRect:(CGRect)frame;
+- (NSRange)visibleStringRange;
 
 - (void)drawLinesWith:(CGContextRef)context inRect:(CGRect)rect;
 

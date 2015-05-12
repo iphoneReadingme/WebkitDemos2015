@@ -48,6 +48,7 @@
 		5B408ECA1AE5F90A00CE34D6 /* NSMutableString+ExceptionSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B408EBD1AE5F90A00CE34D6 /* NSMutableString+ExceptionSafe.m */; };
 		5B408ECB1AE5F90A00CE34D6 /* NSString+ExceptionSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B408EBF1AE5F90A00CE34D6 /* NSString+ExceptionSafe.m */; };
 		5B408ECC1AE5F90A00CE34D6 /* UCFNDCollection.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B408EC11AE5F90A00CE34D6 /* UCFNDCollection.mm */; };
+		5B512EB31B00B20300118DC9 /* DemoPageDataProvider.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B512EB21B00B20300118DC9 /* DemoPageDataProvider.mm */; };
 		5B7D8FC41AFB0DE2006CDDE3 /* NBTextGlyphRun.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B7D8FBC1AFB0DE2006CDDE3 /* NBTextGlyphRun.mm */; };
 		5B7D8FC51AFB0DE2006CDDE3 /* NBTextLayouter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B7D8FBE1AFB0DE2006CDDE3 /* NBTextLayouter.mm */; };
 		5B7D8FC61AFB0DE2006CDDE3 /* NBTextLayoutFrame.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B7D8FC11AFB0DE2006CDDE3 /* NBTextLayoutFrame.mm */; };
@@ -175,6 +176,8 @@
 		5B408EBF1AE5F90A00CE34D6 /* NSString+ExceptionSafe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ExceptionSafe.m"; sourceTree = "<group>"; };
 		5B408EC01AE5F90A00CE34D6 /* UCFNDCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCFNDCollection.h; sourceTree = "<group>"; };
 		5B408EC11AE5F90A00CE34D6 /* UCFNDCollection.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UCFNDCollection.mm; sourceTree = "<group>"; };
+		5B512EB11B00B20300118DC9 /* DemoPageDataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoPageDataProvider.h; sourceTree = "<group>"; };
+		5B512EB21B00B20300118DC9 /* DemoPageDataProvider.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoPageDataProvider.mm; sourceTree = "<group>"; };
 		5B7D8FBB1AFB0DE2006CDDE3 /* NBTextGlyphRun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBTextGlyphRun.h; sourceTree = "<group>"; };
 		5B7D8FBC1AFB0DE2006CDDE3 /* NBTextGlyphRun.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NBTextGlyphRun.mm; sourceTree = "<group>"; };
 		5B7D8FBD1AFB0DE2006CDDE3 /* NBTextLayouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBTextLayouter.h; sourceTree = "<group>"; };
@@ -293,6 +296,7 @@
 		5B05D3DB1AF1FAE5000CBAD1 /* DemoUIPageVIewController20131216 */ = {
 			isa = PBXGroup;
 			children = (
+				5B512EB01B00B20300118DC9 /* DemoPageDataProvider */,
 				5B05D3E81AF1FC90000CBAD1 /* DemoPageView.h */,
 				5B05D3E91AF1FC90000CBAD1 /* DemoPageView.mm */,
 				5B05D3EA1AF1FC90000CBAD1 /* DemoUIPageViewController.h */,
@@ -458,6 +462,15 @@
 				5B408EC11AE5F90A00CE34D6 /* UCFNDCollection.mm */,
 			);
 			path = UCCollections;
+			sourceTree = "<group>";
+		};
+		5B512EB01B00B20300118DC9 /* DemoPageDataProvider */ = {
+			isa = PBXGroup;
+			children = (
+				5B512EB11B00B20300118DC9 /* DemoPageDataProvider.h */,
+				5B512EB21B00B20300118DC9 /* DemoPageDataProvider.mm */,
+			);
+			path = DemoPageDataProvider;
 			sourceTree = "<group>";
 		};
 		5B526E4A1AE5EBE300A7A0B3 /* Framework */ = {
@@ -820,6 +833,7 @@
 				5B05D36F1AF1CF10000CBAD1 /* DemoViewSimpleParagraph.mm in Sources */,
 				5B408EA71AE5F8A000CE34D6 /* FEShapeParameterInfo.mm in Sources */,
 				5B7D8FC51AFB0DE2006CDDE3 /* NBTextLayouter.mm in Sources */,
+				5B512EB31B00B20300118DC9 /* DemoPageDataProvider.mm in Sources */,
 				5BCF310C1AE539D60015B6A3 /* UIUserNotificationSettings+Extension.m in Sources */,
 				5B408EC61AE5F90A00CE34D6 /* NSDictionary+ExceptionSafe.mm in Sources */,
 				5B0AFCC81AE8DC5E00238079 /* DemoRegularExpView.mm in Sources */,

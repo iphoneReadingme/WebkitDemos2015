@@ -16,6 +16,7 @@
 
 
 #import <UIKit/UIKit.h>
+#import "NBBookLayoutConfig.h"
 
 
 
@@ -23,6 +24,10 @@
 
 @optional
 - (void)setCurChapterName:(NSString*)chapterName;
+
+- (NSString*)getPageContentText:(int)pageIndex;
+- (NSString*)getChapterName:(int)pageIndex;
+- (NBBookLayoutConfig*)getLayoutConfig;
 
 @end
 

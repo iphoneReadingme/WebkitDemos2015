@@ -16,6 +16,10 @@
 
 
 
+//#define ENABLE_NBLayoutFrame_Debug
+
+
+
 // the value to use if the width is unknown
 #define CGFLOAT_WIDTH_UNKNOWN 16777215.0f
 

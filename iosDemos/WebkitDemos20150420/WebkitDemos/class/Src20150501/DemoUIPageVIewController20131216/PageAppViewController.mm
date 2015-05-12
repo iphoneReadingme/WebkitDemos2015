@@ -4,6 +4,7 @@
 #import "PageAppViewController.h"
 //#import "DemoViewCoreTextDrawMacroDefine.h"
 #import "DemoTextPageMacroDefine.h"
+#import "DemoPageDataProvider.h"
 
 
 
@@ -28,6 +29,8 @@ NBPageContainerViewControllerDelegate
 {
 	
 }
+
+@property (nonatomic, retain) DemoPageDataProvider *dataProvider;
 
 @property (strong, nonatomic) UIPageViewController *pageController;
 
@@ -62,8 +65,28 @@ NBPageContainerViewControllerDelegate
 	self.view = pView;
 	self.view.accessibilityLabel = @"PageAppViewController.view";
 	
+	CGRect rect = [self getViewRect];
+	rect.size.height -= kChapterTitleHeight;
+	self.dataProvider = [[DemoPageDataProvider alloc] initWithRect:rect];
+	[_dataProvider splittingPagesForString];
+	
     // 设置UIPageViewController的配置项
 	[self addUIPageViewController];
+}
+
+- (NSString*)getPageContentText:(int)pageIndex
+{
+	return [_dataProvider getPageContentText:pageIndex];
+}
+
+- (NSString*)getChapterName:(int)pageIndex
+{
+	return [_dataProvider getChapterName:pageIndex];
+}
+
+- (NBBookLayoutConfig*)getLayoutConfig
+{
+	return [_dataProvider getLayoutConfig];
 }
 
 // called after the view controller's view is released and set to nil.

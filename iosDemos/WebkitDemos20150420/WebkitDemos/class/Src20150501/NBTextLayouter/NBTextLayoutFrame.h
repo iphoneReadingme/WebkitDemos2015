@@ -22,7 +22,7 @@
 @interface NBTextLayoutFrame : NSObject
 {
 	CGRect _frame;
-	NSArray *_lines;
+	//NSArray *_lines;
 	NSArray *_paragraphRanges;
 }
 
@@ -30,28 +30,17 @@
 @property (nonatomic, assign, readonly) CGRect frame;
 @property(nonatomic, assign) NSInteger numberOfLines;
 
-- (instancetype)initWithFrame:(CGRect)frame with:(NSAttributedString *)attrString range:(NSRange)range;
+- (instancetype)initWithFrame:(CGRect)frame withAttributedString:(NSAttributedString *)attrString;
 
-///< 创建指定区域内的frame
-- (BOOL)createRangeFrameWithRange:(NSRange)strRange rect:(CGRect)rect ctframe:(CTFrameRef &)rangeFrame;
-
-- (CTFramesetterRef)getFramesetter;
-
-- (NSAttributedString*)getAttibutedString;
-
-- (CGRect)intrinsicContentFrame;
+//- (NSAttributedString*)getAttibutedString;
 
 - (NSRange)visibleStringRange;
 
-- (NSArray *)stringIndices;
-
-- (NSArray *)linesVisibleInRect:(CGRect)rect;
-
-- (CGRect)getDefaultFrameShowRect;
-
 
 - (NSArray *)getLines;
-- (BOOL)buildSuggestLines:(NSUInteger)start withRect:(CGRect)frame;
+
+///< 创建指定区域内的frame
+- (BOOL)createFrameInRect:(CGRect)frame withRange:(NSRange)textRange;
 
 - (void)drawLinesWith:(CGContextRef)context inRect:(CGRect)rect;
 

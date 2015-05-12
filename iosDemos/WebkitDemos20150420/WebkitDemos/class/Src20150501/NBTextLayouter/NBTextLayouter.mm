@@ -57,64 +57,28 @@
 	}
 }
 
-///< 按要求进行逐行排版，标点处理，行尾处理，断行连字符显示
-///< 第一步先进行正常排版并可以直接显示
-- (void)textLayouter:(NBTextLayoutFrame*)nbTextFrame
-{
-	
-}
-
 - (void)layoutVisibleString:(NBTextLayoutFrame*)nbTextFrame inRect:(CGRect)rect
 {
-	NSArray *lines = nil;
-	
-	//CGRect rect = [nbTextFrame getDefaultFrameShowRect];
-	lines = [nbTextFrame linesVisibleInRect:rect];
-	if (![lines count])
-	{
-		return;
-	}
-	
-	[nbTextFrame getDefaultFrameShowRect];
-	
-//	NSAttributedString *layoutString = [nbTextFrame getAttibutedString];
-//	for (NBTextLine *oneLine in lines)
-//	{
-//		NSUInteger skipRunsBeforeLocation = 0;
-//		
-//		for (NBTextLine *oneRun in [oneLine getGlyphRuns])
-//		{
-//			NSRange runRange = [oneRun stringRange];
-//			if (runRange.location>=skipRunsBeforeLocation)
-//			{
-//				CGRect frameForSubview = oneRun.frame;
-//			}
-//		}
-//	}
-}
 
-- (BOOL)hasLayouted
-{
-	return (nil != [_nbTextFrame getFramesetter]);
 }
 
 ///< 创建指定区域内的frame
-- (BOOL)createRangeFrameWithRange:(NSRange)strRange rect:(CGRect)rect ctframe:(CTFrameRef &)rangeFrame
+- (BOOL)createFrameInRect:(CGRect)frame withRange:(NSRange)textRange
 {
-	return [_nbTextFrame createRangeFrameWithRange:strRange rect:rect ctframe:rangeFrame];
+	BOOL bRet = NO;
+	bRet = [_nbTextFrame createFrameInRect:frame withRange:textRange];
+	
+	return bRet;
+}
+
+- (NSRange)visibleStringRange
+{
+	return [_nbTextFrame visibleStringRange];
 }
 
 - (NSArray *)getLines
 {
 	return [_nbTextFrame getLines];
-}
-
-- (BOOL)buildSuggestLines:(NSUInteger)start withRect:(CGRect)frame
-{
-	BOOL bRet = NO;
-	bRet = [_nbTextFrame buildSuggestLines:0 withRect:frame];
-	
-	return bRet;
 }
 
 - (void)drawLinesWith:(CGContextRef)context inRect:(CGRect)rect
