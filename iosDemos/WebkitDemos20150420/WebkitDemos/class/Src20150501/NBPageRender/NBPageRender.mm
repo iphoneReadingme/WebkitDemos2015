@@ -709,12 +709,12 @@
 	//assert(rect.size.height == frameConfig.pageHeight);
 	//DDLogVerbose(@"==columnFrame=(%@)", NSStringFromCGRect(columnFrame));
 	
-	NSRange textRange = NSMakeRange(nTextStartLocation, nPageTextLength);
-	BOOL bRet = [_textLayout createFrameInRect:columnFrame withRange:textRange];
-	if (!bRet)
-	{
-		return NBDrawSuccesful;
-	}
+//	NSRange textRange = NSMakeRange(nTextStartLocation, nPageTextLength);
+	//BOOL bRet = [_textLayout createFrameInRect:columnFrame withRange:textRange];
+//	if (!bRet)
+//	{
+//		return NBDrawSuccesful;
+//	}
 	//翻转坐标系统（文本原来是倒的要翻转下）
     CGContextSetTextMatrix(context, CGAffineTransformIdentity);
 	CGContextTranslateCTM(context, 0, rect.size.height);

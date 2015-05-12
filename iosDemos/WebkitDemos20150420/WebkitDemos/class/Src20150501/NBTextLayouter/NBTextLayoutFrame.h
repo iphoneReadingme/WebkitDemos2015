@@ -21,18 +21,10 @@
 
 @interface NBTextLayoutFrame : NSObject
 {
-	CGRect _frame;
-	//NSArray *_lines;
-	NSArray *_paragraphRanges;
 }
-
-//@property (nonatomic, strong, readonly) NSArray *lines;
-@property (nonatomic, assign, readonly) CGRect frame;
-@property(nonatomic, assign) NSInteger numberOfLines;
 
 - (instancetype)initWithFrame:(CGRect)frame withAttributedString:(NSAttributedString *)attrString;
 
-//- (NSAttributedString*)getAttibutedString;
 
 - (NSRange)visibleStringRange;
 

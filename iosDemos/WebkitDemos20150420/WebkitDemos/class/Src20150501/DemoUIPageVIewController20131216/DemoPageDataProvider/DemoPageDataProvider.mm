@@ -75,6 +75,8 @@
 	if (_chapterText == nil)
 	{
 		self.chapterText = [self readPageTextFromFile];
+		
+		self.chapterText = [NBPageRender getChapterContentStr:_chapterText];
 	}
 }
 
@@ -144,7 +146,7 @@
 - (NSString*)getChapterName:(int)pageIndex
 {
 	///< 分页
-	NSString* chapterName = [NSString stringWithFormat:@"【共%d页】当前页面 第【%d】页", [[_pagesInfo pageItems] count], 0];
+	NSString* chapterName = [NSString stringWithFormat:@"【共%d页】当前页面 第【%d】页", [[_pagesInfo pageItems] count], pageIndex];
 	
 	return chapterName;
 }

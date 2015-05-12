@@ -85,7 +85,7 @@
 	
 	[_pageView setCurChapterName:chapterName];
 	[self showChapterName:chapterName];
-	
+	[self.view addSubview:_pageView];
 }
 
 #pragma mark -
@@ -149,7 +149,6 @@
 	
 	_pageView.layer.borderColor = [UIColor redColor].CGColor;
 	_pageView.layer.borderWidth = 2;
-	[self.view addSubview:_pageView];
 }
 
 - (void)addTitleLabel:(CGRect)frame

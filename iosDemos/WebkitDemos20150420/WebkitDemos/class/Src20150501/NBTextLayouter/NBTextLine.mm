@@ -44,6 +44,7 @@
 	_text = nil;
 	
 	CFRelease(_line);
+	_line = nil;
 	
 	[super dealloc];
 }

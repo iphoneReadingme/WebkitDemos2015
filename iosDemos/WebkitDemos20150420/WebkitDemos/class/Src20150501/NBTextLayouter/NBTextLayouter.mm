@@ -52,7 +52,7 @@
 {
 	if (_nbTextFrame)
 	{
-		CFRelease(_nbTextFrame);
+		[_nbTextFrame release];
 		_nbTextFrame = nil;
 	}
 }
