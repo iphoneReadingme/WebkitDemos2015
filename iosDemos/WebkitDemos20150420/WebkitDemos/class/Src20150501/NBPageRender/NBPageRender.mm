@@ -152,6 +152,8 @@
 		
 		NBTextLayouter* textLayout = [[NBTextLayouter alloc] initWithLayoutFrame:layoutFrame];
 		
+		NSDate* startDate = [NSDate date];
+		
 		
 		CFIndex textRangeStart = 0;
 		BOOL bBreak = NO;
@@ -200,6 +202,12 @@
 				break;
 			}
 		}
+		
+		NSDate* endDate = [NSDate date];
+		
+		NSInteger nLength = [frameShowText length] > 10 ? 10 : [frameShowText length];
+		NSLog(@"[文字长度：%d]:%@", [frameShowText length], [frameShowText substringToIndex:nLength]);
+		NSLog(@"排版时间：【%f]", [endDate timeIntervalSinceReferenceDate] - [startDate timeIntervalSinceReferenceDate]);
 		
 		[layoutFrame release];
 		[textLayout release];
@@ -595,7 +603,8 @@
         if ([paraStr isEqualToString:@""]) {
             [newArray removeObjectAtIndex:i];
         } else {
-            if (!([paraStr hasPrefix:@"----------"] || [paraStr hasPrefix:@"************"])) {
+            if (i != 0 && !([paraStr hasPrefix:@"----------"] || [paraStr hasPrefix:@"************"]))
+			{
                 paraStr = [NSString stringWithFormat:@"　　%@", paraStr];
             }
             [newArray replaceObjectAtIndex:i withObject:paraStr];

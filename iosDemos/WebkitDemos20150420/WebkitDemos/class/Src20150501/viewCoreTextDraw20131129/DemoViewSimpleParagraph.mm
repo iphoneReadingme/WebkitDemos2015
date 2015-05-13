@@ -192,7 +192,7 @@
 		return nil;
 	}
 	CTFramesetterRef framesetter = nil;
-	framesetter = [NBPageRender formatString:contentStr withChapterName:chapterName andLayoutConfig:self.layoutConfig];
+	//framesetter = [NBPageRender formatString:contentStr withChapterName:chapterName andLayoutConfig:self.layoutConfig];
 	
 	return 	framesetter;
 }

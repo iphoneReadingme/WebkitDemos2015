@@ -24,16 +24,8 @@
 
 
 
-///< 数据文件路径
-//#define kHardcodeNovelDataPath           @"resource/Novel/part.txt"
-//#define kHardcodeNovelDataPath           @"resource/Novel/CoreTextTezhanyongbing.txt"
-#define kHardcodeNovelDataPath           @"resource/Novel/page2.txt"
-
 ///< 私有方法
 @interface DemoPageDataProvider (/*DemoViewCoreTextDraw_private*/)
-{
-	
-}
 
 @property (nonatomic, assign) CGRect    frame;
 @property (nonatomic, retain) NBBookLayoutConfig    *layoutConfig;
@@ -45,6 +37,46 @@
 
 
 @implementation DemoPageDataProvider
+
+- (NSString*)getFilePath
+{
+	///< 数据文件路径
+	//#define kHardcodeNovelDataPath           @"resource/Novel/part.txt"
+#define kHardcodeNovelDataPath           @"resource/Novel/CoreTextTezhanyongbing.txt"
+	//#define kHardcodeNovelDataPath           @"resource/Novel/page2.txt"
+	
+	NSString* fileName = @"page1.txt";
+	
+	int nCase = 5;
+	if (nCase == 0)
+	{
+		fileName = @"page2.txt";
+	}
+	if (nCase == 1)
+	{
+		fileName = @"page3.txt";
+	}
+	if (nCase == 2)
+	{
+		fileName = @"CoreTextTezhanyongbing.txt";
+	}
+	if (nCase == 3)
+	{
+		fileName = @"bigFile01.txt";
+	}
+	if (nCase == 4)
+	{
+		fileName = @"part2.txt";
+	}
+	if (nCase == 5)
+	{
+		fileName = @"part3.txt";
+	}
+	
+	NSString* filePath = [NSString stringWithFormat:@"resource/Novel/%@", fileName];
+	return [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:filePath];
+}
+
 
 - (void)dealloc
 {
@@ -96,11 +128,6 @@
 }
 
 #pragma mark - == 读取文件数据
-
-- (NSString*)getFilePath
-{
-	return [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:kHardcodeNovelDataPath];
-}
 
 - (NSString*)readPageTextFromFile
 {

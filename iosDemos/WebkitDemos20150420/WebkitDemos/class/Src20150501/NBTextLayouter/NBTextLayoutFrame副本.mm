@@ -24,12 +24,11 @@
 
 @interface NBTextLayoutFrame ()
 {
-	CGRect                    _frame;
 	NSRange                   _stringRange;
 	CTFramesetterRef          _framesetter;
 }
 
-@property (nonatomic, retain) NSArray                   *paragraphRanges;
+
 @property (nonatomic, retain) NSArray                   *lines;
 @property (nonatomic, assign) CGFloat                   justifyRatio;
 @property(nonatomic, assign) NSLineBreakMode            lineBreakMode;
@@ -44,9 +43,6 @@
 
 - (void)dealloc
 {
-	[_paragraphRanges release];
-	_paragraphRanges = nil;
-	
 	[_lines release];
 	_lines = nil;
 	
@@ -117,15 +113,28 @@
 				break;
 			}
 			
+			// next paragraph
 			paragraphRange = [plainString rangeOfParagraphsContainingRange:NSMakeRange(nextParagraphBegin, 0) parBegIndex:NULL parEndIndex:NULL];
 		}
 		
-		_paragraphRanges = [tmpArray retain];
+		_paragraphRanges = tmpArray; // no copy for performance
 	}
 	
 	return _paragraphRanges;
 }
 
+- (void)setJustifyRatio:(CGFloat)justifyRatio
+{
+	if (_justifyRatio != justifyRatio)
+	{
+		_justifyRatio = justifyRatio;
+		
+		// clear lines cache
+		_lines = nil;
+	}
+	
+}
+// returns YES if the given line is the first in a paragraph
 - (BOOL)isLineFirstInParagraph:(NBTextLine *)line
 {
 	NSRange lineRange = line.stringRange;
@@ -141,6 +150,7 @@
 	return [[NSCharacterSet newlineCharacterSet] characterIsMember:prevLineLastUnichar];
 }
 
+// returns YES if the given line is the last in a paragraph
 - (BOOL)isLineLastInParagraph:(NBTextLine *)line
 {
 	NSString *lineString = [[_attrString string] substringWithRange:line.stringRange];
@@ -152,6 +162,43 @@
 	
 	return NO;
 }
+
+// determins the "half leading"
+- (CGFloat)_algorithmWebKit_halfLeadingOfLine:(NBTextLine *)line
+{
+	CGFloat maxFontSize = [line lineHeight];
+	
+	NBParagraphStyle *paragraphStyle = [line paragraphStyle];
+	
+	if (paragraphStyle.minimumLineHeight && paragraphStyle.minimumLineHeight > maxFontSize)
+	{
+		maxFontSize = paragraphStyle.minimumLineHeight;
+	}
+	
+	if (paragraphStyle.maximumLineHeight && paragraphStyle.maximumLineHeight < maxFontSize)
+	{
+		maxFontSize = paragraphStyle.maximumLineHeight;
+	}
+	
+	CGFloat leading;
+	
+	if (paragraphStyle.lineHeightMultiple > 0)
+	{
+		leading = maxFontSize * paragraphStyle.lineHeightMultiple;
+	}
+	else
+	{
+		// reasonable "normal"
+		leading = maxFontSize * 1.1f;
+	}
+	
+	// subtract inline box height
+	CGFloat inlineBoxHeight = line.ascent + line.descent;
+	return (leading - inlineBoxHeight)/2.0f;
+	
+//	return 0;
+}
+
 
 - (CGPoint)_algorithmLegacy_BaselineOriginToPositionLine:(NBTextLine *)line afterLine:(NBTextLine *)previousLine
 {
@@ -179,10 +226,23 @@
 		usedLeading = ceil(MAX((line.ascent + line.descent)*0.1f, usedLeading));
 	}
 	
-	if (previousLine == nil)
+	if (!previousLine)
 	{
-		lineOrigin.y = -line.descent;
-		return lineOrigin;
+		if ([self isLineFirstInParagraph:line])
+		{
+			CGFloat paraSpacingBefore = 0;
+			
+			if (CTParagraphStyleGetValueForSpecifier(lineParagraphStyle, kCTParagraphStyleSpecifierParagraphSpacingBefore, sizeof(paraSpacingBefore), &paraSpacingBefore))
+			{
+				lineOrigin.y += paraSpacingBefore;
+			}
+			
+			lineOrigin.x = line.baselineOrigin.x;
+			
+			lineOrigin.y = ceil(lineOrigin.y);
+			
+			return lineOrigin;
+		}
 	}
 	
 	CGFloat lineHeight = 0;
@@ -301,15 +361,20 @@
 	return bRet;
 }
 
-- (BOOL)isPrePartOfPairChars:(NSString*)oneChar
+- (BOOL)isSpecialPairChar:(NSString*)lastAndNextChar
 {
 	BOOL bRet = NO;
-	if ([oneChar length] > 0)
+	
+	if ([lastAndNextChar length] > 1)
 	{
-		NSMutableCharacterSet *specialChar = [NSMutableCharacterSet characterSetWithCharactersInString:@"({[<"];
-		
-		[specialChar addCharactersInString:@"“‘（｛《〈﹄﹂〔【「『〖"];
-		bRet = [specialChar characterIsMember:[oneChar characterAtIndex:0]];
+		NSString* oneChar = [lastAndNextChar substringWithRange:NSMakeRange(0, 1)];
+		if ([self _isSpecialChar:oneChar])
+		{
+			oneChar = [lastAndNextChar substringWithRange:NSMakeRange(1, 1)];
+			//NSMutableCharacterSet *specialChar = [NSMutableCharacterSet characterSetWithCharactersInString:@"'\"’”"];
+			//bRet = [specialChar characterIsMember:[oneChar characterAtIndex:0]];
+			[self _isSpecialChar:oneChar];
+		}
 	}
 	
 	return bRet;
@@ -320,16 +385,15 @@
 	BOOL bRet = NO;
 	if ([oneChar length] > 0)
 	{
-		///< 进一步区分中英语，以提高效率
 		//unichar engcharset[20] = @",.;:?)'\"`!}]>-°′″";
 		//unichar chicharset[20] = "。，；？！、：”’）》〉…—﹃〕﹁】﹏～";
 //		unichar ch = engcharset[0];
 //		ch = chicharset[0];
 		const NSString* englishMarkSet = @",.;:?)'\"`!}]>-°′″";
-		const NSString* chineseMarkSet = @"。，；？！、：”’）》〉」﹃〕﹁】﹏～…—』〗";
+		const NSString* chineseMarkSet = @"。，；？！、：”’）》〉﹃〕﹁】﹏～…—";
 		
 		NSMutableCharacterSet *specialChar = [NSMutableCharacterSet characterSetWithCharactersInString:(NSString*)englishMarkSet];
-		
+		///< 中文
 		[specialChar addCharactersInString:(NSString*)chineseMarkSet];
 		bRet = [specialChar characterIsMember:[oneChar characterAtIndex:0]];
 	}
@@ -343,7 +407,7 @@
 	if ([oneChar length] > 0)
 	{
 		NSMutableCharacterSet *specialChar = [NSMutableCharacterSet characterSetWithCharactersInString:@"!)}]>.?"];
-		
+		///< 中文
 		[specialChar addCharactersInString:@"！）}】。》？…—,，"];
 		bRet = [specialChar characterIsMember:[oneChar characterAtIndex:0]];
 	}
@@ -351,66 +415,7 @@
 	return bRet;
 }
 
-- (NSInteger)getCharOffetWithRange:(NSRange)lineRange
-{
-	NSInteger nOffset = 0;
-	do
-	{
-		if (NSMaxRange(lineRange) < 3)
-		{
-			break;
-		}
-		
-		NSUInteger maxCharsCount = NSMaxRange(_stringRange);
-		
-		NSString* checkStr = nil;
-		
-		if (NSMaxRange(lineRange) + 1 <= maxCharsCount)
-		{
-			NSRange rangeObj = NSMakeRange(NSMaxRange(lineRange) - 1, 2);
-			checkStr = [[_attrString string] substringWithRange:rangeObj];
-		}
-		
-		if (checkStr)
-		{
-			if ([self isPrePartOfPairChars:[checkStr substringToIndex:1]])
-			{
-				nOffset = -1;
-				break;
-			}
-			
-			if ([[NSCharacterSet newlineCharacterSet] characterIsMember:[checkStr characterAtIndex:1]])
-			{
-				break;
-			}
-			checkStr = nil;
-		}
-		
-		if (NSMaxRange(lineRange) + 2 <= maxCharsCount)
-		{
-			NSRange rangeObj = NSMakeRange(NSMaxRange(lineRange), 2);
-			checkStr = [[_attrString string] substringWithRange:rangeObj];
-		}
-		else
-		{
-			if (NSMaxRange(lineRange) + 1 <= maxCharsCount)
-			{
-				NSRange rangeObj = NSMakeRange(NSMaxRange(lineRange), 1);
-				checkStr = [[_attrString string] substringWithRange:rangeObj];
-			}
-		}
-		
-		if (checkStr)
-		{
-			nOffset = [self getNextSpecialCharCount:checkStr];
-		}
-		
-	}while (0);
-	
-	return nOffset;
-}
-
-- (NSInteger)getNextSpecialCharCount:(NSString*)checkStr
+- (NSInteger)getSpecialCharCount:(NSString*)checkStr
 {
 	NSInteger nCount = 0;
 	
@@ -421,93 +426,31 @@
 			break;
 		}
 		
-		BOOL bFirstSpecChar = NO;
-		BOOL bSecondSpecChar = NO;
+		BOOL bSpecChar = NO;
 		
-		if ([checkStr length] == 2)
+		bSpecChar = [self _isSpecialChar:checkStr];
+		if (bSpecChar)
 		{
-			bFirstSpecChar = [self isDashOrEllipsis:[checkStr substringFromIndex:0]];
-			
-			if (bFirstSpecChar)
+			nCount = 1;
+		}
+		
+		if (bSpecChar && [checkStr length] == 2)
+		{
+			bSpecChar = [self isDashOrEllipsis:[checkStr substringFromIndex:1]];
+			///< 如果是破折号
+			if (bSpecChar)
 			{
-				bSecondSpecChar = [self isDashOrEllipsis:[checkStr substringFromIndex:1]];
+				bSpecChar = NO;
 			}
 			else
 			{
-				bFirstSpecChar = [self _isSpecialChar:[checkStr substringFromIndex:0]];
+				bSpecChar = [self _isSpecialChar:[checkStr substringFromIndex:1]];
 			}
 			
-			if (bSecondSpecChar)
+			if (bSpecChar)
 			{
-				break;
+				nCount = 2;
 			}
-			
-			if (bFirstSpecChar)
-			{
-				bSecondSpecChar = [self _isSpecialChar:[checkStr substringFromIndex:1]];
-			}
-		}
-		else
-		{
-			bFirstSpecChar = [self _isSpecialChar:[checkStr substringFromIndex:0]];
-		}
-		
-		if (bFirstSpecChar)
-		{
-			nCount = bSecondSpecChar ? 2 : 1;
-		}
-		
-	}while (0);
-	
-	return nCount;
-}
-
-///< 本行尾部特殊字符
-- (NSInteger)getEndSpecialCharCount:(NSString*)checkStr
-{
-	NSInteger nCount = 0;
-	
-	do
-	{
-		if ([checkStr length] < 1)
-		{
-			break;
-		}
-		
-		BOOL bFirstSpecChar = NO;
-		BOOL bSecondSpecChar = NO;
-		
-		if ([checkStr length] == 2)
-		{
-			bFirstSpecChar = [self isDashOrEllipsis:[checkStr substringFromIndex:0]];
-			
-			if (bFirstSpecChar)
-			{
-				bSecondSpecChar = [self isDashOrEllipsis:[checkStr substringFromIndex:1]];
-			}
-			else
-			{
-				bFirstSpecChar = [self _isSpecialChar:[checkStr substringFromIndex:0]];
-			}
-			
-			if (bSecondSpecChar)
-			{
-				break;
-			}
-			
-			if (bFirstSpecChar)
-			{
-				bSecondSpecChar = [self _isSpecialChar:[checkStr substringFromIndex:1]];
-			}
-		}
-		else
-		{
-			bFirstSpecChar = [self _isSpecialChar:[checkStr substringFromIndex:0]];
-		}
-		
-		if (bFirstSpecChar)
-		{
-			nCount = bSecondSpecChar ? 2 : 1;
 		}
 		
 	}while (0);
@@ -569,8 +512,8 @@
 	NSUInteger maxIndex = NSMaxRange(_stringRange);
 	NSUInteger fittingLength = 0;
 	
-	NBTextLine *firstLine = nil;
 	BOOL bHasCheckMarkChar = NO;
+	BOOL shouldTruncateLine = NO;
 	
 	do
 	{
@@ -637,31 +580,42 @@
 			offset += headIndent;
 		}
 		
+		//lineRange.length = CTTypesetterSuggestLineBreak(typesetter, lineRange.location, availableWidth); ///< use kCTLineBreakByWordWrapping
 		lineRange.length = CTTypesetterSuggestClusterBreak(typesetter, lineRange.location, availableWidth);
 		if (bHasCheckMarkChar && lineRange.length == 1)
 		{
 			NSString *lineString = [[_attrString attributedSubstringFromRange:lineRange] string];
 			if ([lineString isEqualToString:@"\n"])
-			{// NSCharacterSet newlineCharacterSet
+			{
 				fittingLength += lineRange.length;
 				lineRange.location += lineRange.length;
 				continue;
 			}
 		}
 		
-		NSInteger nCount = 0;
-		
 		if (NSMaxRange(lineRange) > maxIndex)
 		{
 			lineRange.length = maxIndex - lineRange.location;
 		}
+		
+		NSString* checkStr = nil;
+		if (NSMaxRange(lineRange) + 2 <= maxIndex)
+		{
+			NSRange rangeObj = NSMakeRange(lineRange.location + lineRange.length, 2);
+			checkStr = [[_attrString string] substringWithRange:rangeObj];
+		}
 		else
 		{
-			nCount =[self getCharOffetWithRange:lineRange];
+			if (NSMaxRange(lineRange) + 1 <= maxIndex)
+			{
+				NSRange rangeObj = NSMakeRange(lineRange.location + lineRange.length, 1);
+				checkStr = [[_attrString string] substringWithRange:rangeObj];
+			}
 		}
 		
+		NSInteger nCount = [self getSpecialCharCount:checkStr];
 		bHasCheckMarkChar = nCount > 0;
-		if (nCount != 0)
+		if (nCount > 0)
 		{
 			lineRange.length += nCount;
 		}
@@ -704,11 +658,9 @@
 			baseWritingDirection = kCTWritingDirectionNatural;
 		}
 		
-		NSUInteger nCharWidth = currentLineWidth/lineRange.length;
-		CGFloat deta = (_frame.size.width - currentLineWidth);
-		if (nCount && ((0.8*_frame.size.width < currentLineWidth && nCharWidth < deta) || currentLineWidth > _frame.size.width))
+		if (nCount)
 		{
-			textAlignment = kCTJustifiedTextAlignment;
+			textAlignment = kCTJustifiedTextAlignment; ///< 手动的行调整
 		}
 		
 		NSAttributedString *attribStr = nil;
@@ -730,15 +682,9 @@
 				
 				attribStr = [[NSAttributedString alloc] initWithString:lineString attributes:attributes];
 				
-				CTLineRef newLineRef = CTLineCreateWithAttributedString((__bridge  CFAttributedStringRef)(attribStr));
+				CTLineRef elipsisLineRef = CTLineCreateWithAttributedString((__bridge  CFAttributedStringRef)(attribStr));
 				
-				CTLineRef justifiedLine = nil;
-				if (newLineRef)
-				{
-					justifiedLine = CTLineCreateJustifiedLine(newLineRef, 1.0f, availableWidth);
-					CFRelease(newLineRef);
-				}
-				
+				CTLineRef justifiedLine = elipsisLineRef;
 				if (justifiedLine)
 				{
 					CFRelease(line);
@@ -778,16 +724,7 @@
 		
 		CGFloat lineBottom = CGRectGetMaxY(newLine.frame);
 		
-		if (firstLine != nil)
-		{
-			lineBottom = newLine.frame.origin.y - firstLine.frame.origin.y + firstLine.lineHeight;
-		}
-		else
-		{
-			lineBottom = newLine.lineHeight;
-		}
-		
-		if (lineBottom > maxY)
+		if (lineBottom>maxY)
 		{
 			[newLine release];
 			newLine = nil;
@@ -803,10 +740,6 @@
 		}
 		
 		[typesetLines addObject:newLine];
-		if (firstLine == nil)
-		{
-			firstLine = newLine;
-		}
 		
 		fittingLength += lineRange.length;
 		
@@ -816,9 +749,9 @@
 		[newLine release];
 		newLine = nil;
 		
-	}while (lineRange.location < maxIndex);
+	}while (lineRange.location < maxIndex && !shouldTruncateLine);
 	
-	_lines = [typesetLines retain];
+	_lines = typesetLines;
 	
 	if (![_lines count])
 	{
@@ -839,20 +772,12 @@
 
 - (void)updateLinesOriginInRect:(CGRect)frame
 {
-	NSInteger i = 0;
-	
 	NSArray *lineList = _lines;
 	for (NBTextLine* lineObj in lineList)
 	{
-		if ([lineList count] < i + 2)
-		{
-			i = i;
-		}
-		i++;
-		
 		CGPoint origin = lineObj.baselineOrigin;
 		CGFloat h = lineObj.descent + lineObj.ascent + lineObj.leading;
-		
+		h = lineObj.ascent;
 		origin.y = frame.origin.y + frame.size.height - origin.y - h;
 		lineObj.baselineOrigin = origin;
 	}
@@ -865,16 +790,9 @@
 
 - (void)drawLinesWith:(CGContextRef)context inRect:(CGRect)rect
 {
-	NSInteger i = 1;
 	NSArray *lineList = _lines;
 	for (NBTextLine* lineObj in lineList)
 	{
-		if ([lineList count] < i + 2)
-		{
-			i = i;
-		}
-		i++;
-		
 		[lineObj drawLinesWith:context inRect:rect];
 	}
 }
