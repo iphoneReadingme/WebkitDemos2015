@@ -57,11 +57,6 @@
 	}
 }
 
-- (void)layoutVisibleString:(NBTextLayoutFrame*)nbTextFrame inRect:(CGRect)rect
-{
-
-}
-
 ///< 创建指定区域内的frame
 - (BOOL)createFrameInRect:(CGRect)frame withRange:(NSRange)textRange
 {

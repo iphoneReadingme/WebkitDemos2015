@@ -762,6 +762,7 @@
 		}
 	}
 #endif
+	return NSTextAlignmentLeft;
 }
 #endif
 

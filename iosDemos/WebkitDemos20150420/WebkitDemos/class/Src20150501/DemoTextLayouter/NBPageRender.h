@@ -25,7 +25,7 @@
 + (NSString*)getChapterContentStr:(NSString*)content;
 
 
-- (id)initWithLayoutConfig:(NBBookLayoutConfig*)config chapterName:(NSString*)chapterName chapterText:(NSString*)chapterText;
+- (instancetype)initWithLayoutConfig:(NBBookLayoutConfig*)config chapterName:(NSString*)chapterName chapterText:(NSString*)chapterText;
 
 /*!
  @function	绘制当前页的文字内容
