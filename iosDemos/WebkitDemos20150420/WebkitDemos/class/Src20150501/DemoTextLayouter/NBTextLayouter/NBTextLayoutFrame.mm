@@ -20,6 +20,7 @@
 #import "NBTextLayoutFrame.h"
 #import "NSString+Paragraphs.h"
 #import "NBParagraphStyle.h"
+#import "NBLayouterHelper.h"
 #import "NBTextLayouterMacroDefine.h"
 
 @interface NBTextLayoutFrame ()
@@ -287,71 +288,7 @@
 	return _lines;
 }
 
-- (BOOL)isDashOrEllipsis:(NSString*)lastAndNextChar
-{
-	BOOL bRet = NO;
-	if ([lastAndNextChar length] > 0)
-	{
-		NSMutableCharacterSet *specialChar = [NSMutableCharacterSet characterSetWithCharactersInString:@"…—"];
-		
-		NSString* oneChar = [lastAndNextChar substringWithRange:NSMakeRange(0, 1)];
-		bRet = [specialChar characterIsMember:[oneChar characterAtIndex:0]];
-	}
-	
-	return bRet;
-}
-
-- (BOOL)isPrePartOfPairChars:(NSString*)oneChar
-{
-	BOOL bRet = NO;
-	if ([oneChar length] > 0)
-	{
-		NSMutableCharacterSet *specialChar = [NSMutableCharacterSet characterSetWithCharactersInString:@"({[<"];
-		
-		[specialChar addCharactersInString:@"“‘（｛《〈﹄﹂〔【「『〖"];
-		bRet = [specialChar characterIsMember:[oneChar characterAtIndex:0]];
-	}
-	
-	return bRet;
-}
-
-- (BOOL)_isSpecialChar:(NSString*)oneChar
-{
-	BOOL bRet = NO;
-	if ([oneChar length] > 0)
-	{
-		///< 进一步区分中英语，以提高效率
-		//unichar engcharset[20] = @",.;:?)'\"`!}]>-°′″";
-		//unichar chicharset[20] = "。，；？！、：”’）》〉…—﹃〕﹁】﹏～";
-//		unichar ch = engcharset[0];
-//		ch = chicharset[0];
-		const NSString* englishMarkSet = @",.;:?)'\"`!}]>-°′″";
-		const NSString* chineseMarkSet = @"。，；？！、：”’）》〉」﹃〕﹁】﹏～…—』〗";
-		
-		NSMutableCharacterSet *specialChar = [NSMutableCharacterSet characterSetWithCharactersInString:(NSString*)englishMarkSet];
-		
-		[specialChar addCharactersInString:(NSString*)chineseMarkSet];
-		bRet = [specialChar characterIsMember:[oneChar characterAtIndex:0]];
-	}
-	
-	return bRet;
-}
-
-- (BOOL)isSpecialCommaChar:(NSString*)oneChar
-{
-	BOOL bRet = NO;
-	if ([oneChar length] > 0)
-	{
-		NSMutableCharacterSet *specialChar = [NSMutableCharacterSet characterSetWithCharactersInString:@"!)}]>.?"];
-		
-		[specialChar addCharactersInString:@"！）}】。》？…—,，"];
-		bRet = [specialChar characterIsMember:[oneChar characterAtIndex:0]];
-	}
-	
-	return bRet;
-}
-
-- (NSInteger)getCharOffetWithRange:(NSRange)lineRange
+- (NSInteger)getCharOffsetWithRange:(NSRange)lineRange
 {
 	NSInteger nOffset = 0;
 	do
@@ -373,7 +310,7 @@
 		
 		if (checkStr)
 		{
-			if ([self isPrePartOfPairChars:[checkStr substringToIndex:1]])
+			if ([NBLayouterHelper isPrePartOfPairMarkChar:[checkStr substringToIndex:1]])
 			{
 				nOffset = -1;
 				break;
@@ -402,117 +339,12 @@
 		
 		if (checkStr)
 		{
-			nOffset = [self getNextSpecialCharCount:checkStr];
+			nOffset = [NBLayouterHelper getSpecialMarkCharCount:checkStr];
 		}
 		
 	}while (0);
 	
 	return nOffset;
-}
-
-- (NSInteger)getNextSpecialCharCount:(NSString*)checkStr
-{
-	NSInteger nCount = 0;
-	
-	do
-	{
-		if ([checkStr length] < 1)
-		{
-			break;
-		}
-		
-		BOOL bFirstSpecChar = NO;
-		BOOL bSecondSpecChar = NO;
-		
-		if ([checkStr length] == 2)
-		{
-			bFirstSpecChar = [self isDashOrEllipsis:[checkStr substringFromIndex:0]];
-			
-			if (bFirstSpecChar)
-			{
-				bSecondSpecChar = [self isDashOrEllipsis:[checkStr substringFromIndex:1]];
-			}
-			else
-			{
-				bFirstSpecChar = [self _isSpecialChar:[checkStr substringFromIndex:0]];
-			}
-			
-			if (bSecondSpecChar)
-			{
-				break;
-			}
-			
-			if (bFirstSpecChar)
-			{
-				bSecondSpecChar = [self _isSpecialChar:[checkStr substringFromIndex:1]];
-			}
-		}
-		else
-		{
-			bFirstSpecChar = [self _isSpecialChar:[checkStr substringFromIndex:0]];
-		}
-		
-		if (bFirstSpecChar)
-		{
-			nCount = bSecondSpecChar ? 2 : 1;
-		}
-		
-	}while (0);
-	
-	return nCount;
-}
-
-///< 本行尾部特殊字符
-- (NSInteger)getEndSpecialCharCount:(NSString*)checkStr
-{
-	NSInteger nCount = 0;
-	
-	do
-	{
-		if ([checkStr length] < 1)
-		{
-			break;
-		}
-		
-		BOOL bFirstSpecChar = NO;
-		BOOL bSecondSpecChar = NO;
-		
-		if ([checkStr length] == 2)
-		{
-			bFirstSpecChar = [self isDashOrEllipsis:[checkStr substringFromIndex:0]];
-			
-			if (bFirstSpecChar)
-			{
-				bSecondSpecChar = [self isDashOrEllipsis:[checkStr substringFromIndex:1]];
-			}
-			else
-			{
-				bFirstSpecChar = [self _isSpecialChar:[checkStr substringFromIndex:0]];
-			}
-			
-			if (bSecondSpecChar)
-			{
-				break;
-			}
-			
-			if (bFirstSpecChar)
-			{
-				bSecondSpecChar = [self _isSpecialChar:[checkStr substringFromIndex:1]];
-			}
-		}
-		else
-		{
-			bFirstSpecChar = [self _isSpecialChar:[checkStr substringFromIndex:0]];
-		}
-		
-		if (bFirstSpecChar)
-		{
-			nCount = bSecondSpecChar ? 2 : 1;
-		}
-		
-	}while (0);
-	
-	return nCount;
 }
 
 - (BOOL)createFrameInRect:(CGRect)frame withRange:(NSRange)textRange
@@ -641,8 +473,8 @@
 		if (bHasCheckMarkChar && lineRange.length == 1)
 		{
 			NSString *lineString = [[_attrString attributedSubstringFromRange:lineRange] string];
-			if ([lineString isEqualToString:@"\n"])
-			{// NSCharacterSet newlineCharacterSet
+			if ([[NSCharacterSet newlineCharacterSet] characterIsMember: (unichar)[lineString characterAtIndex:0]])
+			{
 				fittingLength += lineRange.length;
 				lineRange.location += lineRange.length;
 				continue;
@@ -657,7 +489,7 @@
 		}
 		else
 		{
-			nCount =[self getCharOffetWithRange:lineRange];
+			nCount =[self getCharOffsetWithRange:lineRange];
 		}
 		
 		bHasCheckMarkChar = nCount > 0;
