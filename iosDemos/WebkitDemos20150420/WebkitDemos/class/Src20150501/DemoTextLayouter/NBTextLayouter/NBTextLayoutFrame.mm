@@ -59,9 +59,6 @@
 {
 	[self releaseIndexList];
 	
-	[_paragraphRanges release];
-	_paragraphRanges = nil;
-	
 	[_lines release];
 	_lines = nil;
 	
@@ -402,7 +399,7 @@
 			break;
 		}
 		
-		if ([NBLayouterHelper isPrePartOfPairMarkChar2:_curLineLastChar])
+		if ([NBLayouterHelper isPrePartOfPairMarkChar:_curLineLastChar])
 		{
 			nOffset = -1;
 			break;
@@ -483,9 +480,6 @@
 	
 	NBTextLine *previousLine = nil;
 	
-//	NSArray *paragraphRanges = [self paragraphRanges];
-//	NSRange currentParagraphRange = [[paragraphRanges objectAtIndex:0] rangeValue];
-	
 	NSRange lineRange = _stringRange;
 	
 	[self getParagraphListPtr];
@@ -513,20 +507,6 @@
 		
 		NSInteger i = 0;
 		
-//		while (lineRange.location >= (currentParagraphRange.location+currentParagraphRange.length))
-//		{
-//			i++;
-//			if (i < [paragraphRanges count])
-//			{
-//				currentParagraphRange = [[paragraphRanges objectAtIndex:i] rangeValue];
-//			}
-//			else
-//			{
-//				bEnd = YES;
-//				break;
-//			}
-//		}
-		
 		while (lineRange.location >= curParagraphEnd)
 		{
 			if (i < _paragraphCount)
@@ -547,8 +527,6 @@
 			break;
 		}
 		
-		
-//		BOOL isAtBeginOfParagraph = (currentParagraphRange.location == lineRange.location);
 		BOOL isAtBeginOfParagraph = (curParagraphEnd == lineRange.location + lineRange.length);
 		
 		CGFloat headIndent = 0;

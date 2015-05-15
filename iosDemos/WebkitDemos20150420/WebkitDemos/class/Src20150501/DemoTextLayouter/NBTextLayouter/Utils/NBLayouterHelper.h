@@ -22,12 +22,7 @@
 @interface NBLayouterHelper : NSObject
 
 
-+ (BOOL)isDashOrEllipsis:(unichar)markChar;
-
-+ (BOOL)isPrePartOfPairMarkChar2:(unichar)markChar;
 + (BOOL)isPrePartOfPairMarkChar:(unichar)markChar;
-
-+ (BOOL)isSpecialMarkChar:(unichar)markChar;
 
 + (NSInteger)getSpecialMarkCharCount:(unichar)nextLineFirstChar with:(unichar)nextLineSecondChar;
 

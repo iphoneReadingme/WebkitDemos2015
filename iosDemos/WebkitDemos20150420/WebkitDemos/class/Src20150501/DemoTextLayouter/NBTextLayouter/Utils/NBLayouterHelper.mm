@@ -28,13 +28,14 @@
 
 @implementation NBLayouterHelper
 
-
+#if 0
+// for test and build all mark char unicode
 + (void)showMaxAndMinChar:(NSInteger)type
 {
 	NSString* englishMarkSet = @",.;:?)'\"`!}]>-";
+	//NSString* englishMarkSet2 = @"({[<“";
 	NSString* chineseMarkSet = @"。，；？！、：”’′″）》〉」﹃〕﹁】﹏～…—』〗";
-//	NSString* chineseMarkSet = @"。，；？！、：”’′″）》〉」﹃〕﹁】﹏～…—』〗°";
-//	NSString* chineseMarkSet2 = @"({[<“‘（｛《〈﹄﹂〔【「『〖";
+	//NSString* chineseMarkSet = @"。，；？！、：”’′″）》〉」﹃〕﹁】﹏～…—』〗°";
 	NSString* chineseMarkSet2 = @"‘（｛《〈﹄﹂〔【「『〖";
 	
 	NSString* textMarkSet = nil;
@@ -72,7 +73,6 @@
 	unichar maxChar = markCharSet[0];
 	unichar minChar = markCharSet[0];
 	unichar temp = 0;
-//	int j = 0;
 	
 	for (i = 0; i < nCount; i++)
 	{
@@ -101,66 +101,26 @@
 	
 	[self showMaxAndMinChar:3];
 	
-	//const NSString* englishMarkSet = @",.;:?)'\"`!}]>-";
-	//const NSString* chineseMarkSet = @"。，；？！、：”’′″）》〉」﹃〕﹁】﹏～…—』〗"; // °
-	//const NSString* chineseMarkSet2 = @"({[<“‘（｛《〈﹄﹂〔【「『〖";
-	
 	return bRet;
 }
+#endif
 
 + (BOOL)isDashOrEllipsis:(unichar)markChar
 {
-	BOOL bRet = NO;
-	
-#ifdef Enable_Unichar_Mothed
-	///< 0x2026:  …     0x2014: —
-	bRet = (0x2026 == markChar) || (0x2014 == markChar);
-#else
-	NSMutableCharacterSet *specialChar = [NSMutableCharacterSet characterSetWithCharactersInString:@"…—"];
-	bRet = [specialChar characterIsMember:markChar];
-#endif
-	
-	return bRet;
-}
-
-+ (BOOL)isPrePartOfPairMarkChar:(unichar)markChar
-{
-	BOOL bRet = NO;
-	
-#ifdef Enable_Unichar_Mothed
-	bRet =[self isPrePartOfPairMarkChar2:markChar];
-#else
-	NSMutableCharacterSet *specialChar = [NSMutableCharacterSet characterSetWithCharactersInString:@"({[<"];
-	[specialChar addCharactersInString:@"“‘（｛《〈﹄﹂〔【「『〖"];
-	
-	bRet = [specialChar characterIsMember:markChar];
-#endif
-	
-	return bRet;
+	return (0x2026 == markChar) || (0x2014 == markChar);
 }
 
 + (BOOL)isSpecialMarkChar:(unichar)markChar
 {
 	BOOL bRet = NO;
+	///< 进一步区分中英语，以提高效率
+	//[self printTest:[oneChar characterAtIndex:0]];
+	
+	bRet = [self isASCIICodeMarkChar:markChar];
+	
+	if (!bRet)
 	{
-		///< 进一步区分中英语，以提高效率
-		//[self printTest:[oneChar characterAtIndex:0]];
-		
-#ifdef Enable_Unichar_Mothed
-		bRet = [self isASCIICodeMarkChar:markChar];
-		
-		if (!bRet)
-		{
-			bRet = [self isUniCodeMarkChar:markChar];
-		}
-#else
-		const NSString* englishMarkSet = @",.;:?)'\"`!}]>-";
-		const NSString* chineseMarkSet = @"。，；？！、：”’′″）》〉」﹃〕﹁】﹏～…—』〗°";
-		NSMutableCharacterSet *specialChar = [NSMutableCharacterSet characterSetWithCharactersInString:(NSString*)englishMarkSet];
-		[specialChar addCharactersInString:(NSString*)chineseMarkSet];
-		
-		bRet = [specialChar characterIsMember:markChar];
-#endif
+		bRet = [self isUniCodeMarkChar:markChar];
 	}
 	
 	return bRet;
@@ -227,9 +187,6 @@
 + (BOOL)isASCIICodeMarkChar:(unichar)markChar
 {
 	BOOL bRet = NO;
-	
-	//bRet = ('!' <= markChar && markChar <= '}');
-	//bRet = (33 <= markChar && markChar <= 125);
 	
 	if (!(0x21 <= markChar && markChar <= 0x7D))
 	{
@@ -338,7 +295,7 @@
 		return bRet;
 	}
 	
-	///                       {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, F};
+	///                              {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, F};
 	static char keyIndexTable1[16] = {0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
 	static char keyIndexTable2[16] = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1};
 	static char keyIndexTable3[16] = {1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -483,7 +440,7 @@
 	return bRet;
 }
 
-+ (BOOL)isPrePartOfPairMarkChar2:(unichar)markChar
++ (BOOL)isPrePartOfPairMarkChar:(unichar)markChar
 {
 	BOOL bRet = NO;
 	
