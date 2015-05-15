@@ -108,70 +108,45 @@
 	return bRet;
 }
 
-+ (BOOL)isDashOrEllipsis:(NSString*)oneChar
++ (BOOL)isDashOrEllipsis:(unichar)markChar
 {
 	BOOL bRet = NO;
-	//if ([oneChar length] > 0)
-	{
+	
 #ifdef Enable_Unichar_Mothed
-		switch ([oneChar characterAtIndex:0])
-		{
-			case 0x2026: // …
-			{
-				bRet = YES;
-				break;
-			}
-			case 0x2014: // —
-			{
-				bRet = YES;
-				break;
-			}
-			default:
-			{
-				break;
-			}
-		}
+	///< 0x2026:  …     0x2014: —
+	bRet = (0x2026 == markChar) || (0x2014 == markChar);
 #else
-		NSMutableCharacterSet *specialChar = [NSMutableCharacterSet characterSetWithCharactersInString:@"…—"];
-		
-		bRet = [specialChar characterIsMember:[oneChar characterAtIndex:0]];
+	NSMutableCharacterSet *specialChar = [NSMutableCharacterSet characterSetWithCharactersInString:@"…—"];
+	bRet = [specialChar characterIsMember:markChar];
 #endif
-	}
 	
 	return bRet;
 }
 
-+ (BOOL)isPrePartOfPairMarkChar:(NSString*)oneChar
++ (BOOL)isPrePartOfPairMarkChar:(unichar)markChar
 {
 	BOOL bRet = NO;
 	
-	if ([oneChar length] > 0)
-	{
-		oneChar = nil;
 #ifdef Enable_Unichar_Mothed
-		bRet =[self isPrePartOfPairMarkChar2:[oneChar characterAtIndex:0]];
+	bRet =[self isPrePartOfPairMarkChar2:markChar];
 #else
-		NSMutableCharacterSet *specialChar = [NSMutableCharacterSet characterSetWithCharactersInString:@"({[<"];
-		
-		[specialChar addCharactersInString:@"“‘（｛《〈﹄﹂〔【「『〖"];
-		bRet = [specialChar characterIsMember:[oneChar characterAtIndex:0]];
+	NSMutableCharacterSet *specialChar = [NSMutableCharacterSet characterSetWithCharactersInString:@"({[<"];
+	[specialChar addCharactersInString:@"“‘（｛《〈﹄﹂〔【「『〖"];
+	
+	bRet = [specialChar characterIsMember:markChar];
 #endif
-	}
 	
 	return bRet;
 }
 
-+ (BOOL)isSpecialMarkChar:(NSString*)oneChar
++ (BOOL)isSpecialMarkChar:(unichar)markChar
 {
 	BOOL bRet = NO;
-	if ([oneChar length] > 0)
 	{
 		///< 进一步区分中英语，以提高效率
 		//[self printTest:[oneChar characterAtIndex:0]];
 		
 #ifdef Enable_Unichar_Mothed
-		unichar markChar = [oneChar characterAtIndex:0];
-		
 		bRet = [self isASCIICodeMarkChar:markChar];
 		
 		if (!bRet)
@@ -182,22 +157,28 @@
 		const NSString* englishMarkSet = @",.;:?)'\"`!}]>-";
 		const NSString* chineseMarkSet = @"。，；？！、：”’′″）》〉」﹃〕﹁】﹏～…—』〗°";
 		NSMutableCharacterSet *specialChar = [NSMutableCharacterSet characterSetWithCharactersInString:(NSString*)englishMarkSet];
-		
 		[specialChar addCharactersInString:(NSString*)chineseMarkSet];
-		bRet = [specialChar characterIsMember:[oneChar characterAtIndex:0]];
+		
+		bRet = [specialChar characterIsMember:markChar];
 #endif
 	}
 	
 	return bRet;
 }
 
-+ (NSInteger)getSpecialMarkCharCount:(NSString*)checkStr
++ (NSInteger)getSpecialMarkCharCount:(unichar)nextLineFirstChar with:(unichar)nextLineSecondChar
 {
 	NSInteger nCount = 0;
 	
 	do
 	{
-		if ([checkStr length] < 1)
+		NSInteger nCheckCharsCount = 0;
+		if (nextLineFirstChar != 0)
+		{
+			nCheckCharsCount = (nextLineSecondChar == 0) ? 1 : 2;
+		}
+		
+		if (nCheckCharsCount < 1)
 		{
 			break;
 		}
@@ -205,17 +186,17 @@
 		BOOL bFirstSpecChar = NO;
 		BOOL bSecondSpecChar = NO;
 		
-		if ([checkStr length] == 2)
+		if (nCheckCharsCount == 2)
 		{
-			bFirstSpecChar = [NBLayouterHelper isDashOrEllipsis:[checkStr substringFromIndex:0]];
+			bFirstSpecChar = [NBLayouterHelper isDashOrEllipsis:nextLineFirstChar];
 			
 			if (bFirstSpecChar)
 			{
-				bSecondSpecChar = [NBLayouterHelper isDashOrEllipsis:[checkStr substringFromIndex:1]];
+				bSecondSpecChar = [NBLayouterHelper isDashOrEllipsis:nextLineSecondChar];
 			}
 			else
 			{
-				bFirstSpecChar = [NBLayouterHelper isSpecialMarkChar:[checkStr substringFromIndex:0]];
+				bFirstSpecChar = [NBLayouterHelper isSpecialMarkChar:nextLineFirstChar];
 			}
 			
 			if (bSecondSpecChar)
@@ -225,12 +206,12 @@
 			
 			if (bFirstSpecChar)
 			{
-				bSecondSpecChar = [NBLayouterHelper isSpecialMarkChar:[checkStr substringFromIndex:1]];
+				bSecondSpecChar = [NBLayouterHelper isSpecialMarkChar:nextLineSecondChar];
 			}
 		}
 		else
 		{
-			bFirstSpecChar = [NBLayouterHelper isSpecialMarkChar:[checkStr substringFromIndex:0]];
+			bFirstSpecChar = [NBLayouterHelper isSpecialMarkChar:nextLineFirstChar];
 		}
 		
 		if (bFirstSpecChar)
@@ -258,7 +239,7 @@
 	static char keyIndexTable1[16] = {0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1};
 	//static char keyIndexTable2[16] = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1};
 	
-	if (keyIndexTable1[(markChar >> 4)& 0x0f] && 33 <= markChar)
+	if (keyIndexTable1[(markChar >> 4)& 0x0f] && 0x21 <= markChar)
 	{
 //		NSLog(@"\n====[%X, %d, %@]", markChar, markChar, [NSString stringWithCharacters:&markChar length:1]);
 		
@@ -534,7 +515,7 @@
 	}
 	else if (markChar > 0x2017)
 	{
-		///                       {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, F};
+		///                              {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, F};
 		static char keyIndexTable1[16] = {0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
 		static char keyIndexTable2[16] = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1};
 		

@@ -23,11 +23,23 @@
 #import "NBLayouterHelper.h"
 #import "NBTextLayouterMacroDefine.h"
 
+
+#define kNewLineChar        '\n'
+#define kStepCount          300
+
+
+
 @interface NBTextLayoutFrame ()
 {
 	CGRect                    _frame;
 	NSRange                   _stringRange;
 	CTFramesetterRef          _framesetter;
+	unichar                   _curLineLastChar;
+	unichar                   _nextLineSecondChar;
+	unichar                   _nextLineFirstChar;
+	
+	NSUInteger                *_paragraphEndIndexList;
+	NSInteger                 _paragraphCount;
 }
 
 @property (nonatomic, retain) NSArray                   *paragraphRanges;
@@ -45,6 +57,8 @@
 
 - (void)dealloc
 {
+	[self releaseIndexList];
+	
 	[_paragraphRanges release];
 	_paragraphRanges = nil;
 	
@@ -57,6 +71,15 @@
 	[self destoryFrameSetter];
 	
 	[super dealloc];
+}
+
+- (void)releaseIndexList
+{
+	if (_paragraphEndIndexList)
+	{
+		delete []_paragraphEndIndexList;
+		_paragraphEndIndexList = nil;
+	}
 }
 
 - (void)destoryFrameSetter
@@ -74,6 +97,9 @@
 	
 	if (self)
 	{
+		_paragraphEndIndexList = nil;
+		_paragraphCount = 0;
+		
 		_stringRange = NSMakeRange(0, [attrString length]);
 		
 		_frame = frame;
@@ -93,6 +119,73 @@
 		///< 创建framesetter
 		_framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)_attrString);
 	}
+}
+
+- (NSUInteger)increaseParagraphListContainer:(NSInteger)curMaxCount
+{
+	const NSUInteger stepCount = kStepCount;
+	
+	NSUInteger *indexList = new NSUInteger[curMaxCount + stepCount]{0};
+	
+	if (_paragraphEndIndexList)
+	{
+		memcpy(indexList, _paragraphEndIndexList, curMaxCount * sizeof(NSUInteger));
+		
+		[self releaseIndexList];
+	}
+	
+	_paragraphEndIndexList = indexList;
+	
+	return curMaxCount + stepCount;
+}
+
+- (NSUInteger*)getParagraphListPtr
+{
+	if (nil == _paragraphEndIndexList)
+	{
+		NSInteger i = 0;
+		NSInteger maxCount = 0;
+		
+		NSString *plainString = [[self attrString] string];
+		NSUInteger textLength = [plainString length];
+		NSRange paragraphRange = NSMakeRange(0, 0);
+		NSUInteger nextParagraphBegin = 0;
+		
+		do
+		{
+			paragraphRange = [plainString rangeOfParagraphsContainingRange:NSMakeRange(nextParagraphBegin, 0) parBegIndex:NULL parEndIndex:NULL];
+			if (paragraphRange.length < 1)
+			{
+				break;
+			}
+			else
+			{
+				if (_paragraphEndIndexList == nil)
+				{
+					maxCount = [self increaseParagraphListContainer:maxCount];
+				}
+			}
+			
+			if (i+1 > maxCount)
+			{
+				maxCount = [self increaseParagraphListContainer:maxCount];
+			}
+			
+			nextParagraphBegin = NSMaxRange(paragraphRange);
+			*(_paragraphEndIndexList + i) = nextParagraphBegin;
+			i++;
+			
+			if (nextParagraphBegin >= textLength)
+			{
+				break;
+			}
+			
+		}while (true);
+		
+		_paragraphCount = i;
+	}
+	
+	return _paragraphEndIndexList;
 }
 
 - (NSArray *)paragraphRanges
@@ -136,7 +229,7 @@
 		return YES;
 	}
 	
-	NSInteger prevLineLastUnicharIndex =lineRange.location - 1;
+	NSInteger prevLineLastUnicharIndex = lineRange.location - 1;
 	unichar prevLineLastUnichar = [[_attrString string] characterAtIndex:prevLineLastUnicharIndex];
 	
 	return [[NSCharacterSet newlineCharacterSet] characterIsMember:prevLineLastUnichar];
@@ -144,15 +237,15 @@
 
 - (BOOL)isLineLastInParagraph:(NBTextLine *)line
 {
-//	NSString *lineString = [[_attrString string] substringWithRange:line.stringRange];
-	NSString *lineString = [[_attrString string] substringWithRange:line.stringRange];
+	BOOL bRet = NO;
 	
-	if ([lineString hasSuffix:@"\n"])
+	if (line.stringRange.length > 1)
 	{
-		return YES;
+		unichar charCheck = [[_attrString string] characterAtIndex:line.stringRange.length - 1];
+		bRet = (charCheck == kNewLineChar);
 	}
 	
-	return NO;
+	return bRet;
 }
 
 - (CGPoint)_algorithmLegacy_BaselineOriginToPositionLine:(NBTextLine *)line afterLine:(NBTextLine *)previousLine
@@ -302,54 +395,47 @@
 		NSInteger lineEnd = NSMaxRange(lineRange);
 		NSUInteger maxCharsCount = NSMaxRange(_stringRange);
 		
-		NSString* checkStr = nil;
+		_curLineLastChar = [[_attrString string] characterAtIndex:lineEnd - 1];
 		
+		if (_curLineLastChar == kNewLineChar)
+		{
+			break;
+		}
+		
+		if ([NBLayouterHelper isPrePartOfPairMarkChar2:_curLineLastChar])
+		{
+			nOffset = -1;
+			break;
+		}
+		
+		NSInteger nCheckCharsCount = 0;
 		if (lineEnd + 2 <= maxCharsCount)
 		{
-			NSRange rangeObj = NSMakeRange(NSMaxRange(lineRange) - 1, 3);
-			checkStr = [[_attrString string] substringWithRange:rangeObj];
+			nCheckCharsCount = 2;
+			_nextLineFirstChar = [[_attrString string] characterAtIndex:lineEnd];
+			_nextLineSecondChar = [[_attrString string] characterAtIndex:lineEnd + 1];
 		}
 		else if (lineEnd + 1 <= maxCharsCount)
 		{
-			NSRange rangeObj = NSMakeRange(NSMaxRange(lineRange) - 1, 2);
-			checkStr = [[_attrString string] substringWithRange:rangeObj];
+			nCheckCharsCount = 1;
+			_nextLineFirstChar = [[_attrString string] characterAtIndex:lineEnd];
 		}
 		
-		if (checkStr)
-		{
-			//if ([NBLayouterHelper isPrePartOfPairMarkChar:[checkStr substringToIndex:1]])
-			if ([NBLayouterHelper isPrePartOfPairMarkChar2:[checkStr characterAtIndex:1]])
-			{
-				nOffset = -1;
-				break;
-			}
-			
-			if ([[NSCharacterSet newlineCharacterSet] characterIsMember:[checkStr characterAtIndex:1]])
-			{
-				break;
-			}
-		}
+		nOffset = [NBLayouterHelper getSpecialMarkCharCount:_nextLineFirstChar with:_nextLineSecondChar];
 		
-		if ([checkStr length] > 1)
+#ifdef ENABLE_NBLayoutFrame_Debug
+		unichar ch = 0;
+		if ([lineString length] > 2)
 		{
-			NSRange rangeObj = NSMakeRange(1, 2);
-			checkStr = [checkStr substringWithRange:rangeObj];
+			ch = [lineString characterAtIndex:[lineString length] - 2];
 		}
-		else if ([checkStr length] == 1)
+		NSString* lastChar = nil;
+		if ([lineString length] > 1)
 		{
-			NSRange rangeObj = NSMakeRange(1, 1);
-			checkStr = [checkStr substringWithRange:rangeObj];
+			lastChar = [[[_attrString string] substringWithRange:lineRange] substringFromIndex:[lineString length] - 1];
 		}
-		else
-		{
-			//assert(0);
-		}
-		
-		if (checkStr)
-		{
-			nOffset = [NBLayouterHelper getSpecialMarkCharCount:checkStr];
-		}
-		
+		NSLog(@"lineString=[L:%d][c:%d][ch:%d,%c,%@][%@]", [typesetLines count], [lineString length], ch, ch, lastChar, lineString);
+#endif
 	}while (0);
 	
 	return nOffset;
@@ -365,7 +451,6 @@
 	}
 	
 	NSUInteger length = [_attrString length];
-	
 	if (textRange.length == 0)
 	{
 		length = length - textRange.location;
@@ -398,13 +483,13 @@
 	
 	NBTextLine *previousLine = nil;
 	
-	//NSMutableArray *paragraphRanges = [[self paragraphRanges] mutableCopy];
-	NSArray *paragraphRanges = [self paragraphRanges];
-	
-	NSRange currentParagraphRange = [[paragraphRanges objectAtIndex:0] rangeValue];
+//	NSArray *paragraphRanges = [self paragraphRanges];
+//	NSRange currentParagraphRange = [[paragraphRanges objectAtIndex:0] rangeValue];
 	
 	NSRange lineRange = _stringRange;
 	
+	[self getParagraphListPtr];
+	NSUInteger curParagraphEnd = 0;
 	
 	CGFloat maxY = _frame.size.height;
 	NSUInteger maxIndex = NSMaxRange(_stringRange);
@@ -415,7 +500,11 @@
 	
 	do
 	{
-		if ([typesetLines count] == 15)
+		_curLineLastChar = 0;
+		_nextLineSecondChar = 0;
+		_nextLineFirstChar = 0;
+		
+		if ([typesetLines count] > 15)
 		{
 			int n = 0;
 			n = 0;
@@ -423,23 +512,28 @@
 		BOOL bEnd = NO;
 		
 		NSInteger i = 0;
-		while (lineRange.location >= (currentParagraphRange.location+currentParagraphRange.length))
-		{
-//			[paragraphRanges removeObjectAtIndex:0];
-//			if ([paragraphRanges count] > 0)
+		
+//		while (lineRange.location >= (currentParagraphRange.location+currentParagraphRange.length))
+//		{
+//			i++;
+//			if (i < [paragraphRanges count])
 //			{
-//				currentParagraphRange = [[paragraphRanges objectAtIndex:0] rangeValue];
+//				currentParagraphRange = [[paragraphRanges objectAtIndex:i] rangeValue];
 //			}
 //			else
 //			{
 //				bEnd = YES;
 //				break;
 //			}
-			
-			i++;
-			if (i < [paragraphRanges count])
+//		}
+		
+		while (lineRange.location >= curParagraphEnd)
+		{
+			if (i < _paragraphCount)
 			{
-				currentParagraphRange = [[paragraphRanges objectAtIndex:i] rangeValue];
+				curParagraphEnd = *(_paragraphEndIndexList + i);
+				
+				i++;
 			}
 			else
 			{
@@ -447,12 +541,15 @@
 				break;
 			}
 		}
+		
 		if (bEnd)
 		{
 			break;
 		}
 		
-		BOOL isAtBeginOfParagraph = (currentParagraphRange.location == lineRange.location);
+		
+//		BOOL isAtBeginOfParagraph = (currentParagraphRange.location == lineRange.location);
+		BOOL isAtBeginOfParagraph = (curParagraphEnd == lineRange.location + lineRange.length);
 		
 		CGFloat headIndent = 0;
 		CGFloat tailIndent = 0;
@@ -486,8 +583,8 @@
 		}
 		
 		CGFloat offset = totalLeftPadding;
-//		if (![[[_attrString string] substringWithRange:NSMakeRange(lineRange.location, 1)] isEqualToString:@"\t"])
-		if (![[[_attrString string] substringWithRange:NSMakeRange(lineRange.location, 1)] isEqualToString:@"\t"])
+		
+		if ([[_attrString string] characterAtIndex:lineRange.location] != '\t')
 		{
 			offset += headIndent;
 		}
@@ -495,10 +592,9 @@
 		lineRange.length = CTTypesetterSuggestClusterBreak(typesetter, lineRange.location, availableWidth);
 		if (bHasCheckMarkChar && lineRange.length == 1)
 		{
-			//NSString *lineString = [[_attrString attributedSubstringFromRange:lineRange] string];
-			NSString *lineString = [[_attrString string] substringWithRange:lineRange];
+			bHasCheckMarkChar = NO;
 			
-			if ([[NSCharacterSet newlineCharacterSet] characterIsMember: (unichar)[lineString characterAtIndex:0]])
+			if ([[_attrString string] characterAtIndex:lineRange.location] == kNewLineChar)
 			{
 				fittingLength += lineRange.length;
 				lineRange.location += lineRange.length;
@@ -514,7 +610,7 @@
 		}
 		else
 		{
-//			nCount =[self getCharOffsetWithRange:lineRange];
+			nCount = [self getCharOffsetWithRange:lineRange];
 		}
 		
 		bHasCheckMarkChar = nCount > 0;
@@ -522,21 +618,6 @@
 		{
 			lineRange.length += nCount;
 		}
-		
-#ifdef ENABLE_NBLayoutFrame_Debug
-		NSString *lineString = [[_attrString attributedSubstringFromRange:lineRange] string];
-		unichar ch = 0;
-		if ([lineString length] > 2)
-		{
-			ch = [lineString characterAtIndex:[lineString length] - 2];
-		}
-		NSString* lastChar = nil;
-		if ([lineString length] > 1)
-		{
-			lastChar = [lineString substringFromIndex:[lineString length] - 1];
-		}
-		NSLog(@"lineString=[L:%d][c:%d][ch:%d,%c,%@][%@]", [typesetLines count], [lineString length], ch, ch, lastChar, lineString);
-#endif
 		
 		CTLineRef line;
 		
@@ -574,14 +655,11 @@
 			case kCTLeftTextAlignment:
 			{
 				lineOriginX = _frame.origin.x + offset;
-				// nothing to do
 				break;
 			}
 			case kCTJustifiedTextAlignment:
 			{
-				NSRange newLineRange = lineRange;
-//				NSString *lineString = [[_attrString attributedSubstringFromRange:newLineRange] string];
-				NSString *lineString = [[_attrString string] substringWithRange:newLineRange];
+				NSString *lineString = [[_attrString string] substringWithRange:lineRange];
 				
 				NSRange range;
 				NSDictionary * attributes = [_attrString attributesAtIndex:lineRange.location effectiveRange:&range];
@@ -690,8 +768,6 @@
 	
 	_stringRange.location = _stringRange.location;
 	_stringRange.length = fittingLength;
-	
-//	[self updateLinesOriginInRect:frame];
 	
 	return bRet;
 }

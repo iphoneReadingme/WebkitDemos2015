@@ -209,6 +209,7 @@
 		
 		NBTextLayouter* textLayout = [[NBTextLayouter alloc] initWithLayoutFrame:layoutFrame];
 		
+		NSInteger nRunCount = 1;
 		
 		NSDate* startDate = [NSDate date];
 		
@@ -225,11 +226,14 @@
 //			[layoutFrame release];
 //			[textLayout release];
 //		}
+//		nRunCount += i;
+		
 		
 		pageArray = [NBPageRender _splittingPagesForString2:frameShowText withChapterName:textLayout andLayoutConfig:config];
 		
 		NSDate* endDate = [NSDate date];
 		CGFloat time = [endDate timeIntervalSinceReferenceDate] - [startDate timeIntervalSinceReferenceDate];
+		time /= nRunCount;
 		NSInteger nLength = [frameShowText length] > 10 ? 10 : [frameShowText length];
 		
 		NSMutableString* strTemp = [NSMutableString stringWithCapacity:0];
