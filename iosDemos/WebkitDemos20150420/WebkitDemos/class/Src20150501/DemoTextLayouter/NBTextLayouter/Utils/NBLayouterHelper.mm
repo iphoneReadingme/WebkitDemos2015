@@ -19,6 +19,8 @@
 #import "NBLayouterHelper.h"
 
 
+#define Enable_Unichar_Mothed
+
 @interface NBLayouterHelper ()
 
 @end
@@ -27,58 +29,81 @@
 @implementation NBLayouterHelper
 
 
++ (void)showMaxAndMinChar:(NSInteger)type
+{
+	NSString* englishMarkSet = @",.;:?)'\"`!}]>-";
+	NSString* chineseMarkSet = @"。，；？！、：”’′″）》〉」﹃〕﹁】﹏～…—』〗";
+//	NSString* chineseMarkSet = @"。，；？！、：”’′″）》〉」﹃〕﹁】﹏～…—』〗°";
+//	NSString* chineseMarkSet2 = @"({[<“‘（｛《〈﹄﹂〔【「『〖";
+	NSString* chineseMarkSet2 = @"‘（｛《〈﹄﹂〔【「『〖";
+	
+	NSString* textMarkSet = nil;
+	if (type == 1)
+	{
+		textMarkSet = englishMarkSet;
+	}
+	if (type == 2)
+	{
+		textMarkSet = chineseMarkSet;
+	}
+	if (type == 3)
+	{
+		textMarkSet = chineseMarkSet2;
+	}
+	//return;
+	NSMutableString* tempString = [NSMutableString stringWithCapacity:2];
+	[tempString setString:@"\n"];
+	
+	unichar charTemp = 0;
+	unichar markCharSet[40] = {0};
+	int i = 0;
+	for (; i < [textMarkSet length]; i++)
+	{
+		charTemp = markCharSet[i] = [textMarkSet characterAtIndex:i];
+		//[temp appendFormat:@"'%@', ", [textMarkSet substringWithRange:NSMakeRange(i, 1)]];
+		//[tempString appendFormat:@"%X , [%@], ", markCharSet[i], [textMarkSet substringWithRange:NSMakeRange(i, 1)]];
+		//[tempString appendFormat:@"\n%X , [%@], ", charTemp, [textMarkSet substringWithRange:NSMakeRange(i, 1)]];
+		//[tempString appendFormat:@"%X ,%X, %X, %X", (charTemp>>12)&0x0f, (charTemp>>8)&0xf, (charTemp>>4)&0xf, (charTemp>>0)&0xf];
+		[tempString appendFormat:@"case 0x%X: // %@\n{\n	bRet = YES;\n	break;\n}\n ", markCharSet[i], [textMarkSet substringWithRange:NSMakeRange(i, 1)]];
+	}
+	NSLog(@"%@", tempString);
+	
+	NSInteger nCount = [textMarkSet length];
+	unichar maxChar = markCharSet[0];
+	unichar minChar = markCharSet[0];
+	unichar temp = 0;
+//	int j = 0;
+	
+	for (i = 0; i < nCount; i++)
+	{
+		temp = markCharSet[i];
+		if (temp > maxChar)
+		{
+			maxChar = temp;
+		}
+		
+		if (temp < minChar)
+		{
+			minChar = temp;
+		}
+	}
+	
+	NSLog(@"\n[minChar:%d,[%@]], [minChar:[%d]], %@", minChar, [NSString stringWithCharacters:&minChar length:1], maxChar, [NSString stringWithCharacters:&maxChar length:1]);
+}
+
 + (BOOL)printTest:(unichar)checkChar
 {
 	BOOL bRet = NO;
-	//unichar engCharset[17] = {',', '.', ';', ':', '?', ')', '\'', '\"', '`', '!', '}', ']', '>', '-', '°', 0, 0, 0};
-	//unichar chiCharset[24] = {'。', '，', '；', '？', '！', '、', '：', '”', '’', '′', '″', '）', '》', '〉', '」', '﹃', '〕', '﹁', '】', '﹏', '～', '…', '—', '』', '〗'};
-	unichar engCharset[20] = {0};
-	unichar chiCharset[30] = {0};
-	unichar chiCharset2[30] = {0};
+
+	[self showMaxAndMinChar:1];
 	
-	const NSString* englishMarkSet = @",.;:?)'\"`!}]>-";
-	const NSString* chineseMarkSet = @"。，；？！、：”’′″）》〉」﹃〕﹁】﹏～…—』〗°";
-	const NSString* chineseMarkSet2 = @"({[<“‘（｛《〈﹄﹂〔【「『〖";
+	[self showMaxAndMinChar:2];
 	
-	NSMutableString* temp = [NSMutableString stringWithCapacity:2];
-	[temp setString:@"\n"];
-	int i = 0;
-	for (; i < [englishMarkSet length]; i++)
-	{
-		engCharset[i] = [englishMarkSet characterAtIndex:i];
-		//[temp appendFormat:@"'%@', ", [englishMarkSet substringWithRange:NSMakeRange(i, 1)]];
-		[temp appendFormat:@"case %d: // %@\n{\n	bRet = YES;\n	break;\n}\n ", engCharset[i], [englishMarkSet substringWithRange:NSMakeRange(i, 1)]];
-	}
-	engCharset[i++] = 126;
-	engCharset[i++] = 127;
+	[self showMaxAndMinChar:3];
 	
-	NSLog(@"%@", temp);
-	[temp setString:@"\n"];
-	
-	i = 0;
-	for (; i < [chineseMarkSet length]; i++)
-	{
-		chiCharset[i] = [chineseMarkSet characterAtIndex:i];
-		//[temp appendFormat:@"'%@', ", [chineseMarkSet substringWithRange:NSMakeRange(i, 1)]];
-		//[temp appendFormat:@"%d, ", chiCharset[i]];
-		[temp appendFormat:@"case %d: // %@\n{\n	bRet = YES;\n	break;\n}\n ", chiCharset[i], [chineseMarkSet substringWithRange:NSMakeRange(i, 1)]];
-	}
-	
-	NSLog(@"%@", temp);
-	[temp setString:@"\n"];
-	
-	i = 0;
-	for (; i < [chineseMarkSet2 length]; i++)
-	{
-		chiCharset2[i] = [chineseMarkSet2 characterAtIndex:i];
-		//[temp appendFormat:@"'%@', ", [chineseMarkSet substringWithRange:NSMakeRange(i, 1)]];
-		//[temp appendFormat:@"%d, ", chiCharset[i]];
-		[temp appendFormat:@"case %d: // %@\n{\n	bRet = YES;\n	break;\n}\n ", chiCharset2[i], [chineseMarkSet2 substringWithRange:NSMakeRange(i, 1)]];
-	}
-	
-	NSLog(@"%@", temp);
-	[temp setString:@"\n"];
-	
+	//const NSString* englishMarkSet = @",.;:?)'\"`!}]>-";
+	//const NSString* chineseMarkSet = @"。，；？！、：”’′″）》〉」﹃〕﹁】﹏～…—』〗"; // °
+	//const NSString* chineseMarkSet2 = @"({[<“‘（｛《〈﹄﹂〔【「『〖";
 	
 	return bRet;
 }
@@ -86,28 +111,31 @@
 + (BOOL)isDashOrEllipsis:(NSString*)oneChar
 {
 	BOOL bRet = NO;
-	if ([oneChar length] > 0)
+	//if ([oneChar length] > 0)
 	{
+#ifdef Enable_Unichar_Mothed
 		switch ([oneChar characterAtIndex:0])
 		{
-		case 8230: // …
+			case 0x2026: // …
 			{
 				bRet = YES;
 				break;
 			}
-		case 8212: // —
+			case 0x2014: // —
 			{
 				bRet = YES;
 				break;
 			}
-		default:
+			default:
 			{
 				break;
 			}
 		}
-		//NSMutableCharacterSet *specialChar = [NSMutableCharacterSet characterSetWithCharactersInString:@"…—"];
+#else
+		NSMutableCharacterSet *specialChar = [NSMutableCharacterSet characterSetWithCharactersInString:@"…—"];
 		
-		//bRet = [specialChar characterIsMember:[oneChar characterAtIndex:0]];
+		bRet = [specialChar characterIsMember:[oneChar characterAtIndex:0]];
+#endif
 	}
 	
 	return bRet;
@@ -116,13 +144,18 @@
 + (BOOL)isPrePartOfPairMarkChar:(NSString*)oneChar
 {
 	BOOL bRet = NO;
+	
 	if ([oneChar length] > 0)
 	{
+		oneChar = nil;
+#ifdef Enable_Unichar_Mothed
 		bRet =[self isPrePartOfPairMarkChar2:[oneChar characterAtIndex:0]];
-//		NSMutableCharacterSet *specialChar = [NSMutableCharacterSet characterSetWithCharactersInString:@"({[<"];
+#else
+		NSMutableCharacterSet *specialChar = [NSMutableCharacterSet characterSetWithCharactersInString:@"({[<"];
 		
-//		[specialChar addCharactersInString:@"“‘（｛《〈﹄﹂〔【「『〖"];
-//		bRet = [specialChar characterIsMember:[oneChar characterAtIndex:0]];
+		[specialChar addCharactersInString:@"“‘（｛《〈﹄﹂〔【「『〖"];
+		bRet = [specialChar characterIsMember:[oneChar characterAtIndex:0]];
+#endif
 	}
 	
 	return bRet;
@@ -135,15 +168,24 @@
 	{
 		///< 进一步区分中英语，以提高效率
 		//[self printTest:[oneChar characterAtIndex:0]];
-		unichar markChar = [oneChar characterAtIndex:0];
-		bRet = [self isASCIICodeMarkChar:markChar] || [self isUniCodeMarkChar:markChar];
 		
-//		const NSString* englishMarkSet = @",.;:?)'\"`!}]>-";
-//		const NSString* chineseMarkSet = @"。，；？！、：”’′″）》〉」﹃〕﹁】﹏～…—』〗°";
-//		NSMutableCharacterSet *specialChar = [NSMutableCharacterSet characterSetWithCharactersInString:(NSString*)englishMarkSet];
-//		
-//		[specialChar addCharactersInString:(NSString*)chineseMarkSet];
-//		bRet = [specialChar characterIsMember:[oneChar characterAtIndex:0]];
+#ifdef Enable_Unichar_Mothed
+		unichar markChar = [oneChar characterAtIndex:0];
+		
+		bRet = [self isASCIICodeMarkChar:markChar];
+		
+		if (!bRet)
+		{
+			bRet = [self isUniCodeMarkChar:markChar];
+		}
+#else
+		const NSString* englishMarkSet = @",.;:?)'\"`!}]>-";
+		const NSString* chineseMarkSet = @"。，；？！、：”’′″）》〉」﹃〕﹁】﹏～…—』〗°";
+		NSMutableCharacterSet *specialChar = [NSMutableCharacterSet characterSetWithCharactersInString:(NSString*)englishMarkSet];
+		
+		[specialChar addCharactersInString:(NSString*)chineseMarkSet];
+		bRet = [specialChar characterIsMember:[oneChar characterAtIndex:0]];
+#endif
 	}
 	
 	return bRet;
@@ -201,138 +243,101 @@
 	return nCount;
 }
 
-///< 本行尾部特殊字符
-+ (NSInteger)getEndSpecialMarkCharCount:(NSString*)checkStr
-{
-	NSInteger nCount = 0;
-	
-	do
-	{
-		if ([checkStr length] < 1)
-		{
-			break;
-		}
-		
-		BOOL bFirstSpecChar = NO;
-		BOOL bSecondSpecChar = NO;
-		
-		if ([checkStr length] == 2)
-		{
-			bFirstSpecChar = [NBLayouterHelper isDashOrEllipsis:[checkStr substringFromIndex:0]];
-			
-			if (bFirstSpecChar)
-			{
-				bSecondSpecChar = [NBLayouterHelper isDashOrEllipsis:[checkStr substringFromIndex:1]];
-			}
-			else
-			{
-				bFirstSpecChar = [NBLayouterHelper isSpecialMarkChar:[checkStr substringFromIndex:0]];
-			}
-			
-			if (bSecondSpecChar)
-			{
-				break;
-			}
-			
-			if (bFirstSpecChar)
-			{
-				bSecondSpecChar = [NBLayouterHelper isSpecialMarkChar:[checkStr substringFromIndex:1]];
-			}
-		}
-		else
-		{
-			bFirstSpecChar = [NBLayouterHelper isSpecialMarkChar:[checkStr substringFromIndex:0]];
-		}
-		
-		if (bFirstSpecChar)
-		{
-			nCount = bSecondSpecChar ? 2 : 1;
-		}
-		
-	}while (0);
-	
-	return nCount;
-}
-
 + (BOOL)isASCIICodeMarkChar:(unichar)markChar
 {
 	BOOL bRet = NO;
 	
-	switch (markChar)
+	//bRet = ('!' <= markChar && markChar <= '}');
+	//bRet = (33 <= markChar && markChar <= 125);
+	
+	if (!(0x21 <= markChar && markChar <= 0x7D))
 	{
-		case 44: // ,
+		return bRet;
+	}
+	///                              {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, F};
+	static char keyIndexTable1[16] = {0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1};
+	//static char keyIndexTable2[16] = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1};
+	
+	if (keyIndexTable1[(markChar >> 4)& 0x0f] && 33 <= markChar)
+	{
+//		NSLog(@"\n====[%X, %d, %@]", markChar, markChar, [NSString stringWithCharacters:&markChar length:1]);
+		
+		switch (markChar)
 		{
-			bRet = YES;
-			break;
-		}
-		case 46: // .
-		{
-			bRet = YES;
-			break;
-		}
-		case 59: // ;
-		{
-			bRet = YES;
-			break;
-		}
-		case 58: // :
-		{
-			bRet = YES;
-			break;
-		}
-		case 63: // ?
-		{
-			bRet = YES;
-			break;
-		}
-		case 41: // )
-		{
-			bRet = YES;
-			break;
-		}
-		case 39: // '
-		{
-			bRet = YES;
-			break;
-		}
-		case 34: // "
-		{
-			bRet = YES;
-			break;
-		}
-		case 96: // `
-		{
-			bRet = YES;
-			break;
-		}
-		case 33: // !
-		{
-			bRet = YES;
-			break;
-		}
-		case 125: // }
-		{
-			bRet = YES;
-			break;
-		}
-		case 93: // ]
-		{
-			bRet = YES;
-			break;
-		}
-		case 62: // >
-		{
-			bRet = YES;
-			break;
-		}
-		case 45: // -
-		{
-			bRet = YES;
-			break;
-		}
-		default:
-		{
-			break;
+			case 0x2C: // ,
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x2E: // .
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x3B: // ;
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x3A: // :
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x3F: // ?
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x29: // )
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x27: // '
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x22: // "
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x60: // `
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x21: // !
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x7D: // }
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x5D: // ]
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x3E: // >
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x2D: // -
+			{
+				bRet = YES;
+				break;
+			}
+			default:
+			{
+				break;
+			}
 		}
 	}
 	
@@ -343,141 +348,154 @@
 {
 	BOOL bRet = NO;
 	
-	switch (markChar)
+	if (markChar == 176) // °
 	{
-		case 12290: // 。
+		return YES;
+	}
+	if (markChar < 0x2014 || markChar == 0x3000)
+	{
+		return bRet;
+	}
+	
+	///                       {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, F};
+	static char keyIndexTable1[16] = {0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
+	static char keyIndexTable2[16] = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1};
+	static char keyIndexTable3[16] = {1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	
+	if (keyIndexTable1[(markChar >> 12)& 0x0f] && keyIndexTable2[(markChar >> 8)& 0x0f] && keyIndexTable3[(markChar >> 4)& 0x0f])
+	{
+//		NSLog(@"\n====[%X, %d, %@]", markChar, markChar, [NSString stringWithCharacters:&markChar length:1]);
+		switch (markChar)
 		{
-			bRet = YES;
-			break;
-		}
-		case 65292: // ，
-		{
-			bRet = YES;
-			break;
-		}
-		case 65307: // ；
-		{
-			bRet = YES;
-			break;
-		}
-		case 65311: // ？
-		{
-			bRet = YES;
-			break;
-		}
-		case 65281: // ！
-		{
-			bRet = YES;
-			break;
-		}
-		case 12289: // 、
-		{
-			bRet = YES;
-			break;
-		}
-		case 65306: // ：
-		{
-			bRet = YES;
-			break;
-		}
-		case 8221: // ”
-		{
-			bRet = YES;
-			break;
-		}
-		case 8217: // ’
-		{
-			bRet = YES;
-			break;
-		}
-		case 8242: // ′
-		{
-			bRet = YES;
-			break;
-		}
-		case 8243: // ″
-		{
-			bRet = YES;
-			break;
-		}
-		case 65289: // ）
-		{
-			bRet = YES;
-			break;
-		}
-		case 12299: // 》
-		{
-			bRet = YES;
-			break;
-		}
-		case 12297: // 〉
-		{
-			bRet = YES;
-			break;
-		}
-		case 12301: // 」
-		{
-			bRet = YES;
-			break;
-		}
-		case 65091: // ﹃
-		{
-			bRet = YES;
-			break;
-		}
-		case 12309: // 〕
-		{
-			bRet = YES;
-			break;
-		}
-		case 65089: // ﹁
-		{
-			bRet = YES;
-			break;
-		}
-		case 12305: // 】
-		{
-			bRet = YES;
-			break;
-		}
-		case 65103: // ﹏
-		{
-			bRet = YES;
-			break;
-		}
-		case 65374: // ～
-		{
-			bRet = YES;
-			break;
-		}
-		case 8230: // …
-		{
-			bRet = YES;
-			break;
-		}
-		case 8212: // —
-		{
-			bRet = YES;
-			break;
-		}
-		case 12303: // 』
-		{
-			bRet = YES;
-			break;
-		}
-		case 12311: // 〗
-		{
-			bRet = YES;
-			break;
-		}
-		case 176: // °
-		{
-			bRet = YES;
-			break;
-		}
-		default:
-		{
-			break;
+			case 0x3002: // 。
+			{
+				bRet = YES;
+				break;
+			}
+			case 0xFF0C: // ，
+			{
+				bRet = YES;
+				break;
+			}
+			case 0xFF1B: // ；
+			{
+				bRet = YES;
+				break;
+			}
+			case 0xFF1F: // ？
+			{
+				bRet = YES;
+				break;
+			}
+			case 0xFF01: // ！
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x3001: // 、
+			{
+				bRet = YES;
+				break;
+			}
+			case 0xFF1A: // ：
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x201D: // ”
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x2019: // ’
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x2032: // ′
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x2033: // ″
+			{
+				bRet = YES;
+				break;
+			}
+			case 0xFF09: // ）
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x300B: // 》
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x3009: // 〉
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x300D: // 」
+			{
+				bRet = YES;
+				break;
+			}
+			case 0xFE43: // ﹃
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x3015: // 〕
+			{
+				bRet = YES;
+				break;
+			}
+			case 0xFE41: // ﹁
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x3011: // 】
+			{
+				bRet = YES;
+				break;
+			}
+			case 0xFE4F: // ﹏
+			{
+				bRet = YES;
+				break;
+			}
+			case 0xFF5E: // ～
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x2026: // …
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x2014: // —
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x300F: // 』
+			{
+				bRet = YES;
+				break;
+			}
+			case 0x3017: // 〗
+			{
+				bRet = YES;
+				break;
+			}
+			default:
+			{
+				break;
+			}
 		}
 	}
 	
@@ -488,96 +506,108 @@
 {
 	BOOL bRet = NO;
 	
-	switch (markChar)
+	if (40 <= markChar && markChar < 124)
 	{
-		case 40: // (
+		switch (markChar)
 		{
-			bRet = YES;
-			break;
+			case 40: // (
+			{
+				bRet = YES;
+				break;
+			}
+			case 123: // {
+			{
+				bRet = YES;
+				break;
+			}
+			case 91: // [
+			{
+				bRet = YES;
+				break;
+			}
+			case 60: // <
+			{
+				bRet = YES;
+				break;
+			}
 		}
-		case 123: // {
+	}
+	else if (markChar > 0x2017)
+	{
+		///                       {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, F};
+		static char keyIndexTable1[16] = {0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
+		static char keyIndexTable2[16] = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1};
+		
+		if (keyIndexTable1[(markChar >> 12)& 0x0f] && keyIndexTable2[(markChar >> 8)& 0x0f])
 		{
-			bRet = YES;
-			break;
-		}
-		case 91: // [
-		{
-			bRet = YES;
-			break;
-		}
-		case 60: // <
-		{
-			bRet = YES;
-			break;
-		}
-		case 8220: // “
-		{
-			bRet = YES;
-			break;
-		}
-		case 8216: // ‘
-		{
-			bRet = YES;
-			break;
-		}
-		case 65288: // （
-		{
-			bRet = YES;
-			break;
-		}
-		case 65371: // ｛
-		{
-			bRet = YES;
-			break;
-		}
-		case 12298: // 《
-		{
-			bRet = YES;
-			break;
-		}
-		case 12296: // 〈
-		{
-			bRet = YES;
-			break;
-		}
-		case 65092: // ﹄
-		{
-			bRet = YES;
-			break;
-		}
-		case 65090: // ﹂
-		{
-			bRet = YES;
-			break;
-		}
-		case 12308: // 〔
-		{
-			bRet = YES;
-			break;
-		}
-		case 12304: // 【
-		{
-			bRet = YES;
-			break;
-		}
-		case 12300: // 「
-		{
-			bRet = YES;
-			break;
-		}
-		case 12302: // 『
-		{
-			bRet = YES;
-			break;
-		}
-		case 12310: // 〖
-		{
-			bRet = YES;
-			break;
-		}
-		default:
-		{
-			break;
+//			NSLog(@"\n====[%X, %d, %@]", markChar, markChar, [NSString stringWithCharacters:&markChar length:1]);
+			switch (markChar)
+			{
+				case 0x2018: // ‘
+				{
+					bRet = YES;
+					break;
+				}
+				case 0xFF08: // （
+				{
+					bRet = YES;
+					break;
+				}
+				case 0xFF5B: // ｛
+				{
+					bRet = YES;
+					break;
+				}
+				case 0x300A: // 《
+				{
+					bRet = YES;
+					break;
+				}
+				case 0x3008: // 〈
+				{
+					bRet = YES;
+					break;
+				}
+				case 0xFE44: // ﹄
+				{
+					bRet = YES;
+					break;
+				}
+				case 0xFE42: // ﹂
+				{
+					bRet = YES;
+					break;
+				}
+				case 0x3014: // 〔
+				{
+					bRet = YES;
+					break;
+				}
+				case 0x3010: // 【
+				{
+					bRet = YES;
+					break;
+				}
+				case 0x300C: // 「
+				{
+					bRet = YES;
+					break;
+				}
+				case 0x300E: // 『
+				{
+					bRet = YES;
+					break;
+				}
+				case 0x3016: // 〖
+				{
+					bRet = YES;
+					break;
+				}
+				default:
+				{
+					break;
+				}
+			}
 		}
 	}
 	

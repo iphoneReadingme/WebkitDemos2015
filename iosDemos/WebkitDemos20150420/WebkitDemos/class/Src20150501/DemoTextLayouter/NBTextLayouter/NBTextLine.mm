@@ -84,6 +84,8 @@
 		_needsToDetectWritingDirection = YES;
 		
 		_stringLocationOffset = stringLocationOffset;
+		
+		[self _calculateMetrics];
 	}
 	return self;
 }
@@ -135,7 +137,7 @@
 
 - (void)_calculateMetrics
 {
-	@synchronized(self)
+//	@synchronized(self)
 	{
 		if (!_didCalculateMetrics)
 		{

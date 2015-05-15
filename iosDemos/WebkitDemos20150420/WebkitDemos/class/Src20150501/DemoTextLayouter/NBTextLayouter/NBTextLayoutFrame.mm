@@ -144,6 +144,7 @@
 
 - (BOOL)isLineLastInParagraph:(NBTextLine *)line
 {
+//	NSString *lineString = [[_attrString string] substringWithRange:line.stringRange];
 	NSString *lineString = [[_attrString string] substringWithRange:line.stringRange];
 	
 	if ([lineString hasSuffix:@"\n"])
@@ -293,16 +294,22 @@
 	NSInteger nOffset = 0;
 	do
 	{
-		if (NSMaxRange(lineRange) < 3)
+		if (lineRange.length < 5)
 		{
 			break;
 		}
 		
+		NSInteger lineEnd = NSMaxRange(lineRange);
 		NSUInteger maxCharsCount = NSMaxRange(_stringRange);
 		
 		NSString* checkStr = nil;
 		
-		if (NSMaxRange(lineRange) + 1 <= maxCharsCount)
+		if (lineEnd + 2 <= maxCharsCount)
+		{
+			NSRange rangeObj = NSMakeRange(NSMaxRange(lineRange) - 1, 3);
+			checkStr = [[_attrString string] substringWithRange:rangeObj];
+		}
+		else if (lineEnd + 1 <= maxCharsCount)
 		{
 			NSRange rangeObj = NSMakeRange(NSMaxRange(lineRange) - 1, 2);
 			checkStr = [[_attrString string] substringWithRange:rangeObj];
@@ -310,7 +317,8 @@
 		
 		if (checkStr)
 		{
-			if ([NBLayouterHelper isPrePartOfPairMarkChar:[checkStr substringToIndex:1]])
+			//if ([NBLayouterHelper isPrePartOfPairMarkChar:[checkStr substringToIndex:1]])
+			if ([NBLayouterHelper isPrePartOfPairMarkChar2:[checkStr characterAtIndex:1]])
 			{
 				nOffset = -1;
 				break;
@@ -320,21 +328,21 @@
 			{
 				break;
 			}
-			checkStr = nil;
 		}
 		
-		if (NSMaxRange(lineRange) + 2 <= maxCharsCount)
+		if ([checkStr length] > 1)
 		{
-			NSRange rangeObj = NSMakeRange(NSMaxRange(lineRange), 2);
-			checkStr = [[_attrString string] substringWithRange:rangeObj];
+			NSRange rangeObj = NSMakeRange(1, 2);
+			checkStr = [checkStr substringWithRange:rangeObj];
+		}
+		else if ([checkStr length] == 1)
+		{
+			NSRange rangeObj = NSMakeRange(1, 1);
+			checkStr = [checkStr substringWithRange:rangeObj];
 		}
 		else
 		{
-			if (NSMaxRange(lineRange) + 1 <= maxCharsCount)
-			{
-				NSRange rangeObj = NSMakeRange(NSMaxRange(lineRange), 1);
-				checkStr = [[_attrString string] substringWithRange:rangeObj];
-			}
+			//assert(0);
 		}
 		
 		if (checkStr)
@@ -390,7 +398,8 @@
 	
 	NBTextLine *previousLine = nil;
 	
-	NSMutableArray *paragraphRanges = [[self paragraphRanges] mutableCopy];
+	//NSMutableArray *paragraphRanges = [[self paragraphRanges] mutableCopy];
+	NSArray *paragraphRanges = [self paragraphRanges];
 	
 	NSRange currentParagraphRange = [[paragraphRanges objectAtIndex:0] rangeValue];
 	
@@ -412,12 +421,25 @@
 			n = 0;
 		}
 		BOOL bEnd = NO;
+		
+		NSInteger i = 0;
 		while (lineRange.location >= (currentParagraphRange.location+currentParagraphRange.length))
 		{
-			[paragraphRanges removeObjectAtIndex:0];
-			if ([paragraphRanges count] > 0)
+//			[paragraphRanges removeObjectAtIndex:0];
+//			if ([paragraphRanges count] > 0)
+//			{
+//				currentParagraphRange = [[paragraphRanges objectAtIndex:0] rangeValue];
+//			}
+//			else
+//			{
+//				bEnd = YES;
+//				break;
+//			}
+			
+			i++;
+			if (i < [paragraphRanges count])
 			{
-				currentParagraphRange = [[paragraphRanges objectAtIndex:0] rangeValue];
+				currentParagraphRange = [[paragraphRanges objectAtIndex:i] rangeValue];
 			}
 			else
 			{
@@ -464,6 +486,7 @@
 		}
 		
 		CGFloat offset = totalLeftPadding;
+//		if (![[[_attrString string] substringWithRange:NSMakeRange(lineRange.location, 1)] isEqualToString:@"\t"])
 		if (![[[_attrString string] substringWithRange:NSMakeRange(lineRange.location, 1)] isEqualToString:@"\t"])
 		{
 			offset += headIndent;
@@ -472,7 +495,9 @@
 		lineRange.length = CTTypesetterSuggestClusterBreak(typesetter, lineRange.location, availableWidth);
 		if (bHasCheckMarkChar && lineRange.length == 1)
 		{
-			NSString *lineString = [[_attrString attributedSubstringFromRange:lineRange] string];
+			//NSString *lineString = [[_attrString attributedSubstringFromRange:lineRange] string];
+			NSString *lineString = [[_attrString string] substringWithRange:lineRange];
+			
 			if ([[NSCharacterSet newlineCharacterSet] characterIsMember: (unichar)[lineString characterAtIndex:0]])
 			{
 				fittingLength += lineRange.length;
@@ -489,7 +514,7 @@
 		}
 		else
 		{
-			nCount =[self getCharOffsetWithRange:lineRange];
+//			nCount =[self getCharOffsetWithRange:lineRange];
 		}
 		
 		bHasCheckMarkChar = nCount > 0;
@@ -555,7 +580,8 @@
 			case kCTJustifiedTextAlignment:
 			{
 				NSRange newLineRange = lineRange;
-				NSString *lineString = [[_attrString attributedSubstringFromRange:newLineRange] string];
+//				NSString *lineString = [[_attrString attributedSubstringFromRange:newLineRange] string];
+				NSString *lineString = [[_attrString string] substringWithRange:newLineRange];
 				
 				NSRange range;
 				NSDictionary * attributes = [_attrString attributesAtIndex:lineRange.location effectiveRange:&range];
@@ -600,7 +626,8 @@
 		}
 		
 		NBTextLine *newLine = [[NBTextLine alloc] initWithLine:line stringLocationOffset: 0];
-		newLine.text = [[_attrString attributedSubstringFromRange:lineRange] string];
+		newLine.text = [[_attrString string] substringWithRange:lineRange];
+		
 		newLine.writingDirectionIsRightToLeft = isRTL;
 		CFRelease(line);
 		
@@ -664,23 +691,24 @@
 	_stringRange.location = _stringRange.location;
 	_stringRange.length = fittingLength;
 	
-	[self updateLinesOriginInRect:frame];
+//	[self updateLinesOriginInRect:frame];
 	
 	return bRet;
 }
 
 - (void)updateLinesOriginInRect:(CGRect)frame
 {
-	NSInteger i = 0;
+//	NSInteger i = 0;
+//	NSInteger nCount = 0;
 	
 	NSArray *lineList = _lines;
 	for (NBTextLine* lineObj in lineList)
 	{
-		if ([lineList count] < i + 2)
-		{
-			i = i;
-		}
-		i++;
+//		if (nCount < i + 2)
+//		{
+//			i = i;
+//		}
+//		i++;
 		
 		CGPoint origin = lineObj.baselineOrigin;
 		CGFloat h = lineObj.descent + lineObj.ascent + lineObj.leading;
@@ -697,15 +725,18 @@
 
 - (void)drawLinesWith:(CGContextRef)context inRect:(CGRect)rect
 {
-	NSInteger i = 1;
+	[self updateLinesOriginInRect:rect];;
+	
+//	NSInteger nCount = 0;
+//	NSInteger i = 1;
 	NSArray *lineList = _lines;
 	for (NBTextLine* lineObj in lineList)
 	{
-		if ([lineList count] < i + 2)
-		{
-			i = i;
-		}
-		i++;
+//		if (nCount < i + 2)
+//		{
+//			i = i;
+//		}
+//		i++;
 		
 		[lineObj drawLinesWith:context inRect:rect];
 	}

@@ -24,14 +24,13 @@
 
 + (BOOL)isDashOrEllipsis:(NSString*)lastAndNextChar;
 
++ (BOOL)isPrePartOfPairMarkChar2:(unichar)markChar;
 + (BOOL)isPrePartOfPairMarkChar:(NSString*)oneChar;
 
 + (BOOL)isSpecialMarkChar:(NSString*)oneChar;
 
 + (NSInteger)getSpecialMarkCharCount:(NSString*)checkStr;
 
-///< 本行尾部特殊字符
-+ (NSInteger)getEndSpecialMarkCharCount:(NSString*)checkStr;
 
 @end
 

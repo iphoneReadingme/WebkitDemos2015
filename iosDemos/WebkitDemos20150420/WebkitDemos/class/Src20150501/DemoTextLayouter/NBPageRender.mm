@@ -20,7 +20,7 @@
 #import "NBTextLayouter.h"
 #import "NBTextLayoutFrame.h"
 #import "NSArray+ExceptionSafe.h"
-#import "NBExternalBridge.h"
+//#import "NBExternalBridge.h"
 
 
 
@@ -135,6 +135,65 @@
     return pagesInfo;
 }
 
++ (NSMutableArray*)_splittingPagesForString2:(NSString*)frameShowText withChapterName:(NBTextLayouter*)textLayout andLayoutConfig:(NBBookLayoutConfig*)config
+{
+	NSMutableArray *pageArray = nil;
+	pageArray = [[[NSMutableArray alloc] init] autorelease];
+	
+	UIEdgeInsets contentInset = config.contentInset;
+	
+	UIEdgeInsets edgeInsets = contentInset;
+	edgeInsets.top = contentInset.bottom;
+	edgeInsets.bottom = contentInset.top;
+	
+	NSInteger textRangeStart = 0;
+	BOOL bBreak = NO;
+	for(size_t i = 0; i < INT16_MAX; i++)
+	{
+		// 由于在绘制文字时, 坐标系会沿X轴发生翻转, 故Y方向需要调换
+		
+		CGRect columnFrame = CGRectMake(i*config.pageWidth, 0, config.pageWidth, config.pageHeight);
+		columnFrame = UIEdgeInsetsInsetRect(columnFrame, edgeInsets);
+		NSRange textRange = NSMakeRange(textRangeStart, 0);
+		
+		BOOL bRet = [textLayout createFrameInRect:columnFrame withRange:textRange];
+		if (!bRet)
+		{
+			break;
+		}
+		
+		NSRange visibleRange = [textLayout visibleStringRange];
+		NBPageItem *item = [[[NBPageItem alloc] init] autorelease];
+		item.startInChapter = textRangeStart;
+		item.length = visibleRange.length;
+		item.pageIndex = i;
+		
+		[pageArray addObject:item];
+		textRangeStart += visibleRange.length;
+		
+		if(textRangeStart >= [frameShowText length]) ///< 删除最后一个全空页
+		{
+			NSString* strEnd = [frameShowText substringFromIndex:visibleRange.location];
+			strEnd = [strEnd stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+			//DDLogVerbose(@"最后一页面[%d]", (int)i);
+			if ((0 == [strEnd length]) || ![NBPageRender isVisibleString:strEnd])
+			{
+				// 显示空白,则删除
+				[pageArray removeObject:item];
+			}
+			
+			bBreak = YES;
+		}
+		
+		if (bBreak)
+		{
+			break;
+		}
+	}
+	
+	return pageArray;
+}
+
 // 返回 NBPageItem array
 + (NSMutableArray*)_splittingPagesForString:(NSString*)content withChapterName:(NSString*)chapterName andLayoutConfig:(NBBookLayoutConfig*)config
 {
@@ -142,67 +201,32 @@
 	if ([content length] > 0)
 	{
 		//HTIME_DUMP_IF("splittingPagesForString", 50);
-		pageArray = [[[NSMutableArray alloc] init] autorelease];
 		
 		NSString* frameShowText = [NBPageRender getShowTextOfChapter:content withChapterName:chapterName andLayoutConfig:config];
-		UIEdgeInsets contentInset = config.contentInset;
 		
 		NSMutableAttributedString* attr = [NBPageRender formatString:content withChapterName:chapterName andLayoutConfig:config];
-		
 		NBTextLayoutFrame *layoutFrame = [[NBTextLayoutFrame alloc] initWithFrame:CGRectZero withAttributedString:attr];
 		
 		NBTextLayouter* textLayout = [[NBTextLayouter alloc] initWithLayoutFrame:layoutFrame];
 		
+		
 		NSDate* startDate = [NSDate date];
 		
+//		int i = 1;
+//		for (; i < 100; i++)
+//		{
+//			NBTextLayoutFrame *layoutFrame = [[NBTextLayoutFrame alloc] initWithFrame:CGRectZero withAttributedString:attr];
+//			
+//			NBTextLayouter* textLayout = [[NBTextLayouter alloc] initWithLayoutFrame:layoutFrame];
+//			
+//			
+//			pageArray = [NBPageRender _splittingPagesForString2:frameShowText withChapterName:textLayout andLayoutConfig:config];
+//			
+//			[layoutFrame release];
+//			[textLayout release];
+//		}
 		
-		CFIndex textRangeStart = 0;
-		BOOL bBreak = NO;
-		for(size_t i = 0; i < INT16_MAX; i++)
-		{
-			// 由于在绘制文字时, 坐标系会沿X轴发生翻转, 故Y方向需要调换
-			UIEdgeInsets edgeInsets = contentInset;
-			edgeInsets.top = contentInset.bottom;
-			edgeInsets.bottom = contentInset.top;
-			
-			CGRect columnFrame = CGRectMake(i*config.pageWidth, 0, config.pageWidth, config.pageHeight);
-			columnFrame = UIEdgeInsetsInsetRect(columnFrame, edgeInsets);
-			NSRange textRange = NSMakeRange(textRangeStart, 0);
-			
-			BOOL bRet = [textLayout createFrameInRect:columnFrame withRange:textRange];
-			if (!bRet)
-			{
-				break;
-			}
-			
-			NSRange visibleRange = [textLayout visibleStringRange];
-			NBPageItem *item = [[[NBPageItem alloc] init] autorelease];
-			item.startInChapter = textRangeStart;
-			item.length = visibleRange.length;
-			item.pageIndex = i;
-			
-			[pageArray addObject:item];
-			textRangeStart += visibleRange.length;
-			
-			if(textRangeStart >= [frameShowText length]) ///< 删除最后一个全空页
-			{
-				NSString* strEnd = [frameShowText substringFromIndex:visibleRange.location];
-				strEnd = [strEnd stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-				//DDLogVerbose(@"最后一页面[%d]", (int)i);
-				if ((0 == [strEnd length]) || ![NBPageRender isVisibleString:strEnd])
-				{
-					// 显示空白,则删除
-					[pageArray removeObject:item];
-				}
-				
-				bBreak = YES;
-			}
-			
-			if (bBreak)
-			{
-				break;
-			}
-		}
+		pageArray = [NBPageRender _splittingPagesForString2:frameShowText withChapterName:textLayout andLayoutConfig:config];
 		
 		NSDate* endDate = [NSDate date];
 		CGFloat time = [endDate timeIntervalSinceReferenceDate] - [startDate timeIntervalSinceReferenceDate];
@@ -226,10 +250,10 @@
     return pageArray;
 }
 
-+ (void)showToast:(NSString*)message with:(NBFeedbackType)type
-{
-	[[NBExternalBridge sharedInstance] postFeedbackWithString:message with:type];
-}
+//+ (void)showToast:(NSString*)message with:(NBFeedbackType)type
+//{
+//	[[NBExternalBridge sharedInstance] postFeedbackWithString:message with:type];
+//}
 
 #ifdef EnableDynamicGetPageHeight
 ///< 计算页面排版显示占用的区域高度
