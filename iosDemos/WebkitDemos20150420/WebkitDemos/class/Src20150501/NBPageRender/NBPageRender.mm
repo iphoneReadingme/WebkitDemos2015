@@ -616,7 +616,7 @@
     return newContentStr;
 }
 
-- (id)initWithLayoutConfig:(NBBookLayoutConfig*)config chapterName:(NSString*)chapterName chapterText:(NSString*)chapterText
+- (instancetype)initWithLayoutConfig:(NBBookLayoutConfig*)config chapterName:(NSString*)chapterName chapterText:(NSString*)chapterText
 {
     assert(config);
     self = [super init];
