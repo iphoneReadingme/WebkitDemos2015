@@ -614,14 +614,20 @@
 				currentLineWidth = (CGFloat)CTLineGetTypographicBounds(newLineRef, NULL, NULL, NULL);
 			}
 			
+			CTLineRef justifiedLine = nil;
 			if (newLineRef && _frame.size.width < currentLineWidth)
 			{
-				CTLineRef justifiedLine = nil;
-				
-				justifiedLine = CTLineCreateJustifiedLine(newLineRef, 1.0f, availableWidth);
+				justifiedLine = CTLineCreateJustifiedLine(newLineRef, 1.0f, currentLineWidth);
+			}
+			
+			if (justifiedLine)
+			{
 				CFRelease(newLineRef);
-				
 				newLineRef = justifiedLine;
+			}
+			else
+			{
+//				NSLog(@"[页：%d],%@,%@", [typesetLines count]+1, NSStringFromRange(lineRange), lineString);
 			}
 			
 			if (newLineRef)
@@ -648,14 +654,22 @@
 			
 			NSUInteger nCharWidth = currentLineWidth/lineRange.length;
 			CGFloat deta = (_frame.size.width - currentLineWidth);
+			
+			CTLineRef justifiedLine = nil;
 			if (newLineRef && ((0.8*_frame.size.width < currentLineWidth && nCharWidth < deta) || currentLineWidth > _frame.size.width))
 			{
-				CTLineRef justifiedLine = nil;
-				
-				justifiedLine = CTLineCreateJustifiedLine(newLineRef, 1.0f, availableWidth);
+				justifiedLine = CTLineCreateJustifiedLine(newLineRef, 1.0f, currentLineWidth);
+			}
+			
+			if (justifiedLine)
+			{
 				CFRelease(newLineRef);
-				
 				newLineRef = justifiedLine;
+				currentLineWidth = (CGFloat)CTLineGetTypographicBounds(newLineRef, NULL, NULL, NULL);
+			}
+			else
+			{
+				//NSLog(@"[页：%d],%@,%@", [typesetLines count]+1, NSStringFromRange(lineRange), lineString);
 			}
 			
 			if (newLineRef)
@@ -663,7 +677,8 @@
 				line = newLineRef;
 			}
 		}
-		else
+		
+		if (line == nil)
 		{
 			line = CTTypesetterCreateLine(typesetter, CFRangeMake(lineRange.location, lineRange.length));
 		}
