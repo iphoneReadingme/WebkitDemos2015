@@ -713,8 +713,6 @@
 		
 		if (lineBottom > maxY)
 		{
-			[newLine release];
-			newLine = nil;
 			if ([typesetLines count])
 			{
 				bRet = YES;
@@ -736,9 +734,6 @@
 		
 		lineRange.location += lineRange.length;
 		previousLine = newLine;
-		
-		[newLine release];
-		newLine = nil;
 		
 	}while (lineRange.location < maxIndex);
 	

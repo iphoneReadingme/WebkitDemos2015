@@ -43,8 +43,11 @@
 	[_text release];
 	_text = nil;
 	
-	CFRelease(_line);
-	_line = nil;
+	if (_line)
+	{
+		CFRelease(_line);
+		_line = nil;
+	}
 	
 	[super dealloc];
 }
@@ -229,7 +232,7 @@
 					}
 				}
 				
-				_glyphRuns = tmpArray;
+				_glyphRuns = [tmpArray retain];
 			}
 		}
 		
