@@ -62,12 +62,10 @@
 
 @property (nonatomic, readonly) NSInteger stringLocationOffset;
 
+@property (nonatomic, assign) NSRange textRange;
 
-- (id)initWithLine:(CTLineRef)line;
 
 - (id)initWithLine:(CTLineRef)line stringLocationOffset:(NSInteger)stringLocationOffset;
-
-- (NSRange)stringRange;
 
 - (BOOL)isHorizontalRule;
 

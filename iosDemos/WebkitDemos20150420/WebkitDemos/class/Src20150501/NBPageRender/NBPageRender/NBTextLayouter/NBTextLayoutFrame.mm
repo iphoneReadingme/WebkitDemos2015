@@ -219,7 +219,7 @@
 
 - (BOOL)isLineFirstInParagraph:(NBTextLine *)line
 {
-	NSRange lineRange = line.stringRange;
+	NSRange lineRange = line.textRange;
 	
 	if (lineRange.location == 0)
 	{
@@ -229,16 +229,16 @@
 	NSInteger prevLineLastUnicharIndex = lineRange.location - 1;
 	unichar prevLineLastUnichar = [[_attrString string] characterAtIndex:prevLineLastUnicharIndex];
 	
-	return [[NSCharacterSet newlineCharacterSet] characterIsMember:prevLineLastUnichar];
+	return (prevLineLastUnichar == kNewLineChar);
 }
 
 - (BOOL)isLineLastInParagraph:(NBTextLine *)line
 {
 	BOOL bRet = NO;
 	
-	if (line.stringRange.length > 1)
+	if (line.textRange.length > 1)
 	{
-		unichar charCheck = [[_attrString string] characterAtIndex:line.stringRange.length - 1];
+		unichar charCheck = [[_attrString string] characterAtIndex:NSMaxRange(line.textRange) - 1];
 		bRet = (charCheck == kNewLineChar);
 	}
 	
@@ -249,7 +249,7 @@
 {
 	CGPoint lineOrigin = previousLine.baselineOrigin;
 	
-	NSInteger lineStartIndex = line.stringRange.location;
+	NSInteger lineStartIndex = line.textRange.location;
 	
 	CTParagraphStyleRef lineParagraphStyle = (__bridge CTParagraphStyleRef)[_attrString
 																			attribute:(id)kCTParagraphStyleAttributeName
@@ -301,7 +301,7 @@
 	{
 		CTParagraphStyleRef previousLineParagraphStyle = (__bridge CTParagraphStyleRef)[_attrString
 																						attribute:(id)kCTParagraphStyleAttributeName
-																						atIndex:previousLine.stringRange.location effectiveRange:NULL];
+																						atIndex:previousLine.textRange.location effectiveRange:NULL];
 		
 		CGFloat paraSpacing;
 		
@@ -556,45 +556,8 @@
 			break;
 		}
 		
-		BOOL isAtBeginOfParagraph = (curParagraphEnd == lineRange.location + lineRange.length);
-		
-		CGFloat headIndent = 0;
-		CGFloat tailIndent = 0;
-		
-		CTParagraphStyleRef paragraphStyle = (__bridge CTParagraphStyleRef)[_attrString attribute:(id)kCTParagraphStyleAttributeName atIndex:lineRange.location effectiveRange:NULL];
-		
-		if (isAtBeginOfParagraph)
-		{
-			CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierFirstLineHeadIndent, sizeof(headIndent), &headIndent);
-		}
-		else
-		{
-			CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierHeadIndent, sizeof(headIndent), &headIndent);
-		}
-		
-		CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierTailIndent, sizeof(tailIndent), &tailIndent);
-		
 		CGFloat lineOriginX = 0;
-		CGFloat availableWidth = 0;
-		
-		CGFloat totalLeftPadding = 0;
-		CGFloat totalRightPadding = 0;
-		
-		if (tailIndent<=0)
-		{
-			availableWidth = _frame.size.width - headIndent - totalRightPadding + tailIndent - totalLeftPadding;
-		}
-		else
-		{
-			availableWidth = tailIndent - headIndent - totalLeftPadding - totalRightPadding;
-		}
-		
-		CGFloat offset = totalLeftPadding;
-		
-//		if ([[_attrString string] characterAtIndex:lineRange.location] != '\t')
-//		{
-//			offset += headIndent;
-//		}
+		CGFloat availableWidth = _frame.size.width;
 		
 		lineRange.length = CTTypesetterSuggestClusterBreak(typesetter, lineRange.location, availableWidth);
 		if (bHasCheckMarkChar && lineRange.length == 1)
@@ -603,8 +566,9 @@
 			
 			if ([[_attrString string] characterAtIndex:lineRange.location] == kNewLineChar)
 			{
-				fittingLength += lineRange.length;
-				lineRange.location += lineRange.length;
+				fittingLength += 1;
+				lineRange.location += 1;
+				previousLine.textRange = NSMakeRange(previousLine.textRange.location, previousLine.textRange.length + 1);
 				continue;
 			}
 		}
@@ -623,15 +587,14 @@
 		else
 		{
 			nCount = [self getCharOffsetWithRange:lineRange];
+			if (nCount != 0)
+			{
+				lineRange.length += nCount;
+				bHasCheckMarkChar = nCount > 0;
+			}
 		}
 		
-		bHasCheckMarkChar = nCount > 0;
-		if (nCount != 0)
-		{
-			lineRange.length += nCount;
-		}
-		
-		CTLineRef line;
+		CTLineRef line = nil;
 		
 		NSAttributedString *attribStr = nil;
 		if (bShouldInsertHyphen)
@@ -651,7 +614,7 @@
 				currentLineWidth = (CGFloat)CTLineGetTypographicBounds(newLineRef, NULL, NULL, NULL);
 			}
 			
-			if (_frame.size.width < currentLineWidth)
+			if (newLineRef && _frame.size.width < currentLineWidth)
 			{
 				CTLineRef justifiedLine = nil;
 				
@@ -661,103 +624,61 @@
 				newLineRef = justifiedLine;
 			}
 			
-			line = newLineRef;
+			if (newLineRef)
+			{
+				line = newLineRef;
+			}
+		}
+		else if(nCount != 0)
+		{
+			NSString *lineString = [[_attrString string] substringWithRange:lineRange];
+			
+			NSRange range;
+			NSDictionary * attributes = [_attrString attributesAtIndex:lineRange.location effectiveRange:&range];
+			
+			attribStr = [[[NSAttributedString alloc] initWithString:lineString attributes:attributes] autorelease];
+			
+			CTLineRef newLineRef = CTLineCreateWithAttributedString((__bridge  CFAttributedStringRef)(attribStr));
+			
+			CGFloat currentLineWidth = 0;
+			if (newLineRef)
+			{
+				currentLineWidth = (CGFloat)CTLineGetTypographicBounds(newLineRef, NULL, NULL, NULL);
+			}
+			
+			NSUInteger nCharWidth = currentLineWidth/lineRange.length;
+			CGFloat deta = (_frame.size.width - currentLineWidth);
+			if (newLineRef && ((0.8*_frame.size.width < currentLineWidth && nCharWidth < deta) || currentLineWidth > _frame.size.width))
+			{
+				CTLineRef justifiedLine = nil;
+				
+				justifiedLine = CTLineCreateJustifiedLine(newLineRef, 1.0f, availableWidth);
+				CFRelease(newLineRef);
+				
+				newLineRef = justifiedLine;
+			}
+			
+			if (newLineRef)
+			{
+				line = newLineRef;
+			}
 		}
 		else
 		{
 			line = CTTypesetterCreateLine(typesetter, CFRangeMake(lineRange.location, lineRange.length));
 		}
 		
-		CGFloat currentLineWidth = (CGFloat)CTLineGetTypographicBounds(line, NULL, NULL, NULL);
-		CTTextAlignment textAlignment = kCTTextAlignmentLeft;
+		lineOriginX = _frame.origin.x;
 		
-		if (!CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierAlignment, sizeof(textAlignment), &textAlignment))
-		{
-			textAlignment = kCTNaturalTextAlignment;
-		}
-		BOOL isRTL = NO;
-		CTWritingDirection baseWritingDirection;
-		
-		if (CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierBaseWritingDirection, sizeof(baseWritingDirection), &baseWritingDirection))
-		{
-			isRTL = (baseWritingDirection == kCTWritingDirectionRightToLeft);
-		}
-		else
-		{
-			baseWritingDirection = kCTWritingDirectionNatural;
-		}
-		
-		if (bShouldInsertHyphen)
-		{
-			;
-		}
-		else
-		{
-			NSUInteger nCharWidth = currentLineWidth/lineRange.length;
-			CGFloat deta = (_frame.size.width - currentLineWidth);
-			if (nCount && ((0.8*_frame.size.width < currentLineWidth && nCharWidth < deta) || currentLineWidth > _frame.size.width))
-			{
-				textAlignment = kCTJustifiedTextAlignment;
-			}
-		}
-		
-		switch (textAlignment)
-		{
-			case kCTLeftTextAlignment:
-			{
-				lineOriginX = _frame.origin.x + offset;
-				break;
-			}
-			case kCTJustifiedTextAlignment:
-			{
-				NSString *lineString = [[_attrString string] substringWithRange:lineRange];
-				
-				NSRange range;
-				NSDictionary * attributes = [_attrString attributesAtIndex:lineRange.location effectiveRange:&range];
-				
-				attribStr = [[[NSAttributedString alloc] initWithString:lineString attributes:attributes] autorelease];
-				
-				CTLineRef newLineRef = CTLineCreateWithAttributedString((__bridge  CFAttributedStringRef)(attribStr));
-				
-				CTLineRef justifiedLine = nil;
-				if (newLineRef)
-				{
-					justifiedLine = CTLineCreateJustifiedLine(newLineRef, 1.0f, availableWidth);
-					CFRelease(newLineRef);
-				}
-				
-				if (justifiedLine)
-				{
-					CFRelease(line);
-					line = justifiedLine;
-				}
-				currentLineWidth = (CGFloat)CTLineGetTypographicBounds(line, NULL, NULL, NULL);
-				
-				if (isRTL)
-				{
-					lineOriginX = _frame.origin.x + offset + (CGFloat)CTLineGetPenOffsetForFlush(line, 1.0, availableWidth);
-				}
-				else
-				{
-					lineOriginX = _frame.origin.x + offset;
-				}
-				
-				break;
-			}
-			default:
-			{
-				break;
-			}
-		}
 		if (!line)
 		{
 			continue;
 		}
 		
 		NBTextLine *newLine = [[NBTextLine alloc] initWithLine:line stringLocationOffset: 0];
-		//newLine.text = [[_attrString string] substringWithRange:lineRange];
+		newLine.textRange = lineRange;
+		newLine.text = [[_attrString string] substringWithRange:lineRange]; ///< for test
 		
-		newLine.writingDirectionIsRightToLeft = isRTL;
 		CFRelease(line);
 		
 		CGPoint newLineBaselineOrigin = [self _algorithmLegacy_BaselineOriginToPositionLine:newLine afterLine:previousLine];

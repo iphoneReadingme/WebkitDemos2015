@@ -63,11 +63,6 @@
 	}
 }
 
-- (id)initWithLine:(CTLineRef)line
-{
-	return [self initWithLine:line stringLocationOffset:0];
-}
-
 - (id)initWithLine:(CTLineRef)line stringLocationOffset:(NSInteger)stringLocationOffset
 {
 	if (!line)
@@ -87,15 +82,6 @@
 		[self _calculateMetrics];
 	}
 	return self;
-}
-
-- (NSRange)stringRange
-{
-	CFRange range = CTLineGetStringRange(_line);
-	
-	range.location += _stringLocationOffset;
-	
-	return NSMakeRange(range.location, range.length);
 }
 
 - (NSInteger)numberOfGlyphs
@@ -143,7 +129,7 @@
 
 - (BOOL)isHorizontalRule
 {
-	if (self.stringRange.length>1)
+	if (self.textRange.length>1)
 	{
 		return NO;
 	}
