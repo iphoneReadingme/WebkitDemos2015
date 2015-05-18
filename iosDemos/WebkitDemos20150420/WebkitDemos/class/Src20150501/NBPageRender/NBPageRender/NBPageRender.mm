@@ -18,7 +18,7 @@
 #import "NBTextLayouter.h"
 #import "NBTextLayoutFrame.h"
 #import "NSArray+ExceptionSafe.h"
-#import "iUCCommon.h"
+//#import "iUCCommon.h"
 
 
 
@@ -95,11 +95,11 @@
     
     if ((nil == contentStr) || (0 == [contentStr length]))
     {
-        if (iUCCommon::is4inchDisplay())
-        {
-            contentStr = [NSString stringWithFormat:@"　　\n\n\n\n\n\n\n\n                     本章内容为空"];
-        }
-        else
+//        if (iUCCommon::is4inchDisplay())
+//        {
+//            contentStr = [NSString stringWithFormat:@"　　\n\n\n\n\n\n\n\n                     本章内容为空"];
+//        }
+//        else
         {
             contentStr = [NSString stringWithFormat:@"　　\n\n\n\n\n\n\n               本章内容为空"];
         }
@@ -635,7 +635,7 @@
         if ([paraStr isEqualToString:@""]) {
             [newArray removeObjectAtIndex:i];
         } else {
-            if (i != 0 && !([paraStr hasPrefix:@"----------"] || [paraStr hasPrefix:@"************"]))
+            if (!([paraStr hasPrefix:@"----------"] || [paraStr hasPrefix:@"************"]))
 			{
                 paraStr = [NSString stringWithFormat:@"　　%@", paraStr];
             }
@@ -771,8 +771,6 @@
 	message = [NSString stringWithFormat:@"当前页面排版时间：【%f】", [endDate timeIntervalSinceReferenceDate] - [startDate timeIntervalSinceReferenceDate]];
 	[strTemp appendFormat:@"%@", message];
 	NSLog(@"%@", message);
-	
-//	[NBPageRender showToast:strTemp with:NBFeedbackTypeText];
 	
 	//翻转坐标系统（文本原来是倒的要翻转下）
     CGContextSetTextMatrix(context, CGAffineTransformIdentity);
