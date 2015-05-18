@@ -196,7 +196,7 @@
 			
 			if (runCount)
 			{
-				NSMutableArray *tmpArray = [[NSMutableArray alloc] initWithCapacity:runCount];
+				NSMutableArray *tmpArray = [[[NSMutableArray alloc] initWithCapacity:runCount] autorelease];
 				
 				for (CFIndex i=0; i<runCount; i++)
 				{
@@ -220,7 +220,7 @@
 					
 					CGPoint position = positions[0];
 					
-					NBTextGlyphRun *glyphRun = [[NBTextGlyphRun alloc] initWithRun:oneRun offset:position.x withDelegate:self];
+					NBTextGlyphRun *glyphRun = [[[NBTextGlyphRun alloc] initWithRun:oneRun offset:position.x withDelegate:self] autorelease];
 					[tmpArray addObject:glyphRun];
 					
 					if ( shouldFreePositions )

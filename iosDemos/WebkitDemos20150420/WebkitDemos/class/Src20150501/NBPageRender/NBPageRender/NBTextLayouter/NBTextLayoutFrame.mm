@@ -690,7 +690,7 @@
 			continue;
 		}
 		
-		NBTextLine *newLine = [[NBTextLine alloc] initWithLine:line stringLocationOffset: 0];
+		NBTextLine *newLine = [[[NBTextLine alloc] initWithLine:line stringLocationOffset: 0] autorelease];
 		newLine.textRange = lineRange;
 		newLine.text = [[_attrString string] substringWithRange:lineRange]; ///< for test
 		

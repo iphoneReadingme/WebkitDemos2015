@@ -39,6 +39,17 @@ static NBFontCollection *_availableFontsCollection = nil;
 	return _availableFontsCollection;
 }
 
+- (void)dealloc
+{
+	[_fontDescriptors release];
+	_fontDescriptors = nil;
+	
+	[_fontMatchCache release];
+	_fontMatchCache = nil;
+	
+	[super dealloc];
+}
+
 - (id)initWithAvailableFonts
 {
 	self = [super init];
@@ -61,7 +72,7 @@ static NBFontCollection *_availableFontsCollection = nil;
 	
 	if (firstMatch)
 	{
-		NBFontDescriptor *retMatch = [firstMatch copy];
+		NBFontDescriptor *retMatch = [[firstMatch copy] autorelease];
 		retMatch.pointSize = descriptor.pointSize;
 		return retMatch;
 	}
@@ -77,7 +88,7 @@ static NBFontCollection *_availableFontsCollection = nil;
 		firstMatch = [matchingDescriptors objectAtIndex:0];
 		[self.fontMatchCache setObject:firstMatch forKey:cacheKey];
 		
-		NBFontDescriptor *retMatch = [firstMatch copy];
+		NBFontDescriptor *retMatch = [[firstMatch copy] autorelease];
 		
 		retMatch.pointSize = descriptor.pointSize;
 		return retMatch;
@@ -98,20 +109,20 @@ static NBFontCollection *_availableFontsCollection = nil;
 		
 		if (matchingFonts)
 		{
-			NSMutableArray *tmpArray = [[NSMutableArray alloc] init];
+			NSMutableArray *tmpArray = [[[NSMutableArray alloc] init] autorelease];
 			
 			for (NSInteger i=0; i<CFArrayGetCount(matchingFonts); i++)
 			{
 				CTFontDescriptorRef fontDesc = (CTFontDescriptorRef)CFArrayGetValueAtIndex(matchingFonts, i);
 				
 				
-				NBFontDescriptor *desc = [[NBFontDescriptor alloc] initWithCTFontDescriptor:fontDesc];
+				NBFontDescriptor *desc = [[[NBFontDescriptor alloc] initWithCTFontDescriptor:fontDesc] autorelease];
 				[tmpArray addObject:desc];
 			}
 			
 			CFRelease(matchingFonts);
 			
-			self.fontDescriptors = tmpArray;
+			self.fontDescriptors = [tmpArray retain];
 		}
 		
 		CFRelease(fonts);

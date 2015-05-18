@@ -205,7 +205,7 @@
 		NSMutableAttributedString* attr = [NBPageRender formatString:content withChapterName:chapterName andLayoutConfig:config];
 		NBTextLayoutFrame *layoutFrame = [[NBTextLayoutFrame alloc] initWithFrame:CGRectZero withAttributedString:attr];
 		
-		NBTextLayouter* textLayout = [[NBTextLayouter alloc] initWithLayoutFrame:layoutFrame];
+		NBTextLayouter* textLayout = [[[NBTextLayouter alloc] initWithLayoutFrame:layoutFrame] autorelease];
 		
 		NSInteger nRunCount = 1;
 		

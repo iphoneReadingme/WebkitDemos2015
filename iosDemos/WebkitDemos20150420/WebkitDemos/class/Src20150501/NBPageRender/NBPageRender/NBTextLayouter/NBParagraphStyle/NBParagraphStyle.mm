@@ -26,12 +26,12 @@
 
 + (NBParagraphStyle *)defaultParagraphStyle
 {
-	return [[NBParagraphStyle alloc] init];
+	return [[[NBParagraphStyle alloc] init] autorelease];
 }
 
 + (NBParagraphStyle *)paragraphStyleWithCTParagraphStyle:(CTParagraphStyleRef)ctParagraphStyle
 {
-	return [[NBParagraphStyle alloc] initWithCTParagraphStyle:ctParagraphStyle];
+	return [[[NBParagraphStyle alloc] initWithCTParagraphStyle:ctParagraphStyle] autorelease];
 }
 
 #if NBPageRender_SUPPORT_NS_ATTRIBUTES
@@ -39,7 +39,7 @@
 {
 	NSParameterAssert(paragraphStyle);
 	
-	NBParagraphStyle *retStyle = [[NBParagraphStyle alloc] init];
+	NBParagraphStyle *retStyle = [[[NBParagraphStyle alloc] init] autorelease];
 	
 	retStyle.firstLineHeadIndent = paragraphStyle.firstLineHeadIndent;
 	retStyle.headIndent = paragraphStyle.headIndent;
@@ -209,7 +209,7 @@
 #if NBPageRender_SUPPORT_NS_ATTRIBUTES
 - (NSParagraphStyle *)NSParagraphStyle
 {
-	NSMutableParagraphStyle *mps = [[NSMutableParagraphStyle alloc] init];
+	NSMutableParagraphStyle *mps = [[[NSMutableParagraphStyle alloc] init] autorelease];
 	
 	[mps setFirstLineHeadIndent:_lineSpace];
 	
@@ -261,7 +261,7 @@
 			NSTextAlignment nsAlignment = [NBParagraphStyle NSTextAlignmentFromCTTextAlignment:alignment];
 			CGFloat location = (CGFloat)CTTextTabGetLocation(tab);
 			
-			NSTextTab *textTab = [[NSTextTab alloc] initWithTextAlignment:nsAlignment location:location options:[NSDictionary dictionary]];
+			NSTextTab *textTab = [[[NSTextTab alloc] initWithTextAlignment:nsAlignment location:location options:[NSDictionary dictionary]] autorelease];
 			
 			if (!textTab)
 			{
@@ -291,7 +291,7 @@
 	{
 		if (!_tabStops)
 		{
-			_tabStops = [[NSMutableArray alloc] init];
+			_tabStops = [[[NSMutableArray alloc] init] autorelease];
 		}
 		[_tabStops addObject:CFBridgingRelease(tab)];
 	}

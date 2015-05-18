@@ -183,12 +183,12 @@ static BOOL _needsChineseFontCascadeFix = NO;
 
 + (NBFontDescriptor *)fontDescriptorWithFontAttributes:(NSDictionary *)attributes
 {
-	return [[NBFontDescriptor alloc] initWithFontAttributes:attributes];
+	return [[[NBFontDescriptor alloc] initWithFontAttributes:attributes] autorelease];
 }
 
 + (NBFontDescriptor *)fontDescriptorForCTFont:(CTFontRef)ctFont
 {
-	return [[NBFontDescriptor alloc] initWithCTFont:ctFont];
+	return [[[NBFontDescriptor alloc] initWithCTFont:ctFont] autorelease];
 }
 
 - (id)initWithFontAttributes:(NSDictionary *)attributes
