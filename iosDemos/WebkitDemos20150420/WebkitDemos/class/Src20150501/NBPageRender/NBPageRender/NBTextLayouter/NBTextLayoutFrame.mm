@@ -438,6 +438,35 @@
 	return nOffset;
 }
 
+- (BOOL)shouldInsertHyphenWithRange:(NSRange)lineRange
+{
+	BOOL bRet = NO;
+	
+	do
+	{
+		if (lineRange.length < 5)
+		{
+			break;
+		}
+		
+		NSInteger lineEnd = NSMaxRange(lineRange);
+		NSUInteger maxCharsCount = NSMaxRange(_stringRange);
+		
+		_curLineLastChar = [[_attrString string] characterAtIndex:lineEnd - 1];
+		bRet = [NBLayouterHelper isLetterCharacter:_curLineLastChar];
+		
+		if (bRet && (lineEnd + 1 <= maxCharsCount))
+		{
+			_curLineLastChar = [[_attrString string] characterAtIndex:lineEnd];
+			bRet = [NBLayouterHelper isLetterCharacter:_curLineLastChar];
+		}
+		_curLineLastChar = 0;
+		
+	}while (0);
+	
+	return bRet;
+}
+
 - (BOOL)createFrameInRect:(CGRect)frame withRange:(NSRange)textRange
 {
 	BOOL bRet = NO;
@@ -580,11 +609,16 @@
 			}
 		}
 		
+		BOOL bShouldInsertHyphen = NO;
 		NSInteger nCount = 0;
 		
 		if (NSMaxRange(lineRange) > maxIndex)
 		{
 			lineRange.length = maxIndex - lineRange.location;
+		}
+		else if ([self shouldInsertHyphenWithRange:lineRange])
+		{
+			bShouldInsertHyphen = YES;
 		}
 		else
 		{
@@ -599,7 +633,40 @@
 		
 		CTLineRef line;
 		
-		line = CTTypesetterCreateLine(typesetter, CFRangeMake(lineRange.location, lineRange.length));
+		NSAttributedString *attribStr = nil;
+		if (bShouldInsertHyphen)
+		{
+			NSString *lineString = [NSString stringWithFormat:@"%@-", [[_attrString string] substringWithRange:lineRange]];
+			
+			NSRange range;
+			NSDictionary * attributes = [_attrString attributesAtIndex:lineRange.location effectiveRange:&range];
+			
+			attribStr = [[[NSAttributedString alloc] initWithString:lineString attributes:attributes] autorelease];
+			
+			CTLineRef newLineRef = CTLineCreateWithAttributedString((__bridge  CFAttributedStringRef)(attribStr));
+			
+			CGFloat currentLineWidth = 0;
+			if (newLineRef)
+			{
+				currentLineWidth = (CGFloat)CTLineGetTypographicBounds(newLineRef, NULL, NULL, NULL);
+			}
+			
+			if (_frame.size.width < currentLineWidth)
+			{
+				CTLineRef justifiedLine = nil;
+				
+				justifiedLine = CTLineCreateJustifiedLine(newLineRef, 1.0f, availableWidth);
+				CFRelease(newLineRef);
+				
+				newLineRef = justifiedLine;
+			}
+			
+			line = newLineRef;
+		}
+		else
+		{
+			line = CTTypesetterCreateLine(typesetter, CFRangeMake(lineRange.location, lineRange.length));
+		}
 		
 		CGFloat currentLineWidth = (CGFloat)CTLineGetTypographicBounds(line, NULL, NULL, NULL);
 		CTTextAlignment textAlignment = kCTTextAlignmentLeft;
@@ -620,14 +687,20 @@
 			baseWritingDirection = kCTWritingDirectionNatural;
 		}
 		
-		NSUInteger nCharWidth = currentLineWidth/lineRange.length;
-		CGFloat deta = (_frame.size.width - currentLineWidth);
-		if (nCount && ((0.8*_frame.size.width < currentLineWidth && nCharWidth < deta) || currentLineWidth > _frame.size.width))
+		if (bShouldInsertHyphen)
 		{
-			textAlignment = kCTJustifiedTextAlignment;
+			;
+		}
+		else
+		{
+			NSUInteger nCharWidth = currentLineWidth/lineRange.length;
+			CGFloat deta = (_frame.size.width - currentLineWidth);
+			if (nCount && ((0.8*_frame.size.width < currentLineWidth && nCharWidth < deta) || currentLineWidth > _frame.size.width))
+			{
+				textAlignment = kCTJustifiedTextAlignment;
+			}
 		}
 		
-		NSAttributedString *attribStr = nil;
 		switch (textAlignment)
 		{
 			case kCTLeftTextAlignment:
@@ -642,7 +715,7 @@
 				NSRange range;
 				NSDictionary * attributes = [_attrString attributesAtIndex:lineRange.location effectiveRange:&range];
 				
-				attribStr = [[NSAttributedString alloc] initWithString:lineString attributes:attributes];
+				attribStr = [[[NSAttributedString alloc] initWithString:lineString attributes:attributes] autorelease];
 				
 				CTLineRef newLineRef = CTLineCreateWithAttributedString((__bridge  CFAttributedStringRef)(attribStr));
 				
@@ -682,7 +755,7 @@
 		}
 		
 		NBTextLine *newLine = [[NBTextLine alloc] initWithLine:line stringLocationOffset: 0];
-		newLine.text = [[_attrString string] substringWithRange:lineRange];
+		//newLine.text = [[_attrString string] substringWithRange:lineRange];
 		
 		newLine.writingDirectionIsRightToLeft = isRTL;
 		CFRelease(line);

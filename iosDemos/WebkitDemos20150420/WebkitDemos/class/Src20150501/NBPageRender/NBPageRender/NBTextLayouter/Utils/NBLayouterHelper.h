@@ -21,6 +21,7 @@
 
 @interface NBLayouterHelper : NSObject
 
++ (BOOL)isLetterCharacter:(unichar)aCharacter;
 
 + (BOOL)isPrePartOfPairMarkChar:(unichar)markChar;
 

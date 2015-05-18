@@ -22,6 +22,11 @@
 
 @implementation NBLayouterHelper
 
++ (BOOL)isLetterCharacter:(unichar)aCharacter;
+{
+	return ('A' <= aCharacter && aCharacter <= 'Z') ||  ('a' <= aCharacter && aCharacter <= 'z');
+}
+
 + (BOOL)isDashOrEllipsis:(unichar)markChar
 {
 	return (0x2026 == markChar) || (0x2014 == markChar);
@@ -480,7 +485,7 @@
 	NSString* englishMarkSet = @",.;:?)'\"`!}]>-";
 	//NSString* englishMarkSet2 = @"({[<“";
 	NSString* chineseMarkSet = @"。，；？！、：”’′″）》〉」﹃〕﹁】﹏～…—』〗";
-	//NSString* chineseMarkSet = @"。，；？！、：”’′″）》〉」﹃〕﹁】﹏～…—』〗°";
+	//NSString* chineseMarkSet = @"·。，；？！、：”’′″）》〉」﹃〕﹁】﹏～…—』〗°";
 	NSString* chineseMarkSet2 = @"‘“（｛《〈﹄﹂〔【「『〖";
 	
 	NSString* textMarkSet = nil;
