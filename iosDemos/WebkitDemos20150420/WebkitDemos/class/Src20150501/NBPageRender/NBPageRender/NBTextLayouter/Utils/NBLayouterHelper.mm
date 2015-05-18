@@ -401,6 +401,11 @@
 					bRet = YES;
 					break;
 				}
+				case 0x201c: // “
+				{
+					bRet = YES;
+					break;
+				}
 				case 0xFF08: // （
 				{
 					bRet = YES;
@@ -476,7 +481,7 @@
 	//NSString* englishMarkSet2 = @"({[<“";
 	NSString* chineseMarkSet = @"。，；？！、：”’′″）》〉」﹃〕﹁】﹏～…—』〗";
 	//NSString* chineseMarkSet = @"。，；？！、：”’′″）》〉」﹃〕﹁】﹏～…—』〗°";
-	NSString* chineseMarkSet2 = @"‘（｛《〈﹄﹂〔【「『〖";
+	NSString* chineseMarkSet2 = @"‘“（｛《〈﹄﹂〔【「『〖";
 	
 	NSString* textMarkSet = nil;
 	if (type == 1)

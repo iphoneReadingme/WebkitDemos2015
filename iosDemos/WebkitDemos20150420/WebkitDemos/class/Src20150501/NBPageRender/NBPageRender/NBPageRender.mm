@@ -656,16 +656,10 @@
     {
         self.layoutConfig = config;
 		self.chapterName = chapterName;
-        
-		NSString * contentStr = nil;
-		if (chapterText && [chapterText length])
-		{
-			contentStr = [NBPageRender getChapterContentStr:chapterText];
-		}
 		
-        if (contentStr)
+        if ([chapterText length] > 0)
         {
-            self.chapterTextContent = contentStr;
+            self.chapterTextContent = chapterText;
 			
 			UIEdgeInsets contentInset = config.contentInset;
 			
@@ -677,7 +671,7 @@
 			CGRect columnFrame = CGRectMake(0, 0, config.pageWidth, config.pageHeight);
 			columnFrame = UIEdgeInsetsInsetRect(columnFrame, edgeInsets);
 			
-			NSMutableAttributedString* attr = [NBPageRender formatString:contentStr withChapterName:chapterName andLayoutConfig:config];
+			NSMutableAttributedString* attr = [NBPageRender formatString:_chapterTextContent withChapterName:chapterName andLayoutConfig:config];
 			
 			_nblayoutFrame = [[NBTextLayoutFrame alloc] initWithFrame:columnFrame withAttributedString:attr];
 			
@@ -724,7 +718,7 @@
     //HTIME_DUMP_IF("NBPageRender:drawInContext", 20);
 	
 	NBBookLayoutConfig* frameConfig = self.layoutConfig;
-	NSString* frameShowText = [NBPageRender getShowTextOfChapter:self.chapterTextContent withChapterName:self.chapterName andLayoutConfig:frameConfig];
+	NSString* frameShowText = [NBPageRender getShowTextOfChapter:_chapterTextContent withChapterName:self.chapterName andLayoutConfig:frameConfig];
     if (nTextStartLocation >= [frameShowText length])
     {
         //DDLogError(@"!!!drawInContext，绘制文本超界。");

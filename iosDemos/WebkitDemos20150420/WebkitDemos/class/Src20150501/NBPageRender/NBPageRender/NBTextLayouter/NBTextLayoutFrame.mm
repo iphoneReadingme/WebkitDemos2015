@@ -562,10 +562,10 @@
 		
 		CGFloat offset = totalLeftPadding;
 		
-		if ([[_attrString string] characterAtIndex:lineRange.location] != '\t')
-		{
-			offset += headIndent;
-		}
+//		if ([[_attrString string] characterAtIndex:lineRange.location] != '\t')
+//		{
+//			offset += headIndent;
+//		}
 		
 		lineRange.length = CTTypesetterSuggestClusterBreak(typesetter, lineRange.location, availableWidth);
 		if (bHasCheckMarkChar && lineRange.length == 1)
