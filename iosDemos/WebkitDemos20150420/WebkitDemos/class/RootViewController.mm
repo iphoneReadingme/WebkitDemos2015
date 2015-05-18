@@ -106,9 +106,9 @@
         cell = [[[UCTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		//cell.selectionStyle = UITableViewCellSelectionStyleNone;
-		CGRect rect = CGRectMake(10, 10, 320-20, 20);
-		UIImageView* pView = [[UIImageView alloc] initWithFrame:rect];
-		pView.backgroundColor = [UIColor redColor];
+//		CGRect rect = CGRectMake(10, 10, 320-20, 20);
+//		UIImageView* pView = [[UIImageView alloc] initWithFrame:rect];
+//		pView.backgroundColor = [UIColor redColor];
 
 //		[self setCellColor:cell cellForRowAtIndexPath:indexPath];
     }

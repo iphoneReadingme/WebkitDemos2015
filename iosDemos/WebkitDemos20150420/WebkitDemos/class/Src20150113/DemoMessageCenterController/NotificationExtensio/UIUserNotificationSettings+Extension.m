@@ -37,7 +37,7 @@
     [instance setActions:defaultActions forContext:UIUserNotificationActionContextDefault];
     [instance setActions:minimalActions forContext:UIUserNotificationActionContextMinimal];
 
-    return instance.copy;
+    return [instance.copy autorelease];
 }
 
 @end
@@ -74,7 +74,7 @@
     instance.authenticationRequired = authenticationRequired;
     instance.destructive = destructive;
 
-    return instance.copy;
+    return [instance.copy autorelease];
 }
 
 @end

@@ -130,7 +130,7 @@ fluid (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)str;(
 							 //,NSUnderlineStyleAttributeName:@(NSUnderlineStyleSingle)
 							 };
 	
-	_chapterTitle.attributedText = [[NSAttributedString alloc] initWithString: kKeyString attributes: attrs2];
+	_chapterTitle.attributedText = [[[NSAttributedString alloc] initWithString: kKeyString attributes: attrs2] autorelease];
 	
 }
 

@@ -32,7 +32,7 @@ NBPageContainerViewControllerDelegate
 
 @property (nonatomic, retain) DemoPageDataProvider *dataProvider;
 
-@property (strong, nonatomic) UIPageViewController *pageController;
+@property (nonatomic, retain) UIPageViewController *pageController;
 
 - (void)releaseObject;
 
@@ -54,6 +54,7 @@ NBPageContainerViewControllerDelegate
 
 - (void)releaseObject
 {
+	self.dataProvider = nil;
 	self.pageController = nil;
 }
 
@@ -67,7 +68,7 @@ NBPageContainerViewControllerDelegate
 	
 	CGRect rect = [self getViewRect];
 	rect.size.height -= kChapterTitleHeight;
-	self.dataProvider = [[DemoPageDataProvider alloc] initWithRect:rect];
+	self.dataProvider = [[[DemoPageDataProvider alloc] initWithRect:rect] autorelease];
 	[_dataProvider splittingPagesForString];
 	
     // 设置UIPageViewController的配置项
@@ -151,9 +152,9 @@ NBPageContainerViewControllerDelegate
                                                        forKey: UIPageViewControllerOptionSpineLocationKey];
     
     // 实例化UIPageViewController对象，根据给定的属性
-    self.pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl
+    self.pageController = [[[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl
                                                           navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
-                                                                        options: options];
+                                                                        options: options] autorelease];
     // 设置UIPageViewController对象的代理
     _pageController.dataSource = self;
     // 定义“这本书”的尺寸

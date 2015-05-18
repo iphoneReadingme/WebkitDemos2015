@@ -46,7 +46,7 @@
 	
 	[self addSubViewObject];
 	
-	PageAppViewController* controller = [[PageAppViewController alloc] init];
+	PageAppViewController* controller = [[[PageAppViewController alloc] init] autorelease];
 	[self.navigationController pushViewController:controller animated:YES];
 }
 

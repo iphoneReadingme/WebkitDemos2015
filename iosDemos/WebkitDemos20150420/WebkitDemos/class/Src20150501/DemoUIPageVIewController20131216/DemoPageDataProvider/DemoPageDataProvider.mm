@@ -47,7 +47,7 @@
 	
 	NSString* fileName = @"page1.txt";
 	
-	int nCase = 5;
+	int nCase = 2;
 	if (nCase == 0)
 	{
 		fileName = @"page2.txt";
