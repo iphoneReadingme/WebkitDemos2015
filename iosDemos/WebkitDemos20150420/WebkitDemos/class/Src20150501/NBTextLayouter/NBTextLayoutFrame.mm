@@ -642,7 +642,7 @@
 		{
 			NSString *lineString = [[_attrString attributedSubstringFromRange:lineRange] string];
 			if ([lineString isEqualToString:@"\n"])
-			{// NSCharacterSet newlineCharacterSet
+			{
 				fittingLength += lineRange.length;
 				lineRange.location += lineRange.length;
 				continue;
