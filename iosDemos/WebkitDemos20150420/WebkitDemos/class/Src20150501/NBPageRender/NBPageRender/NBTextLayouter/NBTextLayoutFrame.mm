@@ -617,7 +617,7 @@
 			CTLineRef justifiedLine = nil;
 			if (newLineRef && _frame.size.width < currentLineWidth)
 			{
-				justifiedLine = CTLineCreateJustifiedLine(newLineRef, 1.0f, currentLineWidth);
+				justifiedLine = CTLineCreateJustifiedLine(newLineRef, 1.0f, availableWidth);
 			}
 			
 			if (justifiedLine)
@@ -658,7 +658,7 @@
 			CTLineRef justifiedLine = nil;
 			if (newLineRef && ((0.8*_frame.size.width < currentLineWidth && nCharWidth < deta) || currentLineWidth > _frame.size.width))
 			{
-				justifiedLine = CTLineCreateJustifiedLine(newLineRef, 1.0f, currentLineWidth);
+				justifiedLine = CTLineCreateJustifiedLine(newLineRef, 1.0f, availableWidth);
 			}
 			
 			if (justifiedLine)
