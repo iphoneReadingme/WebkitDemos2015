@@ -771,6 +771,7 @@
 	CGContextTranslateCTM(context, 0, rect.size.height);
 	CGContextScaleCTM(context, 1.0, -1.0);
 	
+	[_textLayout updateLinesOriginInRect:columnFrame with:bLastPage];
 	[_textLayout drawLinesWith:context inRect:columnFrame];
 	
     return NBDrawSuccesful;

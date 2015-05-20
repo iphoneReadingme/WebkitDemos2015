@@ -83,6 +83,7 @@
 		_stringLocationOffset = stringLocationOffset;
 		
 		[self _calculateMetrics];
+		[self _scanGlyphRunsForValues];
 	}
 	return self;
 }
@@ -156,7 +157,7 @@
 
 - (void)_scanGlyphRunsForValues
 {
-	@synchronized(self)
+	//@synchronized(self)
 	{
 		CGFloat maxOffset = 0;
 		CGFloat maxFontSize = 0;
@@ -462,7 +463,22 @@
 	CGPoint linePtOrigin = _baselineOrigin;
 	
 	CGContextSetTextPosition(context, linePtOrigin.x, linePtOrigin.y);
-	CTLineDraw(_line, context);
+	
+	BOOL bRunDraw = YES;
+	bRunDraw = (_width > rect.size.width);
+	if (bRunDraw)
+	{
+		linePtOrigin = CGPointZero;
+		
+		for (NBTextGlyphRun *oneRun in self.glyphRuns)
+		{
+			[oneRun drawRunWith:context inRect:rect];
+		}
+	}
+	else
+	{
+		CTLineDraw(_line, context);
+	}
 }
 
 @end

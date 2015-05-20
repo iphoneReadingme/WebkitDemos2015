@@ -30,6 +30,7 @@
 
 - (NSRange)visibleStringRange;
 
+- (void)updateLinesOriginInRect:(CGRect)frame with:(BOOL)bLastPage;
 - (void)drawLinesWith:(CGContextRef)context inRect:(CGRect)rect;
 
 @end

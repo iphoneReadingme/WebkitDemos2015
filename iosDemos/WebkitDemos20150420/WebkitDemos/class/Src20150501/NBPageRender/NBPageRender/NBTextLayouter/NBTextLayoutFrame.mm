@@ -31,6 +31,8 @@
 
 @interface NBTextLayoutFrame ()
 {
+	CGFloat                   _lineSpacing;
+	
 	CGRect                    _frame;
 	NSRange                   _stringRange;
 	CTFramesetterRef          _framesetter;
@@ -322,6 +324,7 @@
 	if (CTParagraphStyleGetValueForSpecifier(lineParagraphStyle, kCTParagraphStyleSpecifierLineSpacingAdjustment, sizeof(lineSpacing), &lineSpacing))
 	{
 		lineOrigin.y += lineSpacing;
+		_lineSpacing = lineSpacing;
 	}
 	
 	CTLineBreakMode lineBreakModr;
@@ -635,6 +638,7 @@
 				line = newLineRef;
 			}
 		}
+#if 1
 		else if(nCount != 0)
 		{
 			NSString *lineString = [[_attrString string] substringWithRange:lineRange];
@@ -656,8 +660,11 @@
 			CGFloat deta = (_frame.size.width - currentLineWidth);
 			
 			CTLineRef justifiedLine = nil;
-			if (newLineRef && ((0.8*_frame.size.width < currentLineWidth && nCharWidth < deta) || currentLineWidth > _frame.size.width))
+			if (newLineRef
+				//&&(nCharWidth*0.5 + currentLineWidth > _frame.size.width)
+				)
 			{
+				deta = 0;
 				justifiedLine = CTLineCreateJustifiedLine(newLineRef, 1.0f, availableWidth);
 			}
 			
@@ -677,6 +684,7 @@
 				line = newLineRef;
 			}
 		}
+#endif
 		
 		if (line == nil)
 		{
@@ -754,7 +762,7 @@
 	return bRet;
 }
 
-- (void)updateLinesOriginInRect:(CGRect)frame
+- (void)updateLinesOriginInRect:(CGRect)columnFrame with:(BOOL)bLastPage
 {
 //	NSInteger i = 0;
 //	NSInteger nCount = 0;
@@ -771,9 +779,66 @@
 		CGPoint origin = lineObj.baselineOrigin;
 		CGFloat h = lineObj.descent + lineObj.ascent + lineObj.leading;
 		
-		origin.y = frame.origin.y + frame.size.height - origin.y - h;
+		origin.y = columnFrame.origin.y + columnFrame.size.height - origin.y - h;
 		lineObj.baselineOrigin = origin;
 	}
+	
+	CGFloat fYOffset = 0;
+	
+	do
+	{
+		NSInteger nLineCount = [lineList count];
+		
+		if (nLineCount < 2)
+		{
+			break;
+		}
+		
+		CGFloat fLineHeight = 0;
+		NBTextLine* lineObj = (NBTextLine*)lineList[0];
+		NBTextLine* lineObj2 = (NBTextLine*)lineList[1];
+		fLineHeight = lineObj.baselineOrigin.y - lineObj2.baselineOrigin.y;
+		
+		CGFloat lineSpace = _lineSpacing;
+		
+		lineObj = (NBTextLine*)lineList[nLineCount-1];
+		CGFloat y = lineObj.baselineOrigin.y - 2.5;
+		if (nLineCount < 2 ||
+			((lineSpace - 3) < y && y < (lineSpace + 1)) || ///< 底部间距与lineSpace相差很小
+			(y > fLineHeight+3.0 && bLastPage) ///< 底部间距超过一行，一般是最后一页，空白较多的情况
+			)
+		{
+			///< 章节的最后一页留有多于一行的空白，则不调整行间距
+			fYOffset = 0;
+		}
+		else
+		{
+			if (y < lineSpace)
+			{
+				fYOffset = (y - lineSpace)/(nLineCount - 1);
+			}
+			else
+			{
+				fYOffset = (y - lineSpace)/(nLineCount);
+			}
+		}
+		
+		if (fYOffset < 0.1)
+		{
+			break;
+		}
+		
+		CGPoint pt = CGPointZero;
+		NSUInteger i = 0;
+		for (NBTextLine* lineObj in lineList)
+		{
+			pt.x = columnFrame.origin.x;
+			pt.y = lineObj.baselineOrigin.y - fYOffset*i; ///< 向下偏移fYOffset
+			i++;
+			lineObj.baselineOrigin = pt;
+		}
+		
+	}while (0);
 }
 
 - (NSString*)getLineText
@@ -783,8 +848,6 @@
 
 - (void)drawLinesWith:(CGContextRef)context inRect:(CGRect)rect
 {
-	[self updateLinesOriginInRect:rect];;
-	
 //	NSInteger nCount = 0;
 //	NSInteger i = 1;
 	NSArray *lineList = _lines;

@@ -76,6 +76,11 @@
 	return [_nbTextFrame getLines];
 }
 
+- (void)updateLinesOriginInRect:(CGRect)frame with:(BOOL)bLastPage
+{
+	[_nbTextFrame updateLinesOriginInRect:frame with:bLastPage];
+}
+
 - (void)drawLinesWith:(CGContextRef)context inRect:(CGRect)rect
 {
 	[_nbTextFrame drawLinesWith:context inRect:rect];

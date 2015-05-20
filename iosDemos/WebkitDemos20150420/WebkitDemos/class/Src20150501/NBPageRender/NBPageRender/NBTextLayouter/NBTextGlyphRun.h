@@ -34,6 +34,9 @@
 @interface NBTextGlyphRun : NSObject
 {
 	@package
+	
+	CGGlyph _bufGlyph[50];
+	CGGlyph *_buffer;
 	CTRunRef _run;
 	CGRect _frame;
 	
@@ -99,6 +102,8 @@
 - (NSArray *)stringIndices;
 
 - (CGRect)frameOfGlyphAtIndex:(NSInteger)index;
+
+- (void)drawRunWith:(CGContextRef)context inRect:(CGRect)rect;
 
 @end
 

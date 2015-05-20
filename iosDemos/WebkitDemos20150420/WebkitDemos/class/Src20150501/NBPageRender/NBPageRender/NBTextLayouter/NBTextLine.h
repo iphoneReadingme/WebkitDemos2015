@@ -25,7 +25,7 @@
 	
 	CTLineRef _line;
 	
-	CGPoint _baselineOrigin;
+	//CGPoint _baselineOrigin;
 	
 	CGFloat _ascent;
 	CGFloat _descent;

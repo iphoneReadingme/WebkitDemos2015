@@ -36,5 +36,7 @@
 
 - (void)drawLinesWith:(CGContextRef)context inRect:(CGRect)rect;
 
+- (void)updateLinesOriginInRect:(CGRect)frame with:(BOOL)bLastPage;
+
 @end
 
