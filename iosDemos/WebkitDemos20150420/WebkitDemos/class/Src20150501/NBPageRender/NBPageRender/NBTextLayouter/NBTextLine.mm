@@ -473,15 +473,15 @@
 	
 	BOOL bRunDraw = NO;
 //	bRunDraw = (_width > rect.size.width);
-	if (bRunDraw || _justifiedCTRun)
-	{
-		linePtOrigin = CGPointZero;
-		for (NBTextGlyphRun *oneRun in self.glyphRuns)
-		{
-			[oneRun drawRunWith:context inRect:rect];
-		}
-	}
-	else
+//	if (bRunDraw || _justifiedCTRun)
+//	{
+//		linePtOrigin = CGPointZero;
+//		for (NBTextGlyphRun *oneRun in self.glyphRuns)
+//		{
+//			[oneRun drawRunWith:context inRect:rect];
+//		}
+//	}
+//	else
 	{
 		CTLineDraw(_line, context);
 	}

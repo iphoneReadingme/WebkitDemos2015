@@ -607,6 +607,7 @@
 		if (bShouldInsertHyphen)
 		{
 			NSString *lineString = [NSString stringWithFormat:@"%@-", [[_attrString string] substringWithRange:lineRange]];
+//			lineString = [NBLayouterHelper replacingquanJiaoToBanJiao:lineString];
 			
 			NSRange range;
 			NSDictionary * attributes = [_attrString attributesAtIndex:lineRange.location effectiveRange:&range];
@@ -646,6 +647,8 @@
 		{
 			NSString *lineString = [[_attrString string] substringWithRange:lineRange];
 			
+			lineString = [NBLayouterHelper replacingquanJiaoToBanJiao:lineString];
+			
 			NSRange range;
 			NSDictionary * attributes = [_attrString attributesAtIndex:lineRange.location effectiveRange:&range];
 			
@@ -665,7 +668,8 @@
 			
 			CTLineRef justifiedLine = nil;
 			if (newLineRef
-				&& !(currentLineWidth + nCharWidth*2 < _frame.size.width)
+				&&( (currentLineWidth + nCharWidth*2 > _frame.size.width)
+				   || (currentLineWidth > _frame.size.width))
 				)
 			{
 				deta = 0;
@@ -677,7 +681,7 @@
 						availableWidth = _frame.size.width + nCharWidth*0.5f;
 					}
 					justifiedLine = CTLineCreateJustifiedLine(newLineRef, 1.0f, availableWidth);
-					NSLog(@"[页：%d],%@,%@", [typesetLines count]+1, NSStringFromRange(lineRange), lineString);
+//					NSLog(@"[页：%d],%@,%@", [typesetLines count]+1, NSStringFromRange(lineRange), lineString);
 				}
 			}
 			
