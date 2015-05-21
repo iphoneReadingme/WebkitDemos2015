@@ -32,6 +32,8 @@
 		5B36D9BD1B09917C00831CE1 /* NBLayouterHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B36D9AF1B09917C00831CE1 /* NBLayouterHelper.mm */; };
 		5B36D9BE1B09917C00831CE1 /* NSDictionary+NBCoreText.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B36D9B11B09917C00831CE1 /* NSDictionary+NBCoreText.mm */; };
 		5B36D9BF1B09917C00831CE1 /* NSString+Paragraphs.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B36D9B31B09917C00831CE1 /* NSString+Paragraphs.mm */; };
+		5B3AA0221B0B419A00B4A003 /* DemoGlyphDrawController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B3AA01F1B0B419A00B4A003 /* DemoGlyphDrawController.mm */; };
+		5B3AA0231B0B419A00B4A003 /* DemoGlyphDrawView.h.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B3AA0211B0B419A00B4A003 /* DemoGlyphDrawView.h.mm */; };
 		5B408E751AE5F5E600CE34D6 /* DemoIphoneNumberController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B408E6E1AE5F5E600CE34D6 /* DemoIphoneNumberController.mm */; };
 		5B408E761AE5F5E600CE34D6 /* DemoIphoneNumberHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B408E701AE5F5E600CE34D6 /* DemoIphoneNumberHelper.mm */; };
 		5B408E771AE5F5E600CE34D6 /* DemoIphoneNumberView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B408E721AE5F5E600CE34D6 /* DemoIphoneNumberView.mm */; };
@@ -147,6 +149,10 @@
 		5B36D9B11B09917C00831CE1 /* NSDictionary+NBCoreText.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSDictionary+NBCoreText.mm"; sourceTree = "<group>"; };
 		5B36D9B21B09917C00831CE1 /* NSString+Paragraphs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Paragraphs.h"; sourceTree = "<group>"; };
 		5B36D9B31B09917C00831CE1 /* NSString+Paragraphs.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSString+Paragraphs.mm"; sourceTree = "<group>"; };
+		5B3AA01E1B0B419A00B4A003 /* DemoGlyphDrawController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoGlyphDrawController.h; sourceTree = "<group>"; };
+		5B3AA01F1B0B419A00B4A003 /* DemoGlyphDrawController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoGlyphDrawController.mm; sourceTree = "<group>"; };
+		5B3AA0201B0B419A00B4A003 /* DemoGlyphDrawView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoGlyphDrawView.h; sourceTree = "<group>"; };
+		5B3AA0211B0B419A00B4A003 /* DemoGlyphDrawView.h.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoGlyphDrawView.h.mm; sourceTree = "<group>"; };
 		5B408E6D1AE5F5E600CE34D6 /* DemoIphoneNumberController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoIphoneNumberController.h; sourceTree = "<group>"; };
 		5B408E6E1AE5F5E600CE34D6 /* DemoIphoneNumberController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoIphoneNumberController.mm; sourceTree = "<group>"; };
 		5B408E6F1AE5F5E600CE34D6 /* DemoIphoneNumberHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoIphoneNumberHelper.h; sourceTree = "<group>"; };
@@ -270,6 +276,7 @@
 		5B05D3551AF1CF10000CBAD1 /* Src20150501 */ = {
 			isa = PBXGroup;
 			children = (
+				5B3AA01D1B0B419A00B4A003 /* DemoGlyphDraw20150519 */,
 				5B7D8FCB1AFB13A0006CDDE3 /* NBPageRender */,
 				5B05D3DB1AF1FAE5000CBAD1 /* DemoUIPageVIewController20131216 */,
 				5B05D3561AF1CF10000CBAD1 /* viewCoreTextDraw20131129 */,
@@ -380,6 +387,17 @@
 				5B36D9B31B09917C00831CE1 /* NSString+Paragraphs.mm */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		5B3AA01D1B0B419A00B4A003 /* DemoGlyphDraw20150519 */ = {
+			isa = PBXGroup;
+			children = (
+				5B3AA01E1B0B419A00B4A003 /* DemoGlyphDrawController.h */,
+				5B3AA01F1B0B419A00B4A003 /* DemoGlyphDrawController.mm */,
+				5B3AA0201B0B419A00B4A003 /* DemoGlyphDrawView.h */,
+				5B3AA0211B0B419A00B4A003 /* DemoGlyphDrawView.h.mm */,
+			);
+			path = DemoGlyphDraw20150519;
 			sourceTree = "<group>";
 		};
 		5B408E6B1AE5F5E600CE34D6 /* ABAddressBook */ = {
@@ -819,6 +837,7 @@
 				5B408E9E1AE5F8A000CE34D6 /* FEEmojiLabel.mm in Sources */,
 				5B7D8FDC1AFB13A0006CDDE3 /* NBPageItem.m in Sources */,
 				5B408E9C1AE5F8A000CE34D6 /* DemoViewCAKeyView.mm in Sources */,
+				5B3AA0221B0B419A00B4A003 /* DemoGlyphDrawController.mm in Sources */,
 				5B408EA61AE5F8A000CE34D6 /* FEJSONParameterAnalyzer.mm in Sources */,
 				5B408E751AE5F5E600CE34D6 /* DemoIphoneNumberController.mm in Sources */,
 				5B408EC31AE5F90A00CE34D6 /* NSDate+String.m in Sources */,
@@ -826,6 +845,7 @@
 				5B408E9D1AE5F8A000CE34D6 /* FEEmojiIconDataFactory.mm in Sources */,
 				5B0AFCC71AE8DC5E00238079 /* DemoRegularExpController.mm in Sources */,
 				5BCF31051AE539D60015B6A3 /* RootViewController.mm in Sources */,
+				5B3AA0231B0B419A00B4A003 /* DemoGlyphDrawView.h.mm in Sources */,
 				5B408ECA1AE5F90A00CE34D6 /* NSMutableString+ExceptionSafe.m in Sources */,
 				5B05D36D1AF1CF10000CBAD1 /* DemoSettingView.mm in Sources */,
 				5BCBF9A41AE4F9CF00BE201E /* main.m in Sources */,

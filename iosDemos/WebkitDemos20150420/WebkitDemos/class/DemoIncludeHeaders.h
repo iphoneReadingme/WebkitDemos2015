@@ -17,6 +17,10 @@
 
 #import <UIKit/UIKit.h>
 
+
+///< 文字绘制
+#import "DemoGlyphDrawController.h"
+
 ///< 2015-04-23 正则表达式 demo"
 #import "DemoRegularExpController.h"
 

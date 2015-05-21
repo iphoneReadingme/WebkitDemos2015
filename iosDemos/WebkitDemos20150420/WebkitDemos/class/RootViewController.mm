@@ -213,6 +213,9 @@
 	
 	NSMutableArray *webkitList = [NSMutableArray array];
 	
+	///< 2015-05-19 文字绘制
+	[webkitList addObject:[DemoGlyphDrawController class]];
+	
 	///< 2015-04-23 正则表达式 demo
 	[webkitList addObject:[DemoRegularExpController class]];
 	
