@@ -349,8 +349,6 @@
 {
 	CGPoint pt = [self baselineOrigin];
 	
-	CGFloat deta = 0;
-	
 	CGFloat fAverageHalfWidth = (NSInteger)(_width*0.5/_nCount +0.99);
 	CGFloat fAverageWidth = fAverageHalfWidth + fAverageHalfWidth;
 	
@@ -387,36 +385,18 @@
 			glyphRectList[i] = glyphRect;
 		}
 		
-		if (nMarkCount > 0)
-		{
-			deta = (rect.size.width - realWidth)/_nCount;
-		}
-		
-		CGFloat x = 0;
+		glyphRect = CTRunGetImageBounds(_run, context, CFRangeMake(0, _nCount));
 		CGFloat fOffset = 0;
+		if (glyphRect.size.width > rect.size.width)
+		{
+			fOffset = (glyphRect.size.width - rect.size.width)/_nCount;
+		}
 		
 		for (i = 0; i < _nCount; i++)
 		{
-			x = pt.x;
-			
-			if (markGlyphWidth[i] < fAverageHalfWidth)
-			{
-				fOffset = fAverageHalfWidth * 0.5;
-				x += fOffset;
-			}
-			
-			CGContextShowGlyphsAtPoint(context, x, pt.y, _buffer + i, 1);
-			
-			if (markGlyphWidth[i] < fAverageHalfWidth)
-			{
-				fOffset = fAverageHalfWidth + markGlyphWidth[i];
-			}
-			else
-			{
-				fOffset = markGlyphWidth[i];
-			}
-			
-			pt.x += fOffset + deta;
+			CGContextShowGlyphsAtPoint(context, pt.x, pt.y, _buffer + i, 1);
+			pt = CGContextGetTextPosition(context);
+			pt.x -= fOffset;
 		}
 	}
 }

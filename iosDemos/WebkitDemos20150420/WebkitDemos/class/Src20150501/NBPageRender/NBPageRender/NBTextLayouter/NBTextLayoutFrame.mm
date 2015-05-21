@@ -523,6 +523,7 @@
 	
 	NBTextLine *firstLine = nil;
 	BOOL bHasCheckMarkChar = NO;
+	BOOL bLineFirstInParagraph = NO;
 	
 	do
 	{
@@ -535,14 +536,17 @@
 			int n = 0;
 			n = 0;
 		}
-		BOOL bEnd = NO;
 		
+		bLineFirstInParagraph = NO;
+		
+		BOOL bEnd = NO;
 		NSInteger i = 0;
 		
 		while (lineRange.location >= curParagraphEnd)
 		{
 			if (i < _paragraphCount)
 			{
+				bLineFirstInParagraph = YES;
 				curParagraphEnd = *(_paragraphEndIndexList + i);
 				
 				i++;
@@ -638,8 +642,7 @@
 				line = newLineRef;
 			}
 		}
-#if 1
-		else if(nCount != 0)
+		else// if(nCount != 0)
 		{
 			NSString *lineString = [[_attrString string] substringWithRange:lineRange];
 			
@@ -657,15 +660,25 @@
 			}
 			
 			NSUInteger nCharWidth = currentLineWidth/lineRange.length;
+			
 			CGFloat deta = (_frame.size.width - currentLineWidth);
 			
 			CTLineRef justifiedLine = nil;
 			if (newLineRef
-				//&&(nCharWidth*0.5 + currentLineWidth > _frame.size.width)
+				&& !(currentLineWidth + nCharWidth*2 < _frame.size.width)
 				)
 			{
 				deta = 0;
 				justifiedLine = CTLineCreateJustifiedLine(newLineRef, 1.0f, availableWidth);
+				if (justifiedLine == nil)
+				{
+					if (currentLineWidth > _frame.size.width)
+					{
+						availableWidth = _frame.size.width + nCharWidth*0.5f;
+					}
+					justifiedLine = CTLineCreateJustifiedLine(newLineRef, 1.0f, availableWidth);
+					NSLog(@"[页：%d],%@,%@", [typesetLines count]+1, NSStringFromRange(lineRange), lineString);
+				}
 			}
 			
 			if (justifiedLine)
@@ -684,7 +697,6 @@
 				line = newLineRef;
 			}
 		}
-#endif
 		
 		if (line == nil)
 		{
@@ -701,6 +713,7 @@
 		NBTextLine *newLine = [[[NBTextLine alloc] initWithLine:line stringLocationOffset: 0] autorelease];
 		newLine.textRange = lineRange;
 		newLine.text = [[_attrString string] substringWithRange:lineRange]; ///< for test
+		newLine.justifiedCTRun = bLineFirstInParagraph;
 		
 		CFRelease(line);
 		
@@ -721,15 +734,8 @@
 		
 		if (lineBottom > maxY)
 		{
-			if ([typesetLines count])
-			{
-				bRet = YES;
-				break;
-			}
-			else
-			{
-				break;
-			}
+			bRet =  ([typesetLines count] > 0);
+			break;
 		}
 		
 		[typesetLines addObject:newLine];
@@ -764,18 +770,9 @@
 
 - (void)updateLinesOriginInRect:(CGRect)columnFrame with:(BOOL)bLastPage
 {
-//	NSInteger i = 0;
-//	NSInteger nCount = 0;
-	
 	NSArray *lineList = _lines;
 	for (NBTextLine* lineObj in lineList)
 	{
-//		if (nCount < i + 2)
-//		{
-//			i = i;
-//		}
-//		i++;
-		
 		CGPoint origin = lineObj.baselineOrigin;
 		CGFloat h = lineObj.descent + lineObj.ascent + lineObj.leading;
 		
@@ -848,18 +845,13 @@
 
 - (void)drawLinesWith:(CGContextRef)context inRect:(CGRect)rect
 {
-//	NSInteger nCount = 0;
-//	NSInteger i = 1;
+	BOOL bFirstLine = YES;
 	NSArray *lineList = _lines;
+	
 	for (NBTextLine* lineObj in lineList)
 	{
-//		if (nCount < i + 2)
-//		{
-//			i = i;
-//		}
-//		i++;
-		
-		[lineObj drawLinesWith:context inRect:rect];
+		[lineObj drawLinesWith:context inRect:rect with:bFirstLine];
+		bFirstLine = NO;
 	}
 }
 

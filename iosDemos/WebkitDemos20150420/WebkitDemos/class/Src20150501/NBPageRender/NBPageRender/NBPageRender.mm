@@ -60,8 +60,8 @@
 @interface NBPageRender ()
 
 @property (nonatomic, retain) NBBookLayoutConfig *layoutConfig;
-@property (nonatomic, retain) NSString *chapterTextContent;
-@property (nonatomic, retain) NSString *chapterName;
+@property (nonatomic, copy) NSString *chapterTextContent;
+@property (nonatomic, copy) NSString *chapterName;
 
 @property (nonatomic, retain) NBTextLayoutFrame  *nblayoutFrame;
 @property (nonatomic, retain) NBTextLayouter     *textLayout;

@@ -458,18 +458,24 @@
 	return nil;
 }
 
-- (void)drawLinesWith:(CGContextRef)context inRect:(CGRect)rect
+- (void)drawLinesWith:(CGContextRef)context inRect:(CGRect)rect with:(BOOL)firstLine
 {
-	CGPoint linePtOrigin = _baselineOrigin;
+	if (firstLine)
+	{
+		CGContextSetTextPosition(context, rect.size.width + 100, -100);
+		CTLineDraw(_line, context); ///< 让系统装载文字字体
+	}
 	
+	CGPoint linePtOrigin = _baselineOrigin;
 	CGContextSetTextPosition(context, linePtOrigin.x, linePtOrigin.y);
 	
-	BOOL bRunDraw = YES;
-	bRunDraw = (_width > rect.size.width);
-	if (bRunDraw)
+//	NSLog(@"NBTextLine, _text:%@", _text);
+	
+	BOOL bRunDraw = NO;
+//	bRunDraw = (_width > rect.size.width);
+	if (bRunDraw || _justifiedCTRun)
 	{
 		linePtOrigin = CGPointZero;
-		
 		for (NBTextGlyphRun *oneRun in self.glyphRuns)
 		{
 			[oneRun drawRunWith:context inRect:rect];

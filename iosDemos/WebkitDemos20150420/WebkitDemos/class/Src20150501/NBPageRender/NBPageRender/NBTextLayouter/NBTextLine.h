@@ -41,6 +41,7 @@
 	BOOL _hasScannedGlyphRunsForValues;
 }
 
+@property (nonatomic, assign) BOOL justifiedCTRun;
 
 @property (nonatomic, copy) NSString *text;
 
@@ -73,7 +74,7 @@
 - (NSArray *)getGlyphRuns;
 - (NSString*)getLineText;
 
-- (void)drawLinesWith:(CGContextRef)context inRect:(CGRect)rect;
+- (void)drawLinesWith:(CGContextRef)context inRect:(CGRect)rect with:(BOOL)firstLine;
 
 
 @end
