@@ -213,6 +213,10 @@
 	
 	NSMutableArray *webkitList = [NSMutableArray array];
 	
+	
+	///< 3D 透视投影变换矩阵
+	[webkitList addObject:[Demo3DPerspectiveController class]];
+	
 	///< 2015-05-19 文字绘制
 	[webkitList addObject:[DemoGlyphDrawController class]];
 	

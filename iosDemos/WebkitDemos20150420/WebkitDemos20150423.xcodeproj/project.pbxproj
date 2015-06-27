@@ -83,6 +83,9 @@
 		5BCF311B1AE53A5F0015B6A3 /* DemoShakeController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5BCF31151AE53A5F0015B6A3 /* DemoShakeController.mm */; };
 		5BCF311C1AE53A5F0015B6A3 /* DemoShakeView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5BCF31171AE53A5F0015B6A3 /* DemoShakeView.mm */; };
 		5BCF311F1AE53A840015B6A3 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BCF311E1AE53A840015B6A3 /* CoreMotion.framework */; };
+		5BD413981B3EB3E1005E5380 /* Demo3DPerspectiveController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5BD413951B3EB3E1005E5380 /* Demo3DPerspectiveController.mm */; };
+		5BD413991B3EB3E1005E5380 /* Demo3DPerspectiveView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5BD413971B3EB3E1005E5380 /* Demo3DPerspectiveView.mm */; };
+		5BD4139C1B3EB441005E5380 /* CATransform3DPerspect.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD4139B1B3EB441005E5380 /* CATransform3DPerspect.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -251,6 +254,12 @@
 		5BCF31161AE53A5F0015B6A3 /* DemoShakeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoShakeView.h; sourceTree = "<group>"; };
 		5BCF31171AE53A5F0015B6A3 /* DemoShakeView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoShakeView.mm; sourceTree = "<group>"; };
 		5BCF311E1AE53A840015B6A3 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		5BD413941B3EB3E1005E5380 /* Demo3DPerspectiveController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Demo3DPerspectiveController.h; sourceTree = "<group>"; };
+		5BD413951B3EB3E1005E5380 /* Demo3DPerspectiveController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Demo3DPerspectiveController.mm; sourceTree = "<group>"; };
+		5BD413961B3EB3E1005E5380 /* Demo3DPerspectiveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Demo3DPerspectiveView.h; sourceTree = "<group>"; };
+		5BD413971B3EB3E1005E5380 /* Demo3DPerspectiveView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Demo3DPerspectiveView.mm; sourceTree = "<group>"; };
+		5BD4139A1B3EB441005E5380 /* CATransform3DPerspect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATransform3DPerspect.h; sourceTree = "<group>"; };
+		5BD4139B1B3EB441005E5380 /* CATransform3DPerspect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CATransform3DPerspect.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -276,6 +285,7 @@
 		5B05D3551AF1CF10000CBAD1 /* Src20150501 */ = {
 			isa = PBXGroup;
 			children = (
+				5BD413921B3EB3E1005E5380 /* ios3DTransform */,
 				5B3AA01D1B0B419A00B4A003 /* DemoGlyphDraw20150519 */,
 				5B7D8FCB1AFB13A0006CDDE3 /* NBPageRender */,
 				5B05D3DB1AF1FAE5000CBAD1 /* DemoUIPageVIewController20131216 */,
@@ -723,6 +733,27 @@
 			path = DemoShakeController;
 			sourceTree = "<group>";
 		};
+		5BD413921B3EB3E1005E5380 /* ios3DTransform */ = {
+			isa = PBXGroup;
+			children = (
+				5BD413931B3EB3E1005E5380 /* Transform3DPerspective */,
+			);
+			path = ios3DTransform;
+			sourceTree = "<group>";
+		};
+		5BD413931B3EB3E1005E5380 /* Transform3DPerspective */ = {
+			isa = PBXGroup;
+			children = (
+				5BD4139A1B3EB441005E5380 /* CATransform3DPerspect.h */,
+				5BD4139B1B3EB441005E5380 /* CATransform3DPerspect.m */,
+				5BD413941B3EB3E1005E5380 /* Demo3DPerspectiveController.h */,
+				5BD413951B3EB3E1005E5380 /* Demo3DPerspectiveController.mm */,
+				5BD413961B3EB3E1005E5380 /* Demo3DPerspectiveView.h */,
+				5BD413971B3EB3E1005E5380 /* Demo3DPerspectiveView.mm */,
+			);
+			path = Transform3DPerspective;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -855,6 +886,7 @@
 				5BCBF9AA1AE4F9CF00BE201E /* WebkitDemos.xcdatamodeld in Sources */,
 				5B408EC21AE5F90A00CE34D6 /* JSONKit.m in Sources */,
 				5BCF30DD1AE539A50015B6A3 /* MasterViewController.m in Sources */,
+				5BD4139C1B3EB441005E5380 /* CATransform3DPerspect.m in Sources */,
 				5BCF310B1AE539D60015B6A3 /* DemoMessageCenterView.mm in Sources */,
 				5B408E9B1AE5F8A000CE34D6 /* DemoViewCAKeyAnimationController.mm in Sources */,
 				5BCF311B1AE53A5F0015B6A3 /* DemoShakeController.mm in Sources */,
@@ -872,7 +904,9 @@
 				5B0AFCC81AE8DC5E00238079 /* DemoRegularExpView.mm in Sources */,
 				5B408EC81AE5F90A00CE34D6 /* NSMutableArray+ExceptionSafe.mm in Sources */,
 				5B36D9B61B09917C00831CE1 /* NBTextGlyphRun.mm in Sources */,
+				5BD413981B3EB3E1005E5380 /* Demo3DPerspectiveController.mm in Sources */,
 				5B408EA31AE5F8A000CE34D6 /* FEFestivalParameterInfo.mm in Sources */,
+				5BD413991B3EB3E1005E5380 /* Demo3DPerspectiveView.mm in Sources */,
 				5B36D9BA1B09917C00831CE1 /* NBConstants.mm in Sources */,
 				5B7D8FDA1AFB13A0006CDDE3 /* NBBookLayoutConfig.mm in Sources */,
 				5B408EC51AE5F90A00CE34D6 /* NSArray+ExceptionSafe.mm in Sources */,

@@ -18,6 +18,9 @@
 #import <UIKit/UIKit.h>
 
 
+///< 3D 透视投影变换矩阵
+#import "Demo3DPerspectiveController.h"
+
 ///< 文字绘制
 #import "DemoGlyphDrawController.h"
 
