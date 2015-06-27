@@ -85,7 +85,7 @@
 		5BCF311F1AE53A840015B6A3 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BCF311E1AE53A840015B6A3 /* CoreMotion.framework */; };
 		5BD413981B3EB3E1005E5380 /* Demo3DPerspectiveController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5BD413951B3EB3E1005E5380 /* Demo3DPerspectiveController.mm */; };
 		5BD413991B3EB3E1005E5380 /* Demo3DPerspectiveView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5BD413971B3EB3E1005E5380 /* Demo3DPerspectiveView.mm */; };
-		5BD4139C1B3EB441005E5380 /* CATransform3DPerspect.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD4139B1B3EB441005E5380 /* CATransform3DPerspect.m */; };
+		5BD4139C1B3EB441005E5380 /* CATransform3DPerspect.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5BD4139B1B3EB441005E5380 /* CATransform3DPerspect.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -259,7 +259,7 @@
 		5BD413961B3EB3E1005E5380 /* Demo3DPerspectiveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Demo3DPerspectiveView.h; sourceTree = "<group>"; };
 		5BD413971B3EB3E1005E5380 /* Demo3DPerspectiveView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Demo3DPerspectiveView.mm; sourceTree = "<group>"; };
 		5BD4139A1B3EB441005E5380 /* CATransform3DPerspect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATransform3DPerspect.h; sourceTree = "<group>"; };
-		5BD4139B1B3EB441005E5380 /* CATransform3DPerspect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CATransform3DPerspect.m; sourceTree = "<group>"; };
+		5BD4139B1B3EB441005E5380 /* CATransform3DPerspect.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CATransform3DPerspect.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -745,7 +745,7 @@
 			isa = PBXGroup;
 			children = (
 				5BD4139A1B3EB441005E5380 /* CATransform3DPerspect.h */,
-				5BD4139B1B3EB441005E5380 /* CATransform3DPerspect.m */,
+				5BD4139B1B3EB441005E5380 /* CATransform3DPerspect.mm */,
 				5BD413941B3EB3E1005E5380 /* Demo3DPerspectiveController.h */,
 				5BD413951B3EB3E1005E5380 /* Demo3DPerspectiveController.mm */,
 				5BD413961B3EB3E1005E5380 /* Demo3DPerspectiveView.h */,
@@ -886,7 +886,7 @@
 				5BCBF9AA1AE4F9CF00BE201E /* WebkitDemos.xcdatamodeld in Sources */,
 				5B408EC21AE5F90A00CE34D6 /* JSONKit.m in Sources */,
 				5BCF30DD1AE539A50015B6A3 /* MasterViewController.m in Sources */,
-				5BD4139C1B3EB441005E5380 /* CATransform3DPerspect.m in Sources */,
+				5BD4139C1B3EB441005E5380 /* CATransform3DPerspect.mm in Sources */,
 				5BCF310B1AE539D60015B6A3 /* DemoMessageCenterView.mm in Sources */,
 				5B408E9B1AE5F8A000CE34D6 /* DemoViewCAKeyAnimationController.mm in Sources */,
 				5BCF311B1AE53A5F0015B6A3 /* DemoShakeController.mm in Sources */,

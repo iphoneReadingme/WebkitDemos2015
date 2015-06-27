@@ -85,7 +85,7 @@
 	CGRect frame = [self.view bounds];
 	
 	frame.origin.y += 44;
-	frame.size.height -= 20 + frame.origin.y;
+	frame.size.height -= frame.origin.y;
 	
 	return frame;
 }
