@@ -9,6 +9,17 @@
 #ifndef IOS_3D_UI_CATransform3DPerspect_h
 #define IOS_3D_UI_CATransform3DPerspect_h
 
+
+// https://books.google.com/books?id=wCfWkc_E3GkC&pg=PA35&hl=zh-CN&source=gbs_toc_r&cad=3#v=onepage&q&f=false
+///< 3D 向量
+typedef struct
+{
+	CGFloat x;     ///< x
+	CGFloat y;     ///< y
+	CGFloat z;     ///< z
+}Vector3;
+
+
 /**
  *  构造CALayer的透视投影矩阵
  *  center : 相机相对于CALayer的平面位置

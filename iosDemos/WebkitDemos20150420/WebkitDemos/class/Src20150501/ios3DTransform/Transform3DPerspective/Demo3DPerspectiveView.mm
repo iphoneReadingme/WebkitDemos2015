@@ -211,16 +211,22 @@
 	}
 }
 
+Vector3 xAxes = {1, 0, 0};
+Vector3 yAxes = {0, 1, 0};
+Vector3 zAxes = {0, 0, 1};
+
 - (void)setCubeFlipAngle:(float)angle
 {
 	CGFloat y = kImageViewTop;
 	CATransform3D move = CATransform3DMakeTranslation(0, y, kImageViewWidth*0.5f);
 	CATransform3D back = CATransform3DMakeTranslation(0, y, -kImageViewWidth*0.5f);
 	
-	CATransform3D rotate0 = CATransform3DMakeRotation(-angle, 0, 1, 0);
-	CATransform3D rotate1 = CATransform3DMakeRotation(M_PI_2-angle, 0, 1, 0);
-	CATransform3D rotate2 = CATransform3DMakeRotation(M_PI_2*2-angle, 0, 1, 0);
-	CATransform3D rotate3 = CATransform3DMakeRotation(M_PI_2*3-angle, 0, 1, 0);
+	Vector3 rotateAxes = yAxes;
+	
+	CATransform3D rotate0 = CATransform3DMakeRotation(-angle, rotateAxes.x, rotateAxes.y, rotateAxes.z);
+	CATransform3D rotate1 = CATransform3DMakeRotation(M_PI_2-angle, rotateAxes.x, rotateAxes.y, rotateAxes.z);
+	CATransform3D rotate2 = CATransform3DMakeRotation(M_PI_2*2-angle, rotateAxes.x, rotateAxes.y, rotateAxes.z);
+	CATransform3D rotate3 = CATransform3DMakeRotation(M_PI_2*3-angle, rotateAxes.x, rotateAxes.y, rotateAxes.z);
 	
 	CATransform3D mat0 = CATransform3DConcat(CATransform3DConcat(move, rotate0), back);
 	CATransform3D mat1 = CATransform3DConcat(CATransform3DConcat(move, rotate1), back);
