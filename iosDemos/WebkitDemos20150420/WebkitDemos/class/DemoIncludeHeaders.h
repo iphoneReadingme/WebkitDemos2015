@@ -18,6 +18,9 @@
 #import <UIKit/UIKit.h>
 
 
+///< view layer Mask 图形掩码
+#import "DemoMaskLayerController.h"
+
 ///< 3D 透视投影变换矩阵
 #import "Demo3DPerspectiveController.h"
 

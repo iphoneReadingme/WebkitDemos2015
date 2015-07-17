@@ -214,6 +214,9 @@
 	NSMutableArray *webkitList = [NSMutableArray array];
 	
 	
+	///< 20150717_layer Mask 图形掩码
+	[webkitList addObject:[DemoMaskLayerController class]];
+	
 	///< 3D 透视投影变换矩阵
 	[webkitList addObject:[Demo3DPerspectiveController class]];
 	

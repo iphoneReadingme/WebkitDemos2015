@@ -33,7 +33,7 @@
 		5B36D9BE1B09917C00831CE1 /* NSDictionary+NBCoreText.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B36D9B11B09917C00831CE1 /* NSDictionary+NBCoreText.mm */; };
 		5B36D9BF1B09917C00831CE1 /* NSString+Paragraphs.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B36D9B31B09917C00831CE1 /* NSString+Paragraphs.mm */; };
 		5B3AA0221B0B419A00B4A003 /* DemoGlyphDrawController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B3AA01F1B0B419A00B4A003 /* DemoGlyphDrawController.mm */; };
-		5B3AA0231B0B419A00B4A003 /* DemoGlyphDrawView.h.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B3AA0211B0B419A00B4A003 /* DemoGlyphDrawView.h.mm */; };
+		5B3AA0231B0B419A00B4A003 /* DemoGlyphDrawView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B3AA0211B0B419A00B4A003 /* DemoGlyphDrawView.mm */; };
 		5B408E751AE5F5E600CE34D6 /* DemoIphoneNumberController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B408E6E1AE5F5E600CE34D6 /* DemoIphoneNumberController.mm */; };
 		5B408E761AE5F5E600CE34D6 /* DemoIphoneNumberHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B408E701AE5F5E600CE34D6 /* DemoIphoneNumberHelper.mm */; };
 		5B408E771AE5F5E600CE34D6 /* DemoIphoneNumberView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B408E721AE5F5E600CE34D6 /* DemoIphoneNumberView.mm */; };
@@ -68,6 +68,8 @@
 		5B7D8FDC1AFB13A0006CDDE3 /* NBPageItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7D8FD51AFB13A0006CDDE3 /* NBPageItem.m */; };
 		5B99BDC81B578317004B7AFD /* ResManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B99BDC51B578317004B7AFD /* ResManager.mm */; };
 		5B99BDC91B578317004B7AFD /* ResManagerHelp.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B99BDC71B578317004B7AFD /* ResManagerHelp.mm */; };
+		5BB6C2E31B58E47100197902 /* DemoMaskLayerController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5BB6C2E01B58E47100197902 /* DemoMaskLayerController.mm */; };
+		5BB6C2E41B58E47100197902 /* DemoMaskLayerView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5BB6C2E21B58E47100197902 /* DemoMaskLayerView.mm */; };
 		5BCBF9A41AE4F9CF00BE201E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCBF9A31AE4F9CF00BE201E /* main.m */; };
 		5BCBF9AA1AE4F9CF00BE201E /* WebkitDemos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5BCBF9A81AE4F9CF00BE201E /* WebkitDemos.xcdatamodeld */; };
 		5BCBF9B31AE4F9CF00BE201E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BCBF9B11AE4F9CF00BE201E /* Main.storyboard */; };
@@ -157,7 +159,7 @@
 		5B3AA01E1B0B419A00B4A003 /* DemoGlyphDrawController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoGlyphDrawController.h; sourceTree = "<group>"; };
 		5B3AA01F1B0B419A00B4A003 /* DemoGlyphDrawController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoGlyphDrawController.mm; sourceTree = "<group>"; };
 		5B3AA0201B0B419A00B4A003 /* DemoGlyphDrawView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoGlyphDrawView.h; sourceTree = "<group>"; };
-		5B3AA0211B0B419A00B4A003 /* DemoGlyphDrawView.h.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoGlyphDrawView.h.mm; sourceTree = "<group>"; };
+		5B3AA0211B0B419A00B4A003 /* DemoGlyphDrawView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoGlyphDrawView.mm; sourceTree = "<group>"; };
 		5B408E6D1AE5F5E600CE34D6 /* DemoIphoneNumberController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoIphoneNumberController.h; sourceTree = "<group>"; };
 		5B408E6E1AE5F5E600CE34D6 /* DemoIphoneNumberController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoIphoneNumberController.mm; sourceTree = "<group>"; };
 		5B408E6F1AE5F5E600CE34D6 /* DemoIphoneNumberHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoIphoneNumberHelper.h; sourceTree = "<group>"; };
@@ -228,6 +230,10 @@
 		5B99BDC51B578317004B7AFD /* ResManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResManager.mm; sourceTree = "<group>"; };
 		5B99BDC61B578317004B7AFD /* ResManagerHelp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResManagerHelp.h; sourceTree = "<group>"; };
 		5B99BDC71B578317004B7AFD /* ResManagerHelp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResManagerHelp.mm; sourceTree = "<group>"; };
+		5BB6C2DF1B58E47100197902 /* DemoMaskLayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoMaskLayerController.h; sourceTree = "<group>"; };
+		5BB6C2E01B58E47100197902 /* DemoMaskLayerController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoMaskLayerController.mm; sourceTree = "<group>"; };
+		5BB6C2E11B58E47100197902 /* DemoMaskLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoMaskLayerView.h; sourceTree = "<group>"; };
+		5BB6C2E21B58E47100197902 /* DemoMaskLayerView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoMaskLayerView.mm; sourceTree = "<group>"; };
 		5BCBF99E1AE4F9CF00BE201E /* WebkitDemos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebkitDemos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BCBF9A21AE4F9CF00BE201E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5BCBF9A31AE4F9CF00BE201E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -411,7 +417,7 @@
 				5B3AA01E1B0B419A00B4A003 /* DemoGlyphDrawController.h */,
 				5B3AA01F1B0B419A00B4A003 /* DemoGlyphDrawController.mm */,
 				5B3AA0201B0B419A00B4A003 /* DemoGlyphDrawView.h */,
-				5B3AA0211B0B419A00B4A003 /* DemoGlyphDrawView.h.mm */,
+				5B3AA0211B0B419A00B4A003 /* DemoGlyphDrawView.mm */,
 			);
 			path = DemoGlyphDraw20150519;
 			sourceTree = "<group>";
@@ -626,6 +632,18 @@
 			path = ResManager;
 			sourceTree = "<group>";
 		};
+		5BB6C2DE1B58E47100197902 /* DemoMaskLayer20150717 */ = {
+			isa = PBXGroup;
+			children = (
+				5BB6C2DF1B58E47100197902 /* DemoMaskLayerController.h */,
+				5BB6C2E01B58E47100197902 /* DemoMaskLayerController.mm */,
+				5BB6C2E11B58E47100197902 /* DemoMaskLayerView.h */,
+				5BB6C2E21B58E47100197902 /* DemoMaskLayerView.mm */,
+			);
+			name = DemoMaskLayer20150717;
+			path = WebkitDemos/class/Src20150501/DemoMaskLayer20150717;
+			sourceTree = SOURCE_ROOT;
+		};
 		5BCBF9951AE4F9CF00BE201E = {
 			isa = PBXGroup;
 			children = (
@@ -762,6 +780,7 @@
 		5BD413921B3EB3E1005E5380 /* ios3DTransform */ = {
 			isa = PBXGroup;
 			children = (
+				5BB6C2DE1B58E47100197902 /* DemoMaskLayer20150717 */,
 				5BD413931B3EB3E1005E5380 /* Transform3DPerspective */,
 			);
 			path = ios3DTransform;
@@ -894,6 +913,7 @@
 				5B408E9E1AE5F8A000CE34D6 /* FEEmojiLabel.mm in Sources */,
 				5B7D8FDC1AFB13A0006CDDE3 /* NBPageItem.m in Sources */,
 				5B408E9C1AE5F8A000CE34D6 /* DemoViewCAKeyView.mm in Sources */,
+				5BB6C2E41B58E47100197902 /* DemoMaskLayerView.mm in Sources */,
 				5B3AA0221B0B419A00B4A003 /* DemoGlyphDrawController.mm in Sources */,
 				5B408EA61AE5F8A000CE34D6 /* FEJSONParameterAnalyzer.mm in Sources */,
 				5B408E751AE5F5E600CE34D6 /* DemoIphoneNumberController.mm in Sources */,
@@ -903,7 +923,7 @@
 				5B99BDC91B578317004B7AFD /* ResManagerHelp.mm in Sources */,
 				5B0AFCC71AE8DC5E00238079 /* DemoRegularExpController.mm in Sources */,
 				5BCF31051AE539D60015B6A3 /* RootViewController.mm in Sources */,
-				5B3AA0231B0B419A00B4A003 /* DemoGlyphDrawView.h.mm in Sources */,
+				5B3AA0231B0B419A00B4A003 /* DemoGlyphDrawView.mm in Sources */,
 				5B408ECA1AE5F90A00CE34D6 /* NSMutableString+ExceptionSafe.m in Sources */,
 				5B05D36D1AF1CF10000CBAD1 /* DemoSettingView.mm in Sources */,
 				5BCBF9A41AE4F9CF00BE201E /* main.m in Sources */,
@@ -926,6 +946,7 @@
 				5B408EA41AE5F8A000CE34D6 /* FEParameterDataProvider.mm in Sources */,
 				5B05D36F1AF1CF10000CBAD1 /* DemoViewSimpleParagraph.mm in Sources */,
 				5B408EA71AE5F8A000CE34D6 /* FEShapeParameterInfo.mm in Sources */,
+				5BB6C2E31B58E47100197902 /* DemoMaskLayerController.mm in Sources */,
 				5B512EB31B00B20300118DC9 /* DemoPageDataProvider.mm in Sources */,
 				5BCF310C1AE539D60015B6A3 /* UIUserNotificationSettings+Extension.m in Sources */,
 				5B408EC61AE5F90A00CE34D6 /* NSDictionary+ExceptionSafe.mm in Sources */,
