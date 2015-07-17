@@ -1,5 +1,6 @@
 
 
+#import "ResManager.h"
 #import "Demo3DPerspectiveView.h"
 #import "CATransform3DPerspect.h"
 
@@ -15,6 +16,7 @@
 @property (nonatomic, retain) UIImageView             *imgView4;
 @property (nonatomic, retain) UIButton                *startButton;
 @property (nonatomic, retain) UIButton                *stopButton;
+@property (nonatomic, retain) UIImageView             *maskView;
 
 @end
 
@@ -33,9 +35,9 @@
 	self = [super initWithFrame:rect];
 	if (self)
 	{
-		self.backgroundColor = [UIColor lightGrayColor];
 		self.accessibilityLabel = @"Demo3DPerspectiveView";
 		
+		[self handleMask];
 		[self addsubViews];
 		
 		[self didThemeChange];
@@ -65,6 +67,78 @@
 	
 	[_stopButton release];
 	_stopButton = nil;
+}
+
+- (void)handleMask
+{
+	UIView* bg1 = [[UIView alloc] initWithFrame:CGRectMake(10,220,300,160)];
+	
+	[self addSubview:bg1];
+	[self getMaskImageView];
+	[self updateChannelMaskImage:bg1];
+	//[self performSelector:@selector(updateChannelMaskImage:) withObject:bg1 afterDelay:0];
+	
+	UILabel *label = [[[UILabel alloc] initWithFrame:CGRectMake(0,160-20,300,25)] autorelease];
+	label.text = @"test mask view";
+	label.textColor = [UIColor redColor];
+	label.backgroundColor = [UIColor clearColor];
+	
+	UIView* bg = [[UIView alloc] initWithFrame:CGRectMake(10,220,300,160)];
+	bg.backgroundColor = [UIColor blueColor];
+	[bg addSubview:label];
+	//[self updateChannelMaskImage:bg];
+	//[self performSelector:@selector(updateChannelMaskImage:) withObject:bg afterDelay:0];
+	
+	//[self addSubview:bg];
+	
+	[bg setFrame:[bg1 bounds]];
+	[bg1 addSubview:bg];
+}
+
+- (void)getMaskImageView
+{
+	CGRect maskRect = CGRectMake(0, 0, 300, 160);
+	CGRect rect = maskRect;
+	static UIImageView* maskView = nil;
+	if (maskView == nil)
+	{
+		maskView = [[[UIImageView alloc] initWithFrame:rect] autorelease];
+		
+		_maskView = [maskView retain];
+	}
+	UIImage* pImage = resGetImage(@"NewsFlow/SiteNav/ChannelLabelMaskImage.png");
+	//pImage = resGetImage(@"NewsFlow/SiteNav/MaskWithAlpha.png");
+	//rect.size = [pImage size];
+	[_maskView setFrame:rect];
+	_maskView.image = pImage;
+}
+
+- (void)updateChannelMaskImage:(UIView*)pView
+{
+	pView.layer.mask = _maskView.layer;
+	
+	pView.layer.borderColor = [UIColor redColor].CGColor;
+	pView.layer.borderWidth = 1;
+}
+
+- (void)updateChannelMaskPath:(UIView*)pView
+{
+	// Create a mask layer and the frame to determine what will be visible in the view.
+	CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+	CGRect maskRect = CGRectMake(50, 50, 100, 50);
+	
+	// Create a path and add the rectangle in it.
+	CGMutablePathRef path = CGPathCreateMutable();
+	CGPathAddRect(path, nil, maskRect);
+	
+	// Set the path to the mask layer.
+	[maskLayer setPath:path];
+	
+	// Release the path since it's not covered by ARC.
+	CGPathRelease(path);
+	
+	// Set the mask of the view.
+	pView.layer.mask = maskLayer;
 }
 
 - (void)addsubViews
@@ -143,6 +217,7 @@
 
 - (void)didThemeChange
 {
+	self.backgroundColor = [UIColor lightGrayColor];
 //	UIImage *pImage = nil;
 	
 	//pImage = resGetImage(@"SmartNoimageEdu/iconBgImage.png");
