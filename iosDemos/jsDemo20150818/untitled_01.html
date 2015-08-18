@@ -1,0 +1,80 @@
+<html>
+
+<script type="text/javascript">src="file:///Users/yangfs/Desktop/20150204UCWeb/UC107_20150806/jsDemo20150818/test.js"</script>
+
+<body>
+
+	Field1: <input type="text" id="field1" value="Hello World!">
+<br />
+	Field2: <input type="text" id="field2">
+<br /><br />
+	Click the button below to copy the content of Field1 to Field2.
+<br />
+
+<button onclick="document.getElementById('field2').value=
+document.getElementById('field1').value">Copy Text</button>
+<br>
+<p>
+	<img src="http://images.cnitblog.com/blog/684349/201501/051119457964555.png" alt width="362" height="233">
+</p>
+
+<script type="text/javascript">
+function onButtonClicked()
+{
+    var imgs = Array.prototype.slice.call(document.images);
+    var length = imgs.length;
+    for(var i=0;i<length;i++)
+    {
+        var img = imgs[i];
+        if (img.className.indexOf('galleryLink') >= 0)
+        {
+            continue;
+        }
+        var imgHref = img.getAttribute("href");
+        var parent = img.parentNode;
+        if (null != parent)
+        {
+            var dataLink = parent.getAttribute("data-link");
+            if (dataLink)
+            {
+                continue;
+            }
+            parent = parent.parentNode;
+        }
+        if (null == img.onclick && (imgHref == null || imgHref == "") &&
+            (null == parent || (parent.tagName != 'A' && parent.className.indexOf('bigImgContainer') < 0)) &&
+            img.naturalWidth >= 200 && img.naturalHeight >= 200)
+        {
+            img.onclick = function onImgClick(e)
+            {
+                if (typeof ucbrowser != 'undefined' && ucbrowser.isMethodSupported('picBImgClicked'))
+                {
+					var cs = window.getComputedStyle(e);
+                    var data = {};
+                    data["src"] = e.target.src;
+					data["tag"] = '%d';
+					data["naturalWidth"] = img.naturalWidth;
+					data["naturalHeight"] = img.naturalHeight;
+					data["clientWidth"] = img.width;
+					data["clientHeight"] = img.height;
+					data["width"] = cs.width;
+					data["height"] = cs.height;
+					data["x"] = 0;
+					data["y"] = 0;
+					
+                    //var jsonString = JSON.stringify(data);
+                    //ucbrowser.picBImgClicked(jsonString);
+                }
+            }
+        }
+        if (i > '%d')
+        {
+            break;
+        }
+    }
+}
+</script>
+<button onclick="onButtonClicked()">test js</button>
+
+</body>
+</html>
