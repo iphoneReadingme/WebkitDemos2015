@@ -27,19 +27,24 @@ function onButtonClicked(e)
         {
             img.onclick = function onImgClick(e)
             {
+                // e:表示事件对象，它的target,就是响应事件的对象，也就是img,而img变量，此时已经不是接收事件的对象，需要通过e.target获取
                 //if (typeof ucbrowser != 'undefined' && ucbrowser.isMethodSupported('picBImgClicked'))
                 {
-					var cs = window.getComputedStyle(img);
+                    var obj = e.target;
+					var cs = window.getComputedStyle(obj);
                     var data = {};
                     data["src"] = e.target.src;
                     data["tag"] = '%d';
-                    data["naturalWidth"] = img.naturalWidth;
-                    data["naturalHeight"] = img.naturalHeight;
+                    data["naturalWidth"] = obj.naturalWidth;
+                    data["naturalHeight"] = obj.naturalHeight;
                     data["clientX"] = e.clientX;
                     data["clientY"] = e.clientY;
                     data["width"] = cs.width;
                     data["height"] = cs.height;
-                    data["info"] = positonOfElementByElement(img); // 得到字符串："{{8,196},{362,233}}"，可以转换成CGRect
+
+                    data["left2"] = getElementLeft(obj);
+                    data["top2"] = getElementTop(obj);
+                    data["info"] = positonOfElementByElement(obj); // 得到字符串："{{8,196},{362,233}}"，可以转换成CGRect
 					
                     //var jsonString = JSON.stringify(data);
                     //ucbrowser.picBImgClicked(jsonString);
@@ -51,6 +56,30 @@ function onButtonClicked(e)
             break;
         }
     }
+}
+
+function getElementLeft(element)
+{
+    var actualLeft = element.offsetLeft;
+    var current = element.offsetParent;
+    while (current !== null)
+    {
+        actualLeft += current.offsetLeft;
+        current = current.offsetParent;
+    }
+    return actualLeft;
+}
+
+function getElementTop(element)
+{
+    var actualTop = element.offsetTop;
+    var current = element.offsetParent;
+    while (current !== null)
+    {
+        actualTop += current.offsetTop;
+        current = current.offsetParent;
+    }
+    return actualTop;
 }
 
 function positonOfElementByElement(obj)
@@ -121,7 +150,6 @@ function positonOfElementByElement(obj)
             var myNode=obj;
             if (myNode)
             {
-                var rect
                 var pos =  '{{'+(getPos.getLeft(myNode)+getPos.getCss3offsetLeft(myNode))+','+(getPos.getTop(myNode)+getPos.getCss3offsetTop(myNode))+'},{'+myNode.offsetWidth+','+myNode.offsetHeight+'}}';
                 return pos;
             }
