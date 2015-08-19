@@ -48,6 +48,7 @@ function onButtonClicked(e)
 					
                     //var jsonString = JSON.stringify(data);
                     //ucbrowser.picBImgClicked(jsonString);
+                    alert("I am an alert box!!")
                 }
             }
         }
