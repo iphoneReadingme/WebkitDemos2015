@@ -425,7 +425,7 @@
 				ORGANIZATIONNAME = xhb;
 				TargetAttributes = {
 					D26E530019B43C880094EC28 = {
-						DevelopmentTeam = 9J59RQ6A8X;
+						DevelopmentTeam = X3X7VZZ2J6;
 					};
 					D26E532119B43C880094EC28 = {
 						TestTargetID = D26E530019B43C880094EC28;
