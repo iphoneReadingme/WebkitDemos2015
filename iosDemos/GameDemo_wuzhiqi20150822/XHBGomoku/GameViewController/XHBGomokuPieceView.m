@@ -8,6 +8,12 @@
 
 #import "XHBGomokuPieceView.h"
 
+
+///< 棋子图片显示区域的大小
+#define kPieceWidth        (22.0f)
+#define kPieceHeight       (22.0f)
+
+
 @interface XHBGomokuPieceView ()
 @property(nonatomic,strong)UIImageView* backView;
 @end
@@ -36,13 +42,15 @@
     if (point.chess.type==XHBGomokuChessTypeEmpty) {
         return nil;
     }
-    XHBGomokuPieceView * piece=[[XHBGomokuPieceView alloc]initWithFrame:CGRectMake(0, 0, 22, 22)];
+	
+	CGRect frame = CGRectMake(0, 0, kPieceWidth, kPieceHeight);
+    XHBGomokuPieceView * piece=[[XHBGomokuPieceView alloc]initWithFrame:frame];
     piece.point=point;
-    UIImageView * imageBackView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 22, 22)];
+    UIImageView * imageBackView=[[UIImageView alloc]initWithFrame:frame];
     [piece addSubview:imageBackView];
     piece.backView=imageBackView;
     
-    UIImageView * view=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 22, 22)];
+    UIImageView * view=[[UIImageView alloc]initWithFrame:frame];
     [piece addSubview:view];
     if (point.chess.type==XHBGomokuChessTypeBlack) {
         view.image=[UIImage imageNamed:@"stone_black"];

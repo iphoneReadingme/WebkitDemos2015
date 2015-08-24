@@ -13,6 +13,7 @@
 #import "XHBGomokuOverViewController.h"
 
 @interface XHBGomokuGameSencesViewController ()
+@property(nonatomic,weak)IBOutlet UIImageView * boardImageView;
 @property(nonatomic,weak)IBOutlet UIView * boardView;
 @property(nonatomic,strong)XHBGomokuGameEngine * game;
 @property(nonatomic,weak)IBOutlet UIButton * btnSound;
@@ -41,17 +42,25 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	
+	self.view.accessibilityLabel = @"GameSencesViewController_View";
+	
     [UIApplication sharedApplication].statusBarHidden=YES;
     // Do any additional setup after loading the view.
     UITapGestureRecognizer * tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
     [self.boardView addGestureRecognizer:tap];
+	[self addChessBoardBackImage];
+	
     self.game=[XHBGomokuGameEngine game];
     self.game.delegate=self;
     self.game.playerFirst=YES;
-    self.view.backgroundColor=[UIColor colorWithIntegerValue:BACKGROUND_COLOR alpha:1];
-    
+	self.view.backgroundColor=[UIColor colorWithIntegerValue:BACKGROUND_COLOR alpha:1];
+	self.view.backgroundColor=[UIColor blueColor];  ///<
+	
     UIColor * color=[UIColor colorWithPatternImage:[UIImage imageNamed:@"topbarbg_2"]];
     self.topView.backgroundColor=color;
+	self.topView.accessibilityLabel=@"topView";
+	
     self.blackChessMan.textColor=color;
     self.whiteChessMan.textColor=color;
     
@@ -67,13 +76,29 @@
     if (!self.game.playerFirst) {
         self.blackChessMan.text=@"Computer";
         self.whiteChessMan.text=@"Player";
-    }else{
+	}else{
+		//  playerFirst => YES : 玩家先手（黑棋）  NO :玩家后手(白棋)
         self.blackChessMan.text=@"Player";
         self.whiteChessMan.text=@"Computer";
     }
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.game begin];
     });
+}
+
+- (void)addChessBoardBackImage
+{
+	self.boardView.accessibilityLabel = @"self.boardView";
+	CGRect rect = CGRectMake(0, 0, 320 ,320);
+	
+	UIImageView* imgView = [[UIImageView alloc] initWithFrame:rect];
+	[self.boardView addSubview:imgView];
+	imgView.image = [UIImage imageNamed:@"gomokuboard"];
+	imgView.accessibilityLabel = @"my_ChessBoardBackImageView";
+	_boardImageView = imgView;
+	//<UIView: 0x7c291270; frame = (0 156; 320 320); autoresize = RM+BM; gestureRecognizers = <NSArray: 0x7c081120>; layer = <CALayer: 0x7c291400>>
+	//| <UIImageView: 0x7c291450; frame = (0 0; 320 320); autoresize = RM+BM; userInteractionEnabled = NO; layer = <CALayer: 0x7c291620>>
+	//self.boardView.imageView.image = [UIImage imageNamed:@"gomokuboard"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -85,16 +110,19 @@
 
 -(void)tapAction:(UITapGestureRecognizer*)tap
 {
+	///< 通过落点位置，确定行、列编号
     CGPoint point=[tap locationInView:self.boardView];
     NSInteger tapRow=0;
     NSInteger tapLine=0;
     for (NSInteger row=1; row<=15; row++) {
-        if (point.y>(21*(row-1)+3)&&point.y<(21*(row-1)+23)) {
+        if (point.y>(21*(row-1)+3)&&point.y<(21*(row-1)+23))
+		{
             tapRow=row;
             break;
         }
     }
-    for (NSInteger line=1; line<=15; line++) {
+    for (NSInteger line=1; line<=15; line++)
+	{
         if (point.x>(21*(line-1)+3)&&point.x<(21*(line-1)+23)) {
             tapLine=line;
             break;
@@ -121,8 +149,11 @@
         [self.game reStart];
     }
 }
+
 -(IBAction)btnBackAction:(id)sender
-{}
+{
+}
+
 -(IBAction)btnSoundAction:(id)sender
 {
     self.btnSound.selected=!self.btnSound.selected;
@@ -131,10 +162,14 @@
     [[NSUserDefaults standardUserDefaults] setObject:number forKey:@"soundOpen"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
+
+///< 重新开始
 -(IBAction)btnRestartAction:(id)sender
 {
     [self.game reStart];
 }
+
+///< 悔棋
 -(IBAction)btnUndoAction:(id)sender
 {
     if ([self.game undo]) {
@@ -155,6 +190,7 @@
 {
     XHBGomokuPieceView * view=[XHBGomokuPieceView piece:point];
     [self.boardView addSubview:view];
+	
     [_pieces addObject:view];
     
     [view setSelected:YES];
@@ -206,7 +242,8 @@
 }
 
 -(void)game:(XHBGomokuGameEngine *)game statuChange:(XHBGameStatu)gameStatu
-{}
+{
+}
 
 -(void)gameRestart:(XHBGomokuGameEngine*)game
 {

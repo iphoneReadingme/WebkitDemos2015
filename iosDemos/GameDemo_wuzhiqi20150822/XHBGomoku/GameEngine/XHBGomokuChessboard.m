@@ -31,10 +31,10 @@
 
 
 @interface XHBGomokuChessboard ()
-@property(nonatomic,strong)NSMutableDictionary * pointsAtRows;
-@property(nonatomic,strong)NSMutableDictionary * pointsAtLines;
-@property(nonatomic,strong)NSMutableDictionary * pointsAtLeftToTops;
-@property(nonatomic,strong)NSMutableDictionary * pointsAtLeftToBottoms;
+@property(nonatomic,strong)NSMutableDictionary * pointsAtRows;   ///< 横线上的点
+@property(nonatomic,strong)NSMutableDictionary * pointsAtLines;   ///< 纵线上的点
+@property(nonatomic,strong)NSMutableDictionary * pointsAtLeftToTops;    ///< 左上斜线上的点
+@property(nonatomic,strong)NSMutableDictionary * pointsAtLeftToBottoms; ///< 左下斜线上的点
 
 @end
 
@@ -49,6 +49,8 @@
 {
     self=[super init];
     if (self) {
+		
+		///< 棋盘上纵、横15条线的交点 (15 * 15) = 225个
         NSMutableArray * points=[NSMutableArray array];
         for (NSInteger row=1; row<=RowCount; row++) {
             for (NSInteger line=1; line<=RowCount; line++) {

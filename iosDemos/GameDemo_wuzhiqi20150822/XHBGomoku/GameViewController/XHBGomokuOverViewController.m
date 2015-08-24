@@ -38,6 +38,7 @@
     }
     self.view.backgroundColor=[UIColor colorWithIntegerValue:BACKGROUND_COLOR alpha:1];
     self.backView.image=self.backImage;
+	self.backView.accessibilityLabel = @"over_BackView";
     
     UIColor * color=[UIColor colorWithPatternImage:[UIImage imageNamed:@"topbarbg_2"]];
     [self.btnBack setBackgroundColor:color];

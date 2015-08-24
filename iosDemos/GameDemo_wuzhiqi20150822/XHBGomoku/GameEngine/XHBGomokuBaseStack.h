@@ -11,8 +11,15 @@
 @interface XHBGomokuBaseStack : NSObject
 
 -(NSInteger)depth;
+
+///< 入栈
 -(void)push:(XHBGomokuChessPoint*)element;
+///< 出栈
 -(XHBGomokuChessPoint*)pop;
+
+///< 悔棋
 -(void)reuse;
+
 -(XHBGomokuChessPoint*)getTopElement;
+
 @end

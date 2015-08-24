@@ -18,7 +18,9 @@
 
 @end
 
+///< Envision 展望，预测
 @interface XHBGomokuEnvisionStack : XHBGomokuBaseStack
+
 @property(nonatomic)BOOL playerFirst;  //  YES : 玩家先手（黑棋）  NO :玩家后手(白棋)
 @property(nonatomic,strong)XHBGomokuValue* maxValue;
 @property(nonatomic,strong,readonly)XHBGomokuChessPoint * maxPoint;

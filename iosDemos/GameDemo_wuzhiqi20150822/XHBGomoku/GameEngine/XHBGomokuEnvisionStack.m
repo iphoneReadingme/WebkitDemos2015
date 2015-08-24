@@ -92,9 +92,9 @@
         XHBGomokuValue * valueBottom=[_values lastObject];
         if (valueBottom.hasValue) {
             if (depth%2==0) {
-                valueBottom.value=valueBottom.value<value.value?valueBottom.value:value.value;
+                valueBottom.value = valueBottom.value < value.value ? valueBottom.value : value.value;
             }else{
-                valueBottom.value=valueBottom.value>value.value?valueBottom.value:value.value;
+                valueBottom.value = valueBottom.value > value.value ? valueBottom.value : value.value;
             }
         }else{
             valueBottom.value=value.value;
