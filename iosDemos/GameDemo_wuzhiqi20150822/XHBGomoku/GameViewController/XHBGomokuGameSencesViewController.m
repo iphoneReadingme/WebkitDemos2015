@@ -13,7 +13,10 @@
 #import "XHBGomokuOverViewController.h"
 
 @interface XHBGomokuGameSencesViewController ()
-@property(nonatomic,weak)IBOutlet UIImageView * boardImageView;
+
+@property(nonatomic,retain) UIView *chessBoardView;
+@property(nonatomic,retain) UIImageView * boardImageView;
+
 @property(nonatomic,weak)IBOutlet UIView * boardView;
 @property(nonatomic,strong)XHBGomokuGameEngine * game;
 @property(nonatomic,weak)IBOutlet UIButton * btnSound;
@@ -47,8 +50,8 @@
 	
     [UIApplication sharedApplication].statusBarHidden=YES;
     // Do any additional setup after loading the view.
-    UITapGestureRecognizer * tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
-    [self.boardView addGestureRecognizer:tap];
+    //UITapGestureRecognizer * tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
+    //[self boardView addGestureRecognizer:tap];
 	[self addChessBoardBackImage];
 	
     self.game=[XHBGomokuGameEngine game];
@@ -88,17 +91,31 @@
 
 - (void)addChessBoardBackImage
 {
-	self.boardView.accessibilityLabel = @"self.boardView";
-	CGRect rect = CGRectMake(0, 0, 320 ,320);
+	//self.boardView.alpha = 0.0f;
+	self.boardView.accessibilityLabel = @"self.board_View";
 	
+	///< 棋盘视图对象
+	CGRect frame = CGRectMake(0, 156, 320, 320);
+	UIView* chessBoard = [[UIView alloc] initWithFrame:frame];
+	chessBoard.accessibilityLabel = @"self.chessBoardView";
+	[self.view addSubview:chessBoard];
+	chessBoard.layer.borderColor = [UIColor redColor].CGColor;
+	chessBoard.layer.borderWidth = 2;
+	_chessBoardView = chessBoard;
+	
+	///< 棋盘背景图
+	CGRect rect = CGRectMake(0, 0, 320 ,320);
 	UIImageView* imgView = [[UIImageView alloc] initWithFrame:rect];
-	[self.boardView addSubview:imgView];
-	imgView.image = [UIImage imageNamed:@"gomokuboard"];
 	imgView.accessibilityLabel = @"my_ChessBoardBackImageView";
+	[_chessBoardView addSubview:imgView];
+	imgView.image = [UIImage imageNamed:@"gomokuboard"];
 	_boardImageView = imgView;
 	//<UIView: 0x7c291270; frame = (0 156; 320 320); autoresize = RM+BM; gestureRecognizers = <NSArray: 0x7c081120>; layer = <CALayer: 0x7c291400>>
 	//| <UIImageView: 0x7c291450; frame = (0 0; 320 320); autoresize = RM+BM; userInteractionEnabled = NO; layer = <CALayer: 0x7c291620>>
-	//self.boardView.imageView.image = [UIImage imageNamed:@"gomokuboard"];
+	
+	///< 点击手势
+	UITapGestureRecognizer * tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
+	[_chessBoardView addGestureRecognizer:tap];
 }
 
 - (void)didReceiveMemoryWarning
@@ -111,7 +128,9 @@
 -(void)tapAction:(UITapGestureRecognizer*)tap
 {
 	///< 通过落点位置，确定行、列编号
-    CGPoint point=[tap locationInView:self.boardView];
+	CGPoint point= CGPointZero;
+	//point = [tap locationInView:self boardView];
+	point=[tap locationInView:_chessBoardView];
     NSInteger tapRow=0;
     NSInteger tapLine=0;
     for (NSInteger row=1; row<=15; row++) {
@@ -189,7 +208,8 @@
 -(void)game:(XHBGomokuGameEngine*)game updateSences:(XHBGomokuChessPoint*)point
 {
     XHBGomokuPieceView * view=[XHBGomokuPieceView piece:point];
-    [self.boardView addSubview:view];
+    //[self.boardView addSubview:view];
+	[_chessBoardView addSubview:view];
 	
     [_pieces addObject:view];
     
