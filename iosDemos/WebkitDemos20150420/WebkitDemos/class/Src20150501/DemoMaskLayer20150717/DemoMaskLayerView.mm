@@ -4,11 +4,16 @@
 #import "DemoMaskLayerView.h"
 
 
+#define kMainViewWidth            300
+#define kMainViewHeight           64
+
+
 @interface DemoMaskLayerView()
 
 @property (nonatomic, retain) UIButton                *startButton;
 @property (nonatomic, retain) UIButton                *stopButton;
 @property (nonatomic, retain) UIImageView             *maskView;
+@property (nonatomic, retain) UIImageView             *maskView2;
 
 @end
 
@@ -28,7 +33,9 @@
 	{
 		self.accessibilityLabel = @"Demo3DPerspectiveView";
 		
-		[self handleMask];
+		[self handleMask1];
+		[self handleMask2];
+		[self addChannelMaskView2];
 		[self addsubViews];
 		
 		[self didThemeChange];
@@ -50,31 +57,33 @@
 	_stopButton = nil;
 }
 
-- (void)handleMask
+#pragma mark -==左侧掩码
+- (void)handleMask1
 {
-	UIView* bg1 = [[UIView alloc] initWithFrame:CGRectMake(10,220,300,160)];
+	UIView* bg1 = [[UIView alloc] initWithFrame:CGRectMake(10, 100, kMainViewWidth, kMainViewHeight)];
+	bg1.accessibilityLabel = @"Mask1_background_bg1";
 	
 	[self addSubview:bg1];
 	[self getMaskImageView];
 	[self updateChannelMaskImage:bg1];
-	//[self performSelector:@selector(updateChannelMaskImage:) withObject:bg1 afterDelay:0];
 	
-	UILabel *label = [[[UILabel alloc] initWithFrame:CGRectMake(0,160-20,300,25)] autorelease];
-	label.text = @"test mask view";
+	UILabel *label = [[[UILabel alloc] initWithFrame:CGRectMake(0, kMainViewHeight-20, kMainViewWidth, 25)] autorelease];
+	label.text = @"【1】左侧掩码test mask view";
 	label.textColor = [UIColor redColor];
 	label.backgroundColor = [UIColor clearColor];
 	
-	UIView* bg = [[UIView alloc] initWithFrame:CGRectMake(10,220,300,160)];
-	bg.backgroundColor = [UIColor blueColor];
-	[bg addSubview:label];
+	UIView* content = [[UIView alloc] initWithFrame:[bg1 frame]];
+	content.backgroundColor = [UIColor blueColor];
+	[content addSubview:label];
+	content.accessibilityLabel = @"Mask1_background_Content";
 	
-	[bg setFrame:[bg1 bounds]];
-	[bg1 addSubview:bg];
+	[content setFrame:[bg1 bounds]];
+	[bg1 addSubview:content];
 }
 
 - (void)getMaskImageView
 {
-	CGRect maskRect = CGRectMake(0, 0, 300, 160);
+	CGRect maskRect = CGRectMake(0, 0, kMainViewWidth, kMainViewHeight);
 	CGRect rect = maskRect;
 	static UIImageView* maskView = nil;
 	if (maskView == nil)
@@ -84,7 +93,7 @@
 		_maskView = [maskView retain];
 	}
 	UIImage* pImage = resGetImage(@"NewsFlow/SiteNav/ChannelLabelMaskImage.png");
-	//pImage = resGetImage(@"NewsFlow/SiteNav/MaskWithAlpha.png");
+	//pImage = resGetImage(@"NewsFlow/Channels/ChannelLabelMaskImage.png");
 	//rect.size = [pImage size];
 	[_maskView setFrame:rect];
 	_maskView.image = pImage;
@@ -98,6 +107,71 @@
 	pView.layer.borderWidth = 1;
 }
 
+#pragma mark -==左右两侧掩码
+- (void)handleMask2
+{
+	UIView* bg1 = [[UIView alloc] initWithFrame:CGRectMake(10,220, kMainViewWidth, kMainViewHeight)];
+	bg1.backgroundColor = [UIColor clearColor];
+	bg1.accessibilityLabel = @"Mask2_background_bg1";
+	
+	[self addSubview:bg1];
+	
+	[self addChannelMaskView];
+	//[self performSelector:@selector(updateChannelMaskImage:) withObject:bg1 afterDelay:0];
+	
+	UILabel *label = [[[UILabel alloc] initWithFrame:CGRectMake(0, kMainViewHeight-20, 800, 25)] autorelease];
+	label.text = @"【2】左右两侧掩码test mask view【2】左右两侧掩码";
+	label.textColor = [UIColor redColor];
+	label.backgroundColor = [UIColor clearColor];
+	
+	UIScrollView* content = [[UIScrollView alloc] initWithFrame:[bg1 frame]];
+	content.backgroundColor = [UIColor blueColor];
+	[content addSubview:label];
+	content.accessibilityLabel = @"Mask2_background_Content";
+	
+	content.contentSize = CGSizeMake(800, 0);
+	
+	[content setFrame:[bg1 bounds]];
+	[bg1 addSubview:content];
+	[self updateChannelMaskImage2:bg1];
+}
+
+- (void)updateChannelMaskImage2:(UIView*)pView
+{
+	//pView.layer.mask = _maskView.layer;
+	pView.layer.mask = [_maskView2.layer copy];
+	
+	pView.layer.borderColor = [UIColor redColor].CGColor;
+	pView.layer.borderWidth = 1;
+}
+
+- (void)addChannelMaskView
+{
+	UIImage* pImage = resGetImage(@"NewsFlow/Channels/ChannelLabelMaskImage.png");
+	CGSize imgSize = [pImage size];
+	pImage = [pImage stretchableImageWithLeftCapWidth:imgSize.width*0.5f topCapHeight:imgSize.height*0.5f];
+	CGRect rect = CGRectMake(0, 0, kMainViewWidth, kMainViewHeight);
+	//rect = CGRectMake(10,220, kMainViewWidth, kMainViewHeight);
+	_maskView2 = [[[UIImageView alloc] initWithFrame:rect] autorelease];
+	_maskView2.image = pImage;
+	_maskView2.accessibilityLabel = @"Mask2_T_maskView2";
+	[self addSubview:_maskView2];
+}
+
+- (void)addChannelMaskView2
+{
+	UIImage* pImage = resGetImage(@"NewsFlow/Channels/ChannelLabelMaskImage.png");
+	CGSize imgSize = [pImage size];
+	pImage = [pImage stretchableImageWithLeftCapWidth:imgSize.width*0.5f topCapHeight:imgSize.height*0.5f];
+	CGRect rect = CGRectMake(0, [self bounds].size.height - kMainViewHeight - 20, kMainViewWidth, kMainViewHeight);
+	
+	UIImageView* g_maskView = [[[UIImageView alloc] initWithFrame:rect] autorelease];
+	g_maskView.image = pImage;
+	g_maskView.accessibilityLabel = @"Mask2_g_maskView";
+	[self addSubview:g_maskView];
+}
+
+#if 1
 - (void)updateChannelMaskPath:(UIView*)pView
 {
 	// Create a mask layer and the frame to determine what will be visible in the view.
@@ -115,8 +189,9 @@
 	CGPathRelease(path);
 	
 	// Set the mask of the view.
-	pView.layer.mask = maskLayer;
+	pView.layer.mask = [maskLayer copy];
 }
+#endif
 
 - (void)addsubViews
 {
@@ -180,11 +255,11 @@
 	NSInteger nTag = sender.tag;
 	if (nTag == 0)
 	{
-		[self startAnimation];
+		//[self startAnimation];
 	}
 	else if (nTag == 1)
 	{
-		[self stopAnimation];
+		//[self stopAnimation];
 	}
 }
 
@@ -217,5 +292,31 @@
 	rect.origin.x += rect.size.width + 40;
 	[_stopButton setFrame:rect];
 }
+
+#if 0
+{
+	UIImage* pImage = resGetImage(@"NewsFlow/Channels/ChannelLabelMaskImage.png");
+	CGSize imgSize = [pImage size];
+	pImage = [pImage stretchableImageWithLeftCapWidth:imgSize.width*0.5f topCapHeight:imgSize.height*0.5f];
+	CGRect rect = [_mainContainerView bounds];
+	
+	NFChannelMaskImageView *maskView = nil;
+	if (_channelMaskView == nil)
+	{
+		maskView = [[NFChannelMaskImageView alloc] initWithFrame:rect];
+		_channelMaskView = maskView;
+		maskView.accessibilityLabel = @"channel_container_maskView";
+		maskView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	}
+	else
+	{
+		maskView = _channelMaskView;
+		[maskView setFrame:rect];
+	}
+	maskView.image = pImage;
+	
+	_mainContainerView.layer.mask = maskView.layer;
+}
+#endif
 
 @end

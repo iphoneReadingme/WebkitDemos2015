@@ -5,7 +5,7 @@
  * Copyright (C) 2005-2013 readbookamazon@126.com. All Rights Reserved
  * File			: DemoMaskLayerController.h
  *
- * Description	: view layer mask 测试
+ * Description	: view layer mask 测试 视图掩码效果处理
  *
  * Author		: yangfs@ucweb.com
  *
