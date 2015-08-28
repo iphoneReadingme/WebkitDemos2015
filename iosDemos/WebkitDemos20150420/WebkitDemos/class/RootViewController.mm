@@ -214,6 +214,9 @@
 	NSMutableArray *webkitList = [NSMutableArray array];
 	
 	
+	///< 20150828_Metal API 图形接口
+	[webkitList addObject:[DemoMetalController class]];
+	
 	///< 20150717_layer Mask 图形掩码
 	[webkitList addObject:[DemoMaskLayerController class]];
 	
@@ -376,7 +379,7 @@
 #pragma mark - == UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-	NSLog(@"===scrollViewDidScroll===");
+//	NSLog(@"===scrollViewDidScroll===");
 }
 
 @end

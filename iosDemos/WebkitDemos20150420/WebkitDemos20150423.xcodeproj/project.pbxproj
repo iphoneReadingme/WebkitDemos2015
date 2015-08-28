@@ -63,6 +63,8 @@
 		5B408ECB1AE5F90A00CE34D6 /* NSString+ExceptionSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B408EBF1AE5F90A00CE34D6 /* NSString+ExceptionSafe.m */; };
 		5B408ECC1AE5F90A00CE34D6 /* UCFNDCollection.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B408EC11AE5F90A00CE34D6 /* UCFNDCollection.mm */; };
 		5B512EB31B00B20300118DC9 /* DemoPageDataProvider.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B512EB21B00B20300118DC9 /* DemoPageDataProvider.mm */; };
+		5B65CF5F1B8EBE6200CD201A /* DemoCustomCALayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B65CF5E1B8EBE6100CD201A /* DemoCustomCALayer.mm */; };
+		5B65CF621B8EBF6E00CD201A /* DemoCustomView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B65CF611B8EBF6E00CD201A /* DemoCustomView.mm */; };
 		5B7D8FDA1AFB13A0006CDDE3 /* NBBookLayoutConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B7D8FCE1AFB13A0006CDDE3 /* NBBookLayoutConfig.mm */; };
 		5B7D8FDB1AFB13A0006CDDE3 /* NBChapterPagesInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7D8FD31AFB13A0006CDDE3 /* NBChapterPagesInfo.m */; };
 		5B7D8FDC1AFB13A0006CDDE3 /* NBPageItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7D8FD51AFB13A0006CDDE3 /* NBPageItem.m */; };
@@ -70,6 +72,9 @@
 		5B99BDC91B578317004B7AFD /* ResManagerHelp.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B99BDC71B578317004B7AFD /* ResManagerHelp.mm */; };
 		5BB6C2E31B58E47100197902 /* DemoMaskLayerController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5BB6C2E01B58E47100197902 /* DemoMaskLayerController.mm */; };
 		5BB6C2E41B58E47100197902 /* DemoMaskLayerView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5BB6C2E21B58E47100197902 /* DemoMaskLayerView.mm */; };
+		5BB93AE21B90668400E0ABEA /* DemoMetalController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5BB93ADF1B90668400E0ABEA /* DemoMetalController.mm */; };
+		5BB93AE31B90668400E0ABEA /* DemoMetalView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5BB93AE11B90668400E0ABEA /* DemoMetalView.mm */; };
+		5BB93AE51B90684900E0ABEA /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5BB93AE41B90684900E0ABEA /* Shaders.metal */; };
 		5BCBF9A41AE4F9CF00BE201E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCBF9A31AE4F9CF00BE201E /* main.m */; };
 		5BCBF9AA1AE4F9CF00BE201E /* WebkitDemos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5BCBF9A81AE4F9CF00BE201E /* WebkitDemos.xcdatamodeld */; };
 		5BCBF9B31AE4F9CF00BE201E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BCBF9B11AE4F9CF00BE201E /* Main.storyboard */; };
@@ -218,6 +223,10 @@
 		5B408EC11AE5F90A00CE34D6 /* UCFNDCollection.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UCFNDCollection.mm; sourceTree = "<group>"; };
 		5B512EB11B00B20300118DC9 /* DemoPageDataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoPageDataProvider.h; sourceTree = "<group>"; };
 		5B512EB21B00B20300118DC9 /* DemoPageDataProvider.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoPageDataProvider.mm; sourceTree = "<group>"; };
+		5B65CF5D1B8EBE6100CD201A /* DemoCustomCALayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoCustomCALayer.h; sourceTree = "<group>"; };
+		5B65CF5E1B8EBE6100CD201A /* DemoCustomCALayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoCustomCALayer.mm; sourceTree = "<group>"; };
+		5B65CF601B8EBF6E00CD201A /* DemoCustomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoCustomView.h; sourceTree = "<group>"; };
+		5B65CF611B8EBF6E00CD201A /* DemoCustomView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoCustomView.mm; sourceTree = "<group>"; };
 		5B7D8FCD1AFB13A0006CDDE3 /* NBBookLayoutConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBBookLayoutConfig.h; sourceTree = "<group>"; };
 		5B7D8FCE1AFB13A0006CDDE3 /* NBBookLayoutConfig.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NBBookLayoutConfig.mm; sourceTree = "<group>"; };
 		5B7D8FCF1AFB13A0006CDDE3 /* NovelBoxConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NovelBoxConfig.h; sourceTree = "<group>"; };
@@ -234,6 +243,11 @@
 		5BB6C2E01B58E47100197902 /* DemoMaskLayerController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoMaskLayerController.mm; sourceTree = "<group>"; };
 		5BB6C2E11B58E47100197902 /* DemoMaskLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoMaskLayerView.h; sourceTree = "<group>"; };
 		5BB6C2E21B58E47100197902 /* DemoMaskLayerView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoMaskLayerView.mm; sourceTree = "<group>"; };
+		5BB93ADE1B90668400E0ABEA /* DemoMetalController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoMetalController.h; sourceTree = "<group>"; };
+		5BB93ADF1B90668400E0ABEA /* DemoMetalController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoMetalController.mm; sourceTree = "<group>"; };
+		5BB93AE01B90668400E0ABEA /* DemoMetalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoMetalView.h; sourceTree = "<group>"; };
+		5BB93AE11B90668400E0ABEA /* DemoMetalView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoMetalView.mm; sourceTree = "<group>"; };
+		5BB93AE41B90684900E0ABEA /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		5BCBF99E1AE4F9CF00BE201E /* WebkitDemos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebkitDemos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BCBF9A21AE4F9CF00BE201E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5BCBF9A31AE4F9CF00BE201E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -639,9 +653,26 @@
 				5BB6C2E01B58E47100197902 /* DemoMaskLayerController.mm */,
 				5BB6C2E11B58E47100197902 /* DemoMaskLayerView.h */,
 				5BB6C2E21B58E47100197902 /* DemoMaskLayerView.mm */,
+				5B65CF5D1B8EBE6100CD201A /* DemoCustomCALayer.h */,
+				5B65CF5E1B8EBE6100CD201A /* DemoCustomCALayer.mm */,
+				5B65CF601B8EBF6E00CD201A /* DemoCustomView.h */,
+				5B65CF611B8EBF6E00CD201A /* DemoCustomView.mm */,
 			);
 			name = DemoMaskLayer20150717;
 			path = WebkitDemos/class/Src20150501/DemoMaskLayer20150717;
+			sourceTree = SOURCE_ROOT;
+		};
+		5BB93ADD1B90668400E0ABEA /* DemoMetal20150828 */ = {
+			isa = PBXGroup;
+			children = (
+				5BB93AE41B90684900E0ABEA /* Shaders.metal */,
+				5BB93ADE1B90668400E0ABEA /* DemoMetalController.h */,
+				5BB93ADF1B90668400E0ABEA /* DemoMetalController.mm */,
+				5BB93AE01B90668400E0ABEA /* DemoMetalView.h */,
+				5BB93AE11B90668400E0ABEA /* DemoMetalView.mm */,
+			);
+			name = DemoMetal20150828;
+			path = WebkitDemos/class/Src20150501/DemoMetal20150828;
 			sourceTree = SOURCE_ROOT;
 		};
 		5BCBF9951AE4F9CF00BE201E = {
@@ -780,6 +811,7 @@
 		5BD413921B3EB3E1005E5380 /* ios3DTransform */ = {
 			isa = PBXGroup;
 			children = (
+				5BB93ADD1B90668400E0ABEA /* DemoMetal20150828 */,
 				5BB6C2DE1B58E47100197902 /* DemoMaskLayer20150717 */,
 				5BD413931B3EB3E1005E5380 /* Transform3DPerspective */,
 			);
@@ -909,7 +941,9 @@
 				5B05D3F41AF1FC90000CBAD1 /* DemoPageViewDrawText.mm in Sources */,
 				5BCF311C1AE53A5F0015B6A3 /* DemoShakeView.mm in Sources */,
 				5BCF310A1AE539D60015B6A3 /* DemoMessageCenterController.mm in Sources */,
+				5BB93AE21B90668400E0ABEA /* DemoMetalController.mm in Sources */,
 				5B408E9F1AE5F8A000CE34D6 /* FEEmojiView.mm in Sources */,
+				5BB93AE31B90668400E0ABEA /* DemoMetalView.mm in Sources */,
 				5B408E9E1AE5F8A000CE34D6 /* FEEmojiLabel.mm in Sources */,
 				5B7D8FDC1AFB13A0006CDDE3 /* NBPageItem.m in Sources */,
 				5B408E9C1AE5F8A000CE34D6 /* DemoViewCAKeyView.mm in Sources */,
@@ -929,6 +963,7 @@
 				5BCBF9A41AE4F9CF00BE201E /* main.m in Sources */,
 				5B05D3F61AF1FC90000CBAD1 /* NBPageContainerViewController.mm in Sources */,
 				5B05D36B1AF1CF10000CBAD1 /* ColorPickerView.mm in Sources */,
+				5B65CF5F1B8EBE6200CD201A /* DemoCustomCALayer.mm in Sources */,
 				5B408EA11AE5F8A000CE34D6 /* FEEmojiParameterInfo.mm in Sources */,
 				5BCBF9AA1AE4F9CF00BE201E /* WebkitDemos.xcdatamodeld in Sources */,
 				5B408EC21AE5F90A00CE34D6 /* JSONKit.m in Sources */,
@@ -959,12 +994,14 @@
 				5B36D9BA1B09917C00831CE1 /* NBConstants.mm in Sources */,
 				5B7D8FDA1AFB13A0006CDDE3 /* NBBookLayoutConfig.mm in Sources */,
 				5B408EC51AE5F90A00CE34D6 /* NSArray+ExceptionSafe.mm in Sources */,
+				5B65CF621B8EBF6E00CD201A /* DemoCustomView.mm in Sources */,
 				5B36D9B81B09917C00831CE1 /* NBTextLayoutFrame.mm in Sources */,
 				5B408ECB1AE5F90A00CE34D6 /* NSString+ExceptionSafe.m in Sources */,
 				5BCF311A1AE53A5F0015B6A3 /* DemoAccelerometerManager.mm in Sources */,
 				5B36D9BD1B09917C00831CE1 /* NBLayouterHelper.mm in Sources */,
 				5B408E761AE5F5E600CE34D6 /* DemoIphoneNumberHelper.mm in Sources */,
 				5B05D3F21AF1FC90000CBAD1 /* DemoPageView.mm in Sources */,
+				5BB93AE51B90684900E0ABEA /* Shaders.metal in Sources */,
 				5B408EA01AE5F8A000CE34D6 /* FEEmojiViewController.mm in Sources */,
 				5B408EC41AE5F90A00CE34D6 /* NSDateUtility.m in Sources */,
 				5B05D36C1AF1CF10000CBAD1 /* DemoCoreTextDrawController.mm in Sources */,

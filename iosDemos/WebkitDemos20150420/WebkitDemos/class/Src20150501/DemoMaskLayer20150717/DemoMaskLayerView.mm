@@ -1,6 +1,7 @@
 
 
 #import "ResManager.h"
+#import "DemoCustomView.h"
 #import "DemoMaskLayerView.h"
 
 
@@ -14,7 +15,7 @@
 @property (nonatomic, retain) UIButton                *stopButton;
 @property (nonatomic, retain) UIImageView             *maskView;
 @property (nonatomic, retain) UIImageView             *maskView2;
-
+@property (nonatomic, retain) DemoCustomView          *custView;
 @end
 
 @implementation DemoMaskLayerView
@@ -138,8 +139,8 @@
 
 - (void)updateChannelMaskImage2:(UIView*)pView
 {
-	//pView.layer.mask = _maskView.layer;
-	pView.layer.mask = [_maskView2.layer copy];
+	pView.layer.mask = _maskView.layer;
+	//pView.layer.mask = [_maskView2.layer copy];
 	
 	pView.layer.borderColor = [UIColor redColor].CGColor;
 	pView.layer.borderWidth = 1;
@@ -198,6 +199,8 @@
 	[self addImageViews];
 	
 	[self addButtonViews];
+	
+	[self addDemoCustomView];
 }
 
 - (UIImageView*)createImageView
@@ -256,6 +259,7 @@
 	if (nTag == 0)
 	{
 		//[self startAnimation];
+		[_custView executeAnimation];
 	}
 	else if (nTag == 1)
 	{
@@ -293,30 +297,20 @@
 	[_stopButton setFrame:rect];
 }
 
-#if 0
+///< test View / CALayer frame,bounds,center
+- (void)addDemoCustomView
 {
-	UIImage* pImage = resGetImage(@"NewsFlow/Channels/ChannelLabelMaskImage.png");
-	CGSize imgSize = [pImage size];
-	pImage = [pImage stretchableImageWithLeftCapWidth:imgSize.width*0.5f topCapHeight:imgSize.height*0.5f];
-	CGRect rect = [_mainContainerView bounds];
+	CGRect rect = CGRectMake(50, 250, 50, 80);
+	DemoCustomView *cusView = [[DemoCustomView alloc] initWithFrame:rect];
+	[self addSubview:cusView];
 	
-	NFChannelMaskImageView *maskView = nil;
-	if (_channelMaskView == nil)
-	{
-		maskView = [[NFChannelMaskImageView alloc] initWithFrame:rect];
-		_channelMaskView = maskView;
-		maskView.accessibilityLabel = @"channel_container_maskView";
-		maskView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	}
-	else
-	{
-		maskView = _channelMaskView;
-		[maskView setFrame:rect];
-	}
-	maskView.image = pImage;
-	
-	_mainContainerView.layer.mask = maskView.layer;
+	_custView = cusView;
+	//[cusView autorelease];
 }
-#endif
+
+- (void)drawRect:(CGRect)rect
+{
+	[super drawRect:rect];
+}
 
 @end

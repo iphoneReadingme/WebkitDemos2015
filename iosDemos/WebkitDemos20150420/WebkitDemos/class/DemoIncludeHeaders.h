@@ -18,6 +18,9 @@
 #import <UIKit/UIKit.h>
 
 
+///< Metal API 图形接口
+#import "DemoMetalController.h"
+
 ///< view layer Mask 图形掩码
 #import "DemoMaskLayerController.h"
 
