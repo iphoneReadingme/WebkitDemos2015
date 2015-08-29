@@ -70,7 +70,7 @@
 	[self addSubview:spriteView];
 	_spriteView = spriteView;
 	
-	HelloSceneNode *hello = [[HelloSceneNode alloc] initWithSize:CGSizeMake(768,1024)];
+	HelloSceneNode *hello = [[HelloSceneNode alloc] initWithSize:CGSizeMake(300, 400)];
 	[spriteView presentScene:hello];
 }
 
