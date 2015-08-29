@@ -67,6 +67,7 @@
 		5B5A81141B91AB3C00788F8B /* DemoSpriteKitView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A81121B91AB3C00788F8B /* DemoSpriteKitView.mm */; };
 		5B5A811A1B91AFBF00788F8B /* DemoTemplateController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A81171B91AFBF00788F8B /* DemoTemplateController.mm */; };
 		5B5A811B1B91AFBF00788F8B /* DemoTemplateView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A81191B91AFBF00788F8B /* DemoTemplateView.mm */; };
+		5B5A811E1B91B60100788F8B /* DemoSceneView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A811D1B91B60100788F8B /* DemoSceneView.mm */; };
 		5B65CF5F1B8EBE6200CD201A /* DemoCustomCALayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B65CF5E1B8EBE6100CD201A /* DemoCustomCALayer.mm */; };
 		5B65CF621B8EBF6E00CD201A /* DemoCustomView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B65CF611B8EBF6E00CD201A /* DemoCustomView.mm */; };
 		5B7D8FDA1AFB13A0006CDDE3 /* NBBookLayoutConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B7D8FCE1AFB13A0006CDDE3 /* NBBookLayoutConfig.mm */; };
@@ -234,6 +235,8 @@
 		5B5A81171B91AFBF00788F8B /* DemoTemplateController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoTemplateController.mm; sourceTree = "<group>"; };
 		5B5A81181B91AFBF00788F8B /* DemoTemplateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoTemplateView.h; sourceTree = "<group>"; };
 		5B5A81191B91AFBF00788F8B /* DemoTemplateView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoTemplateView.mm; sourceTree = "<group>"; };
+		5B5A811C1B91B60100788F8B /* DemoSceneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoSceneView.h; sourceTree = "<group>"; };
+		5B5A811D1B91B60100788F8B /* DemoSceneView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoSceneView.mm; sourceTree = "<group>"; };
 		5B65CF5D1B8EBE6100CD201A /* DemoCustomCALayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoCustomCALayer.h; sourceTree = "<group>"; };
 		5B65CF5E1B8EBE6100CD201A /* DemoCustomCALayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoCustomCALayer.mm; sourceTree = "<group>"; };
 		5B65CF601B8EBF6E00CD201A /* DemoCustomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoCustomView.h; sourceTree = "<group>"; };
@@ -614,6 +617,8 @@
 				5B5A81101B91AB3C00788F8B /* DemoSpriteKitController.mm */,
 				5B5A81111B91AB3C00788F8B /* DemoSpriteKitView.h */,
 				5B5A81121B91AB3C00788F8B /* DemoSpriteKitView.mm */,
+				5B5A811C1B91B60100788F8B /* DemoSceneView.h */,
+				5B5A811D1B91B60100788F8B /* DemoSceneView.mm */,
 			);
 			name = DemoSpriteKit20150829;
 			path = WebkitDemos/class/Src20150501/DemoSpriteKit20150829;
@@ -1009,6 +1014,7 @@
 				5BCF310B1AE539D60015B6A3 /* DemoMessageCenterView.mm in Sources */,
 				5B99BDC81B578317004B7AFD /* ResManager.mm in Sources */,
 				5B408E9B1AE5F8A000CE34D6 /* DemoViewCAKeyAnimationController.mm in Sources */,
+				5B5A811E1B91B60100788F8B /* DemoSceneView.mm in Sources */,
 				5BCF311B1AE53A5F0015B6A3 /* DemoShakeController.mm in Sources */,
 				5B36D9B71B09917C00831CE1 /* NBTextLayouter.mm in Sources */,
 				5BCF30DB1AE539A50015B6A3 /* AppDelegate.m in Sources */,

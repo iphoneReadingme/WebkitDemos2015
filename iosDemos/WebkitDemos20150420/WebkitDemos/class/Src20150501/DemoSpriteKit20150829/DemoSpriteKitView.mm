@@ -9,6 +9,7 @@
 
 @interface DemoSpriteKitView()
 
+@property (nonatomic, retain) UIView                  *containerView;
 @property (nonatomic, retain) UIButton                *startButton;
 @property (nonatomic, retain) UIButton                *stopButton;
 
@@ -63,8 +64,21 @@
 - (void)addsubViews
 {
 	
+	[self addContainerViewObj];
 	[self addButtonViews];
 	
+}
+
+- (void)addContainerViewObj
+{
+	UIView *pView = [[UIView alloc] initWithFrame:[self bounds]];
+	pView.backgroundColor = [UIColor clearColor];
+	pView.accessibilityLabel = @"self_containerView";
+	[self addSubview:pView];
+	
+	pView.layer.borderColor = [UIColor blueColor].CGColor;
+	pView.layer.borderWidth = 4;
+	_containerView = pView;
 }
 
 #pragma mark - ==按钮相关
