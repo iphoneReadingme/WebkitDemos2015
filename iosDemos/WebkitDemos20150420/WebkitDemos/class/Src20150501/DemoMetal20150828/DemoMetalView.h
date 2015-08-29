@@ -23,4 +23,6 @@
 	
 }
 
+- (void)viewDidLayoutSubviews;
+
 @end

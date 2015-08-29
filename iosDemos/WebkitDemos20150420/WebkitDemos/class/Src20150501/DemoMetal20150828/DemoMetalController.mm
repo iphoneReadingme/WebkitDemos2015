@@ -97,6 +97,10 @@
 	[self.view addSubview:_subDemoView];
 }
 
+- (void)viewDidLayoutSubviews
+{
+	[_subDemoView viewDidLayoutSubviews];
+}
 
 @end
 

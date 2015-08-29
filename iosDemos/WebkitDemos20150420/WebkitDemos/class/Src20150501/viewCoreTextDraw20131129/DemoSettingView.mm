@@ -148,7 +148,7 @@ static NSArray* fontNameList =@[@"Bodoni 72",
 	CGRect rect1 = rect;
 	rect1.size.width = 160;
 	UILabel* pLabel = [[UILabel alloc] initWithFrame:rect1];
-	pLabel.text = [NSString stringWithFormat:@"文字字体:[1,%d]", [fontNameList count]];
+	pLabel.text = [NSString stringWithFormat:@"文字字体:[1,%d]", (int)[fontNameList count]];
 	pLabel.backgroundColor = [UIColor clearColor];
 	
 	[self addSubview:pLabel];
