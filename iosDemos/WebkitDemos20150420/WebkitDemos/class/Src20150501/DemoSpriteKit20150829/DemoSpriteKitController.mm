@@ -75,6 +75,25 @@
 	return YES;
 }
 
+// 屏幕即将旋转 layoutSubviews执行之前发生
+// Notifies when rotation begins, reaches halfway point and ends.
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+	
+}
+
+// 屏幕即将旋转 layoutSubviews执行之后发生
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration
+{
+}
+
+// 屏幕旋转完毕
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+	//NSLog(@"g_rootView=%@", g_rootView);
+	//emitEvent(nil, @selector(willAnimateRotationToInterfaceOrientation:duration:), fromInterfaceOrientation, 0);
+}
+
 // =================================================================
 #pragma mark -
 #pragma mark 子视图对象
@@ -83,7 +102,7 @@
 {
 	CGRect frame = [self.view bounds];
 	
-	frame.origin.y += 44;
+	frame.origin.y += 64;
 	frame.size.height -= frame.origin.y;
 	
 	return frame;

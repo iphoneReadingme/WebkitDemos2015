@@ -37,6 +37,9 @@
 		
 		[self didThemeChange];
 		[self onChangeFrame];
+		
+		self.layer.borderColor = [UIColor redColor].CGColor;
+		self.layer.borderWidth = 2;
 	}
 	
 	return self;
@@ -125,12 +128,9 @@
 	
 }
 
-#define kImageViewWidth                       160
-#define kImageViewTop                         50
-
 - (void)onChangeFrame
 {
-	CGRect rect = CGRectMake(100, kImageViewTop, kImageViewWidth, 80);
+	CGRect rect = CGRectMake(100, 0, 0, 80);
 	
 	rect.size.height = 44;
 	rect.size.width = 60;
