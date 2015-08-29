@@ -1,6 +1,7 @@
 
 
 
+#import "DemoSceneView.h"
 #import "DemoSpriteKitView.h"
 
 
@@ -9,6 +10,7 @@
 
 @interface DemoSpriteKitView()
 
+@property (nonatomic, retain) DemoSceneView           *sceneView;
 @property (nonatomic, retain) UIView                  *containerView;
 @property (nonatomic, retain) UIButton                *startButton;
 @property (nonatomic, retain) UIButton                *stopButton;
@@ -49,6 +51,11 @@
 
 - (void)releaseImageViews
 {
+	[_containerView release];
+	_containerView = nil;
+	
+	[_sceneView release];
+	_sceneView = nil;
 }
 
 - (void)releaseButtons
@@ -79,6 +86,17 @@
 	pView.layer.borderColor = [UIColor blueColor].CGColor;
 	pView.layer.borderWidth = 4;
 	_containerView = pView;
+	
+	[self addSceneView];
+}
+
+- (void)addSceneView
+{
+	DemoSceneView* sceView = [[DemoSceneView alloc] initWithFrame:[_containerView bounds]];
+	sceView.backgroundColor = [UIColor clearColor];
+	
+	[_containerView addSubview:sceView];
+	_sceneView = sceView;
 }
 
 #pragma mark - ==按钮相关

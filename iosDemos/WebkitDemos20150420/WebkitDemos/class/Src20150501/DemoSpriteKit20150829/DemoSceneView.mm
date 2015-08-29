@@ -1,10 +1,13 @@
 
 
-
+#import <SpriteKit/SpriteKit.h>
+#import "HelloSceneNode.h"
 #import "DemoSceneView.h"
 
 
 @interface DemoSceneView()
+
+@property (nonatomic, retain) SKView * spriteView;
 
 @end
 
@@ -24,7 +27,7 @@
 	self = [super initWithFrame:rect];
 	if (self)
 	{
-		self.accessibilityLabel = @"DemoSpriteKitView";
+		self.accessibilityLabel = @"DemoSceneView";
 		
 		[self addsubViews];
 		
@@ -40,6 +43,8 @@
 
 - (void)releaseImageViews
 {
+	[_spriteView release];
+	_spriteView = nil;
 }
 
 - (void)releaseButtons
@@ -57,6 +62,16 @@
 
 - (void)addButtonViews
 {
+	SKView * spriteView =[[SKView alloc] initWithFrame:[self bounds]];
+	spriteView.showsDrawCount = YES; ///< 使用多少绘画传递来渲染内容（越少越好）
+	spriteView.showsNodeCount = YES; ///< 显示了多少个节点
+	spriteView.showsFPS = YES;  ///< 最重要的一块信息是帧率（spriteView.showsFPS）
+	
+	[self addSubview:spriteView];
+	_spriteView = spriteView;
+	
+	HelloSceneNode *hello = [[HelloSceneNode alloc] initWithSize:CGSizeMake(768,1024)];
+	[spriteView presentScene:hello];
 }
 
 - (void)didThemeChange
