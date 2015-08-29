@@ -70,6 +70,7 @@
 		5B5A811E1B91B60100788F8B /* DemoSceneView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A811D1B91B60100788F8B /* DemoSceneView.mm */; };
 		5B5A81201B91B8D300788F8B /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B5A811F1B91B8D300788F8B /* SpriteKit.framework */; };
 		5B5A81231B91BA0100788F8B /* HelloSceneNode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A81221B91BA0100788F8B /* HelloSceneNode.mm */; };
+		5B5A814E1B91EB1A00788F8B /* HelloSceneNode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A814D1B91EB1A00788F8B /* HelloSceneNode.mm */; };
 		5B65CF5F1B8EBE6200CD201A /* DemoCustomCALayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B65CF5E1B8EBE6100CD201A /* DemoCustomCALayer.mm */; };
 		5B65CF621B8EBF6E00CD201A /* DemoCustomView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B65CF611B8EBF6E00CD201A /* DemoCustomView.mm */; };
 		5B7D8FDA1AFB13A0006CDDE3 /* NBBookLayoutConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B7D8FCE1AFB13A0006CDDE3 /* NBBookLayoutConfig.mm */; };
@@ -242,6 +243,8 @@
 		5B5A811F1B91B8D300788F8B /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/System/Library/Frameworks/SpriteKit.framework; sourceTree = DEVELOPER_DIR; };
 		5B5A81211B91BA0100788F8B /* HelloSceneNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloSceneNode.h; sourceTree = "<group>"; };
 		5B5A81221B91BA0100788F8B /* HelloSceneNode.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HelloSceneNode.mm; sourceTree = "<group>"; };
+		5B5A814C1B91EB1A00788F8B /* HelloSceneNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloSceneNode.h; sourceTree = "<group>"; };
+		5B5A814D1B91EB1A00788F8B /* HelloSceneNode.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HelloSceneNode.mm; sourceTree = "<group>"; };
 		5B65CF5D1B8EBE6100CD201A /* DemoCustomCALayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoCustomCALayer.h; sourceTree = "<group>"; };
 		5B65CF5E1B8EBE6100CD201A /* DemoCustomCALayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoCustomCALayer.mm; sourceTree = "<group>"; };
 		5B65CF601B8EBF6E00CD201A /* DemoCustomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoCustomView.h; sourceTree = "<group>"; };
@@ -620,6 +623,7 @@
 		5B5A810E1B91AB3C00788F8B /* DemoSpriteKit20150829 */ = {
 			isa = PBXGroup;
 			children = (
+				5B5A814B1B91EB1A00788F8B /* SceneNodes */,
 				5B5A810F1B91AB3C00788F8B /* DemoSpriteKitController.h */,
 				5B5A81101B91AB3C00788F8B /* DemoSpriteKitController.mm */,
 				5B5A81111B91AB3C00788F8B /* DemoSpriteKitView.h */,
@@ -642,6 +646,15 @@
 				5B5A81191B91AFBF00788F8B /* DemoTemplateView.mm */,
 			);
 			path = DemoTemplate20150829;
+			sourceTree = "<group>";
+		};
+		5B5A814B1B91EB1A00788F8B /* SceneNodes */ = {
+			isa = PBXGroup;
+			children = (
+				5B5A814C1B91EB1A00788F8B /* HelloSceneNode.h */,
+				5B5A814D1B91EB1A00788F8B /* HelloSceneNode.mm */,
+			);
+			path = SceneNodes;
 			sourceTree = "<group>";
 		};
 		5B7D8FCB1AFB13A0006CDDE3 /* NBPageRender */ = {
@@ -1033,6 +1046,7 @@
 				5B408EA41AE5F8A000CE34D6 /* FEParameterDataProvider.mm in Sources */,
 				5B05D36F1AF1CF10000CBAD1 /* DemoViewSimpleParagraph.mm in Sources */,
 				5B408EA71AE5F8A000CE34D6 /* FEShapeParameterInfo.mm in Sources */,
+				5B5A814E1B91EB1A00788F8B /* HelloSceneNode.mm in Sources */,
 				5BB6C2E31B58E47100197902 /* DemoMaskLayerController.mm in Sources */,
 				5B512EB31B00B20300118DC9 /* DemoPageDataProvider.mm in Sources */,
 				5BCF310C1AE539D60015B6A3 /* UIUserNotificationSettings+Extension.m in Sources */,
