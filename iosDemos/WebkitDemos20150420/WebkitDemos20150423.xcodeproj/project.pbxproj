@@ -69,7 +69,6 @@
 		5B5A811B1B91AFBF00788F8B /* DemoTemplateView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A81191B91AFBF00788F8B /* DemoTemplateView.mm */; };
 		5B5A811E1B91B60100788F8B /* DemoSceneView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A811D1B91B60100788F8B /* DemoSceneView.mm */; };
 		5B5A81201B91B8D300788F8B /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B5A811F1B91B8D300788F8B /* SpriteKit.framework */; };
-		5B5A81231B91BA0100788F8B /* HelloSceneNode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A81221B91BA0100788F8B /* HelloSceneNode.mm */; };
 		5B5A814E1B91EB1A00788F8B /* HelloSceneNode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A814D1B91EB1A00788F8B /* HelloSceneNode.mm */; };
 		5B65CF5F1B8EBE6200CD201A /* DemoCustomCALayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B65CF5E1B8EBE6100CD201A /* DemoCustomCALayer.mm */; };
 		5B65CF621B8EBF6E00CD201A /* DemoCustomView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B65CF611B8EBF6E00CD201A /* DemoCustomView.mm */; };
@@ -241,8 +240,6 @@
 		5B5A811C1B91B60100788F8B /* DemoSceneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoSceneView.h; sourceTree = "<group>"; };
 		5B5A811D1B91B60100788F8B /* DemoSceneView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoSceneView.mm; sourceTree = "<group>"; };
 		5B5A811F1B91B8D300788F8B /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/System/Library/Frameworks/SpriteKit.framework; sourceTree = DEVELOPER_DIR; };
-		5B5A81211B91BA0100788F8B /* HelloSceneNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloSceneNode.h; sourceTree = "<group>"; };
-		5B5A81221B91BA0100788F8B /* HelloSceneNode.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HelloSceneNode.mm; sourceTree = "<group>"; };
 		5B5A814C1B91EB1A00788F8B /* HelloSceneNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloSceneNode.h; sourceTree = "<group>"; };
 		5B5A814D1B91EB1A00788F8B /* HelloSceneNode.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HelloSceneNode.mm; sourceTree = "<group>"; };
 		5B65CF5D1B8EBE6100CD201A /* DemoCustomCALayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoCustomCALayer.h; sourceTree = "<group>"; };
@@ -630,8 +627,6 @@
 				5B5A81121B91AB3C00788F8B /* DemoSpriteKitView.mm */,
 				5B5A811C1B91B60100788F8B /* DemoSceneView.h */,
 				5B5A811D1B91B60100788F8B /* DemoSceneView.mm */,
-				5B5A81211B91BA0100788F8B /* HelloSceneNode.h */,
-				5B5A81221B91BA0100788F8B /* HelloSceneNode.mm */,
 			);
 			name = DemoSpriteKit20150829;
 			path = WebkitDemos/class/Src20150501/DemoSpriteKit20150829;
@@ -1066,7 +1061,6 @@
 				5BCF311A1AE53A5F0015B6A3 /* DemoAccelerometerManager.mm in Sources */,
 				5B36D9BD1B09917C00831CE1 /* NBLayouterHelper.mm in Sources */,
 				5B408E761AE5F5E600CE34D6 /* DemoIphoneNumberHelper.mm in Sources */,
-				5B5A81231B91BA0100788F8B /* HelloSceneNode.mm in Sources */,
 				5B05D3F21AF1FC90000CBAD1 /* DemoPageView.mm in Sources */,
 				5B408EA01AE5F8A000CE34D6 /* FEEmojiViewController.mm in Sources */,
 				5B408EC41AE5F90A00CE34D6 /* NSDateUtility.m in Sources */,
