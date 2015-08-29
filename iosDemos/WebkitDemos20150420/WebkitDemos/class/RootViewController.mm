@@ -213,6 +213,8 @@
 	
 	NSMutableArray *webkitList = [NSMutableArray array];
 	
+	///< 20150829_SpriteKit Demo
+	[webkitList addObject:[DemoSpriteKitController class]];
 	
 	///< 20150828_Metal API 图形接口
 	[webkitList addObject:[DemoMetalController class]];

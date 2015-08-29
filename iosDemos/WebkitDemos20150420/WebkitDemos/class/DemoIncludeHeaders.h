@@ -18,6 +18,9 @@
 #import <UIKit/UIKit.h>
 
 
+///< 20150829_SpriteKit Demo
+#import "DemoSpriteKitController.h"
+
 ///< Metal API 图形接口
 #import "DemoMetalController.h"
 

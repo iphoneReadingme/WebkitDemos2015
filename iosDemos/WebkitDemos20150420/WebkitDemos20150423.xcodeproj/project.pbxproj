@@ -63,6 +63,8 @@
 		5B408ECB1AE5F90A00CE34D6 /* NSString+ExceptionSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B408EBF1AE5F90A00CE34D6 /* NSString+ExceptionSafe.m */; };
 		5B408ECC1AE5F90A00CE34D6 /* UCFNDCollection.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B408EC11AE5F90A00CE34D6 /* UCFNDCollection.mm */; };
 		5B512EB31B00B20300118DC9 /* DemoPageDataProvider.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B512EB21B00B20300118DC9 /* DemoPageDataProvider.mm */; };
+		5B5A81131B91AB3C00788F8B /* DemoSpriteKitController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A81101B91AB3C00788F8B /* DemoSpriteKitController.mm */; };
+		5B5A81141B91AB3C00788F8B /* DemoSpriteKitView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A81121B91AB3C00788F8B /* DemoSpriteKitView.mm */; };
 		5B65CF5F1B8EBE6200CD201A /* DemoCustomCALayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B65CF5E1B8EBE6100CD201A /* DemoCustomCALayer.mm */; };
 		5B65CF621B8EBF6E00CD201A /* DemoCustomView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B65CF611B8EBF6E00CD201A /* DemoCustomView.mm */; };
 		5B7D8FDA1AFB13A0006CDDE3 /* NBBookLayoutConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B7D8FCE1AFB13A0006CDDE3 /* NBBookLayoutConfig.mm */; };
@@ -74,7 +76,6 @@
 		5BB6C2E41B58E47100197902 /* DemoMaskLayerView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5BB6C2E21B58E47100197902 /* DemoMaskLayerView.mm */; };
 		5BB93AE21B90668400E0ABEA /* DemoMetalController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5BB93ADF1B90668400E0ABEA /* DemoMetalController.mm */; };
 		5BB93AE31B90668400E0ABEA /* DemoMetalView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5BB93AE11B90668400E0ABEA /* DemoMetalView.mm */; };
-		5BB93AE51B90684900E0ABEA /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5BB93AE41B90684900E0ABEA /* Shaders.metal */; };
 		5BCBF9A41AE4F9CF00BE201E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCBF9A31AE4F9CF00BE201E /* main.m */; };
 		5BCBF9AA1AE4F9CF00BE201E /* WebkitDemos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5BCBF9A81AE4F9CF00BE201E /* WebkitDemos.xcdatamodeld */; };
 		5BCBF9B31AE4F9CF00BE201E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BCBF9B11AE4F9CF00BE201E /* Main.storyboard */; };
@@ -223,6 +224,10 @@
 		5B408EC11AE5F90A00CE34D6 /* UCFNDCollection.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UCFNDCollection.mm; sourceTree = "<group>"; };
 		5B512EB11B00B20300118DC9 /* DemoPageDataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoPageDataProvider.h; sourceTree = "<group>"; };
 		5B512EB21B00B20300118DC9 /* DemoPageDataProvider.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoPageDataProvider.mm; sourceTree = "<group>"; };
+		5B5A810F1B91AB3C00788F8B /* DemoSpriteKitController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoSpriteKitController.h; sourceTree = "<group>"; };
+		5B5A81101B91AB3C00788F8B /* DemoSpriteKitController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoSpriteKitController.mm; sourceTree = "<group>"; };
+		5B5A81111B91AB3C00788F8B /* DemoSpriteKitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoSpriteKitView.h; sourceTree = "<group>"; };
+		5B5A81121B91AB3C00788F8B /* DemoSpriteKitView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoSpriteKitView.mm; sourceTree = "<group>"; };
 		5B65CF5D1B8EBE6100CD201A /* DemoCustomCALayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoCustomCALayer.h; sourceTree = "<group>"; };
 		5B65CF5E1B8EBE6100CD201A /* DemoCustomCALayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoCustomCALayer.mm; sourceTree = "<group>"; };
 		5B65CF601B8EBF6E00CD201A /* DemoCustomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoCustomView.h; sourceTree = "<group>"; };
@@ -247,7 +252,6 @@
 		5BB93ADF1B90668400E0ABEA /* DemoMetalController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoMetalController.mm; sourceTree = "<group>"; };
 		5BB93AE01B90668400E0ABEA /* DemoMetalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoMetalView.h; sourceTree = "<group>"; };
 		5BB93AE11B90668400E0ABEA /* DemoMetalView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoMetalView.mm; sourceTree = "<group>"; };
-		5BB93AE41B90684900E0ABEA /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		5BCBF99E1AE4F9CF00BE201E /* WebkitDemos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebkitDemos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BCBF9A21AE4F9CF00BE201E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5BCBF9A31AE4F9CF00BE201E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -595,6 +599,18 @@
 			name = Framework;
 			sourceTree = "<group>";
 		};
+		5B5A810E1B91AB3C00788F8B /* DemoSpriteKit20150829 */ = {
+			isa = PBXGroup;
+			children = (
+				5B5A810F1B91AB3C00788F8B /* DemoSpriteKitController.h */,
+				5B5A81101B91AB3C00788F8B /* DemoSpriteKitController.mm */,
+				5B5A81111B91AB3C00788F8B /* DemoSpriteKitView.h */,
+				5B5A81121B91AB3C00788F8B /* DemoSpriteKitView.mm */,
+			);
+			name = DemoSpriteKit20150829;
+			path = WebkitDemos/class/Src20150501/DemoSpriteKit20150829;
+			sourceTree = SOURCE_ROOT;
+		};
 		5B7D8FCB1AFB13A0006CDDE3 /* NBPageRender */ = {
 			isa = PBXGroup;
 			children = (
@@ -665,7 +681,6 @@
 		5BB93ADD1B90668400E0ABEA /* DemoMetal20150828 */ = {
 			isa = PBXGroup;
 			children = (
-				5BB93AE41B90684900E0ABEA /* Shaders.metal */,
 				5BB93ADE1B90668400E0ABEA /* DemoMetalController.h */,
 				5BB93ADF1B90668400E0ABEA /* DemoMetalController.mm */,
 				5BB93AE01B90668400E0ABEA /* DemoMetalView.h */,
@@ -811,6 +826,7 @@
 		5BD413921B3EB3E1005E5380 /* ios3DTransform */ = {
 			isa = PBXGroup;
 			children = (
+				5B5A810E1B91AB3C00788F8B /* DemoSpriteKit20150829 */,
 				5BB93ADD1B90668400E0ABEA /* DemoMetal20150828 */,
 				5BB6C2DE1B58E47100197902 /* DemoMaskLayer20150717 */,
 				5BD413931B3EB3E1005E5380 /* Transform3DPerspective */,
@@ -962,6 +978,7 @@
 				5B05D36D1AF1CF10000CBAD1 /* DemoSettingView.mm in Sources */,
 				5BCBF9A41AE4F9CF00BE201E /* main.m in Sources */,
 				5B05D3F61AF1FC90000CBAD1 /* NBPageContainerViewController.mm in Sources */,
+				5B5A81131B91AB3C00788F8B /* DemoSpriteKitController.mm in Sources */,
 				5B05D36B1AF1CF10000CBAD1 /* ColorPickerView.mm in Sources */,
 				5B65CF5F1B8EBE6200CD201A /* DemoCustomCALayer.mm in Sources */,
 				5B408EA11AE5F8A000CE34D6 /* FEEmojiParameterInfo.mm in Sources */,
@@ -1001,13 +1018,13 @@
 				5B36D9BD1B09917C00831CE1 /* NBLayouterHelper.mm in Sources */,
 				5B408E761AE5F5E600CE34D6 /* DemoIphoneNumberHelper.mm in Sources */,
 				5B05D3F21AF1FC90000CBAD1 /* DemoPageView.mm in Sources */,
-				5BB93AE51B90684900E0ABEA /* Shaders.metal in Sources */,
 				5B408EA01AE5F8A000CE34D6 /* FEEmojiViewController.mm in Sources */,
 				5B408EC41AE5F90A00CE34D6 /* NSDateUtility.m in Sources */,
 				5B05D36C1AF1CF10000CBAD1 /* DemoCoreTextDrawController.mm in Sources */,
 				5B408EC71AE5F90A00CE34D6 /* NSHTTPCookieStorage+ExceptionSafe.m in Sources */,
 				5B36D9BB1B09917C00831CE1 /* NBFontCollection.mm in Sources */,
 				5B36D9BF1B09917C00831CE1 /* NSString+Paragraphs.mm in Sources */,
+				5B5A81141B91AB3C00788F8B /* DemoSpriteKitView.mm in Sources */,
 				5B408EA51AE5F8A000CE34D6 /* FECDParmFetcher.mm in Sources */,
 				5B408ECC1AE5F90A00CE34D6 /* UCFNDCollection.mm in Sources */,
 				5BCF30DC1AE539A50015B6A3 /* DetailViewController.m in Sources */,

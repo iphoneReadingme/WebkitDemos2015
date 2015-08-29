@@ -1,13 +1,15 @@
 
 
+#import "DemoMetalView.h"
+
+#if !TARGET_IPHONE_SIMULATOR
 #import <simd/simd.h>
 #import <Metal/Metal.h>
 #import <QuartzCore/CAMetalLayer.h>
+
 //@import Metal;
 //@import simd;
 //@import QuartzCore.CAMetalLayer;
-
-#import "DemoMetalView.h"
 
 
 static matrix_float4x4 rotation_matrix_2d(float radians)
@@ -68,6 +70,7 @@ typedef struct
 
 @end
 
+#endif  ///< #if !TARGET_IPHONE_SIMULATOR
 
 ///< DemoMetalView
 @implementation DemoMetalView
@@ -75,7 +78,10 @@ typedef struct
 -(void)dealloc
 {
 	[self releaseImageViews];
+	
+#if !TARGET_IPHONE_SIMULATOR
 	[_timer invalidate];
+#endif
 	
 	[super dealloc];
 }
@@ -180,6 +186,7 @@ typedef struct
 	//[_stopButton setFrame:rect];
 }
 
+#if !TARGET_IPHONE_SIMULATOR
 #pragma mark - == metal 相关代码
 - (void)didMoveToSuperview
 {
@@ -358,5 +365,12 @@ typedef struct
 	
 	return _currentDrawable;
 }
+#else
+
+- (void)viewDidLayoutSubviews
+{
+}
+
+#endif ///< #if !TARGET_IPHONE_SIMULATOR
 
 @end
