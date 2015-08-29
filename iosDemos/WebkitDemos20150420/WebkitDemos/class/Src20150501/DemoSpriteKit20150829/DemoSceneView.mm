@@ -8,6 +8,7 @@
 @interface DemoSceneView()
 
 @property (nonatomic, retain) SKView * spriteView;
+@property (nonatomic, retain) HelloSceneNode *helloNode;
 
 @end
 
@@ -45,6 +46,9 @@
 {
 	[_spriteView release];
 	_spriteView = nil;
+	
+	[_helloNode release];
+	_helloNode = nil;
 }
 
 - (void)releaseButtons
@@ -72,6 +76,8 @@
 	
 	HelloSceneNode *hello = [[HelloSceneNode alloc] initWithSize:CGSizeMake(300, 400)];
 	[spriteView presentScene:hello];
+	
+	_helloNode = hello;
 }
 
 - (void)didThemeChange
@@ -91,5 +97,20 @@
 	
 }
 
+- (void)updateScaleMode:(NSInteger)scaleMode
+{
+	static NSInteger i = 0;
+	
+	if (i < SKSceneScaleModeResizeFill)
+	{
+		i++;
+	}
+	else
+	{
+		i = 0;
+	}
+	scaleMode = i;
+	[_helloNode updateScaleMode:(SKSceneScaleMode)scaleMode];
+}
 
 @end

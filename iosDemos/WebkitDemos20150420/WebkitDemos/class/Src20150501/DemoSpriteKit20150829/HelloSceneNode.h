@@ -23,5 +23,6 @@
 	
 }
 
+- (void)updateScaleMode:(SKSceneScaleMode)scaleMode;
 
 @end

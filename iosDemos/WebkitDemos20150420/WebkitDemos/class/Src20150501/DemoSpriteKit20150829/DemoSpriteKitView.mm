@@ -140,6 +140,7 @@
 	if (nTag == 0)
 	{
 		NSLog(@"====【开始】====");
+		[_sceneView updateScaleMode:0];
 	}
 	else if (nTag == 1)
 	{

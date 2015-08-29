@@ -23,5 +23,6 @@
 	
 }
 
+- (void)updateScaleMode:(NSInteger)scaleMode;
 
 @end
