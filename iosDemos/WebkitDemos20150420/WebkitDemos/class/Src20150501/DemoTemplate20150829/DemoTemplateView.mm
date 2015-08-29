@@ -1,13 +1,13 @@
 
 
 
-#import "DemoSpriteKitView.h"
+#import "DemoTemplateView.h"
 
 
 ///< DemoSpriteKitView
-#pragma mark - == DemoSpriteKitView
+#pragma mark - == DemoTemplateView
 
-@interface DemoSpriteKitView()
+@interface DemoTemplateView()
 
 @property (nonatomic, retain) UIButton                *startButton;
 @property (nonatomic, retain) UIButton                *stopButton;
@@ -15,9 +15,8 @@
 @end
 
 
-
 ///< DemoSpriteKitView
-@implementation DemoSpriteKitView
+@implementation DemoTemplateView
 
 -(void)dealloc
 {

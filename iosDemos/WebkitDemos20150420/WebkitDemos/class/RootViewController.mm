@@ -213,6 +213,9 @@
 	
 	NSMutableArray *webkitList = [NSMutableArray array];
 	
+	///< 20150829_DemoTemplateView
+	[webkitList addObject:[DemoTemplateController class]];
+	
 	///< 20150829_SpriteKit Demo
 	[webkitList addObject:[DemoSpriteKitController class]];
 	
