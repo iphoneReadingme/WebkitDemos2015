@@ -41,6 +41,37 @@
 	SKSpriteNode *spaceship = [self newSpaceship];
 	spaceship.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame)-150);
 	[self addChild:spaceship];
+	
+	[self addMakeRocks];
+}
+
+- (void)addMakeRocks
+{
+	SKAction * makeRocks = [SKAction sequence:@[
+												[SKAction performSelector:@selector(addRock) onTarget:self],
+												[SKAction waitForDuration:0.10 withRange:0.15]
+												]];
+	[self runAction:[SKAction repeatActionForever:makeRocks]];
+}
+
+static inline CGFloat skRandf()
+{
+	return rand()/(CGFloat)RAND_MAX;
+}
+
+static inline CGFloat skRand(CGFloat low, CGFloat high)
+{
+	return skRandf()*(high - low) + low;
+}
+
+- (void)addRock
+{
+	SKSpriteNode *rock = [[SKSpriteNode alloc] initWithColor:[SKColor brownColor] size:CGSizeMake(8,8)];
+	rock.position = CGPointMake(skRand(0, self.size.width),self.size.height-50);
+	rock.name = @"rock";
+	rock.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:rock.size];
+	rock.physicsBody.usesPreciseCollisionDetection = YES;
+	[self addChild:rock];
 }
 
 - (void)updateScaleMode:(SKSceneScaleMode)scaleMode
@@ -52,6 +83,11 @@
 - (SKSpriteNode*)newSpaceship
 {
 	SKSpriteNode *hull= [[SKSpriteNode alloc] initWithColor:[SKColor grayColor] size:CGSizeMake(64,32)];
+	
+	///< 添加物理体到飞船。飞船垂直坠落到屏幕下方。这是因为重力施加到飞船的物理体
+	hull.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:hull.size];
+	///< 更改的newSpaceship方法来防止飞船受物理交互影响。
+	hull.physicsBody.dynamic = NO;
 	
 	SKAction *hover= [SKAction sequence:@[
 										  [SKAction waitForDuration:1.0],
