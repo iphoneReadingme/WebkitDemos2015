@@ -1,5 +1,6 @@
 
 
+#import "SpaceshipScene.h"
 #import "HelloSceneNode.h"
 
 
@@ -72,8 +73,19 @@
 		///< 从父节点中删除。
 		SKAction *remove = [SKAction removeFromParent];
 		SKAction * moveSequence = [SKAction sequence:@[moveUp, zoom, pause, fadeAway, remove]];
-		[helloNode runAction:moveSequence];
+		//[helloNode runAction:moveSequence];
+		[helloNode runAction:moveSequence completion:^{
+			
+			[self didFinishedRunAction];
+		}];
 	}
+}
+
+- (void)didFinishedRunAction
+{
+	SKScene *spaceShipNode = [[SpaceshipScene alloc] initWithSize:[self size]];
+	SKTransition *doors = [SKTransition doorsOpenVerticalWithDuration:0.5f];
+	[self.view presentScene:spaceShipNode transition:doors];
 }
 
 @end
