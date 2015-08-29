@@ -70,6 +70,7 @@
 		5B5A811E1B91B60100788F8B /* DemoSceneView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A811D1B91B60100788F8B /* DemoSceneView.mm */; };
 		5B5A81201B91B8D300788F8B /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B5A811F1B91B8D300788F8B /* SpriteKit.framework */; };
 		5B5A814E1B91EB1A00788F8B /* HelloSceneNode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A814D1B91EB1A00788F8B /* HelloSceneNode.mm */; };
+		5B5A81511B91EBDA00788F8B /* SpaceshipScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A81501B91EBDA00788F8B /* SpaceshipScene.mm */; };
 		5B65CF5F1B8EBE6200CD201A /* DemoCustomCALayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B65CF5E1B8EBE6100CD201A /* DemoCustomCALayer.mm */; };
 		5B65CF621B8EBF6E00CD201A /* DemoCustomView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B65CF611B8EBF6E00CD201A /* DemoCustomView.mm */; };
 		5B7D8FDA1AFB13A0006CDDE3 /* NBBookLayoutConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B7D8FCE1AFB13A0006CDDE3 /* NBBookLayoutConfig.mm */; };
@@ -242,6 +243,8 @@
 		5B5A811F1B91B8D300788F8B /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/System/Library/Frameworks/SpriteKit.framework; sourceTree = DEVELOPER_DIR; };
 		5B5A814C1B91EB1A00788F8B /* HelloSceneNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloSceneNode.h; sourceTree = "<group>"; };
 		5B5A814D1B91EB1A00788F8B /* HelloSceneNode.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HelloSceneNode.mm; sourceTree = "<group>"; };
+		5B5A814F1B91EBDA00788F8B /* SpaceshipScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpaceshipScene.h; sourceTree = "<group>"; };
+		5B5A81501B91EBDA00788F8B /* SpaceshipScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SpaceshipScene.mm; sourceTree = "<group>"; };
 		5B65CF5D1B8EBE6100CD201A /* DemoCustomCALayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoCustomCALayer.h; sourceTree = "<group>"; };
 		5B65CF5E1B8EBE6100CD201A /* DemoCustomCALayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoCustomCALayer.mm; sourceTree = "<group>"; };
 		5B65CF601B8EBF6E00CD201A /* DemoCustomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoCustomView.h; sourceTree = "<group>"; };
@@ -648,6 +651,8 @@
 			children = (
 				5B5A814C1B91EB1A00788F8B /* HelloSceneNode.h */,
 				5B5A814D1B91EB1A00788F8B /* HelloSceneNode.mm */,
+				5B5A814F1B91EBDA00788F8B /* SpaceshipScene.h */,
+				5B5A81501B91EBDA00788F8B /* SpaceshipScene.mm */,
 			);
 			path = SceneNodes;
 			sourceTree = "<group>";
@@ -1016,6 +1021,7 @@
 				5B0AFCC71AE8DC5E00238079 /* DemoRegularExpController.mm in Sources */,
 				5BCF31051AE539D60015B6A3 /* RootViewController.mm in Sources */,
 				5B3AA0231B0B419A00B4A003 /* DemoGlyphDrawView.mm in Sources */,
+				5B5A81511B91EBDA00788F8B /* SpaceshipScene.mm in Sources */,
 				5B408ECA1AE5F90A00CE34D6 /* NSMutableString+ExceptionSafe.m in Sources */,
 				5B05D36D1AF1CF10000CBAD1 /* DemoSettingView.mm in Sources */,
 				5BCBF9A41AE4F9CF00BE201E /* main.m in Sources */,

@@ -1,18 +1,16 @@
 
 
-#import "HelloSceneNode.h"
+#import "SpaceshipScene.h"
 
 
-@interface HelloSceneNode()
-
-//@property (nonatomic, retain) SKView * spriteView;
+@interface SpaceshipScene()
 
 @property (nonatomic, assign) BOOL contentCreated;
 
 @end
 
 
-@implementation HelloSceneNode
+@implementation SpaceshipScene
 
 -(void)dealloc
 {
