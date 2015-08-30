@@ -69,7 +69,7 @@
 		SKAction *moveUp = [SKAction moveByX:0 y:100.0 duration:0.5];
 		SKAction *zoom = [SKAction scaleTo:2.0 duration:0.25];
 		SKAction *pause = [SKAction waitForDuration:0.5];
-		SKAction *fadeAway = [SKAction fadeOutWithDuration:0.25];
+		SKAction *fadeAway = [SKAction fadeOutWithDuration: 0.25];
 		///< 从父节点中删除。
 		SKAction *remove = [SKAction removeFromParent];
 		SKAction * moveSequence = [SKAction sequence:@[moveUp, zoom, pause, fadeAway, remove]];
@@ -83,9 +83,10 @@
 
 - (void)didFinishedRunAction
 {
-	SKScene *spaceShipNode = [[SpaceshipScene alloc] initWithSize:[self size]];
-	SKTransition *doors = [SKTransition doorsOpenVerticalWithDuration:0.5f];
-	[self.view presentScene:spaceShipNode transition:doors];
+	SKScene *spaceshipScene  = [[SpaceshipScene alloc] initWithSize:self.size];
+	SKTransition *doors = [SKTransition doorsOpenVerticalWithDuration:0.5];
+	[self.view presentScene:spaceshipScene transition:doors];
+	
 }
 
 @end
