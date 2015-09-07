@@ -4,6 +4,16 @@
 <array>
 	<dict>
 		<key>Description</key>
+		<string>
+			　　“胡，你太残忍了，他还只是个孩子。”
+		</string>
+		<key>File</key>
+		<string>About.html</string>
+		<key>Title</key>
+		<string>[About.html]</string>
+	</dict>
+	<dict>
+		<key>Description</key>
 		<string>This is the &lt;b&gt;introduction&lt;/b&gt; to the &lt;font color=&quot;blue&quot; face=&quot;Courier&quot;&gt;NSAttributedString&lt;/font&gt; HTML Additions for iOS. Even this very table view here demonstrates that you can easily add HTML formatted text to table views.</string>
 		<key>File</key>
 		<string>README.html</string>

@@ -10,7 +10,7 @@
 
 @interface DTCoreTextLayouter ()
 
-@property (nonatomic, strong) NSMutableArray *frames;
+//@property (nonatomic, strong) NSMutableArray *frames;
 
 - (void)_discardFramesetter;
 
