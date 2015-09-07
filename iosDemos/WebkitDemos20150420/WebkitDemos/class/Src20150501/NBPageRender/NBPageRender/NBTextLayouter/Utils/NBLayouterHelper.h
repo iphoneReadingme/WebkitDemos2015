@@ -28,5 +28,8 @@
 + (NSInteger)getSpecialMarkCharCount:(unichar)nextLineFirstChar with:(unichar)nextLineSecondChar;
 
 
++ (NSString*)replacingquanJiaoToBanJiao:(NSString*)srcText;
++ (BOOL)quanJiaoToBanJiao:(unichar&)markChar;
+
 @end
 

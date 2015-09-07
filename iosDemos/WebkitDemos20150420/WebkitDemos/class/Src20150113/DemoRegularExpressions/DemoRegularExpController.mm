@@ -2,6 +2,14 @@
 #import "DemoRegularExpView.h"
 #import "DemoRegularExpController.h"
 
+#ifdef __IPHONE_8_0
+//#define Enable_Photo_Authorization_Library
+#endif
+
+#ifdef Enable_Photo_Authorization_Library
+#import <Photos/Photos.h>
+#endif
+
 
 ///< 私有方法
 @interface DemoRegularExpController()
@@ -37,6 +45,10 @@
 {
 	[super viewDidLoad];
 	
+#ifdef Enable_Photo_Authorization_Library
+	PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+	status = PHAuthorizationStatusNotDetermined;
+#endif
 }
 
 // called after the view controller's view is released and set to nil.

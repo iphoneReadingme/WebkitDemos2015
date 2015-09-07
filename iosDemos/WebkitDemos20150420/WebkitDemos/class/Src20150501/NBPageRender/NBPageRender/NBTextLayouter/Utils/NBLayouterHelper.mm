@@ -477,6 +477,83 @@
 	return bRet;
 }
 
++ (NSString*)replacingquanJiaoToBanJiao:(NSString*)srcText
+{
+	NSString* strTemp = srcText;
+	NSInteger nLength = [strTemp length];
+	NSRange replaceRange;
+	unichar nCharCode = 0;
+	
+	unichar buffer[500] = {0};
+	
+	[strTemp getCharacters:buffer range:NSMakeRange(0, nLength)];
+	
+	BOOL bReplace = NO;
+	
+	NSInteger i = 0;
+	for (; i < nLength; i++)
+	{
+		nCharCode = [strTemp characterAtIndex:i];
+		nCharCode = buffer[i];
+		BOOL bRet = [self quanJiaoToBanJiao:nCharCode];
+		if (bRet)
+		{
+			replaceRange = NSMakeRange(i, 1);
+			buffer[i] = nCharCode;
+			bReplace = YES;
+		}
+	}
+	
+//	NSMutableAttributedString *hyphenatedString = [[_attributedStringFragment attributedSubstringFromRange:lineRange] mutableCopy];
+//	NSRange replaceRange = NSMakeRange(hyphenatedString.length - 1, 1);
+//	[hyphenatedString replaceCharactersInRange:replaceRange withString:@"-"];
+	if (bReplace)
+	{
+		NSLog(@"replace before:%@", strTemp);
+		strTemp = [NSString stringWithCharacters:buffer length:nLength];
+		NSLog(@"replace  after:%@", strTemp);
+	}
+	
+	return strTemp;
+}
+
++ (BOOL)quanJiaoToBanJiao:(unichar&)markChar
+{
+	BOOL bRet = NO;
+	if (markChar == 0x3002)
+	{
+		markChar = 0xFF61;
+		bRet = YES;
+	}
+	else if (markChar == 0x300C)
+	{
+		markChar = 0xFF62;
+		bRet = YES;
+	}
+	else if (markChar == 0x300D)
+	{
+		markChar = 0xFF63;
+		bRet = YES;
+	}
+	else if (markChar == 0x3001)
+	{
+		markChar = 0xFF64;
+		bRet = YES;
+	}
+	else if (markChar == 0x30FB)
+	{
+		markChar = 0xFF65;
+		bRet = YES;
+	}
+	else if (markChar == 0x309C)
+	{
+		markChar = 0xFF9F;
+		bRet = YES;
+	}
+	
+	return bRet;
+}
+
 #if 0
 // for test and build all mark char unicode
 
