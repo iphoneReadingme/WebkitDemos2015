@@ -28,7 +28,15 @@
 {
 	[self releaseObject];
 	
+	[self performSelector:@selector(dump)
+			   withObject:nil
+			   afterDelay:0.5];
 	[super dealloc];
+}
+
+- (void)dump
+{
+	NSLog(@"hello");
 }
 
 - (void)releaseObject

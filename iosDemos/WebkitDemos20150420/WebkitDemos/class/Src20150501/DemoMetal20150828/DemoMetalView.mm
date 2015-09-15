@@ -2,7 +2,11 @@
 
 #import "DemoMetalView.h"
 
-#if !TARGET_IPHONE_SIMULATOR
+//#if !TARGET_IPHONE_SIMULATOR && __IPHONE_9_0
+//#define Enable_Metal_CAMetalLayer
+//#endif
+
+#if Enable_Metal_CAMetalLayer
 #import <simd/simd.h>
 #import <Metal/Metal.h>
 #import <QuartzCore/CAMetalLayer.h>
@@ -70,7 +74,7 @@ typedef struct
 
 @end
 
-#endif  ///< #if !TARGET_IPHONE_SIMULATOR
+#endif  ///< #if Enable_Metal_CAMetalLayer
 
 ///< DemoMetalView
 @implementation DemoMetalView
@@ -79,7 +83,7 @@ typedef struct
 {
 	[self releaseImageViews];
 	
-#if !TARGET_IPHONE_SIMULATOR
+#if Enable_Metal_CAMetalLayer
 	[_timer invalidate];
 #endif
 	
@@ -186,7 +190,7 @@ typedef struct
 	//[_stopButton setFrame:rect];
 }
 
-#if !TARGET_IPHONE_SIMULATOR
+#if Enable_Metal_CAMetalLayer
 #pragma mark - == metal 相关代码
 - (void)didMoveToSuperview
 {
@@ -371,6 +375,6 @@ typedef struct
 {
 }
 
-#endif ///< #if !TARGET_IPHONE_SIMULATOR
+#endif ///< #if Enable_Metal_CAMetalLayer
 
 @end

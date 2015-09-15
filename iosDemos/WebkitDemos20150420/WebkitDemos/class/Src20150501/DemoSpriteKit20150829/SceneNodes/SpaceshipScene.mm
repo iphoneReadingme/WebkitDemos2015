@@ -153,6 +153,9 @@ static inline CGFloat skRand(CGFloat low, CGFloat high)
 //	spriteObj.xScale = 8.0f/40;
 //	spriteObj.yScale = 8.0f/40;
 	spriteObj.size = CGSizeMake(8,8);
+	//spriteObj.centerRect = CGRectMake(12.0/28.0,12.0/28.0,4.0/28.0,4.0/28.0); ///< 纹理可拉伸,所以 centerRect 参数拉伸区域（纹理区域【0， 1.0】）。
+	//SKSpriteNode *button = [SKSpriteNode spriteNodeWithImageNamed:@"stretchable_button.png"];
+	//button.centerRect = CGRectMake(12.0/28.0,12.0/28.0,4.0/28.0,4.0/28.0);
 	
 	///< 对精灵着色
 	//在把纹理应用到精灵之前,你可以使用 color 和 colorBlendFactor 属性对它着色。默认情 况下的颜色混合因子为 0.0,这表明纹理未经更改地使用。当你增加这个数字,更多的纹理颜 色就会被混合颜色替换。例如,在你的游戏中的怪物受到伤害时,你可能要添加一个红色的色调 (tint)给角色。

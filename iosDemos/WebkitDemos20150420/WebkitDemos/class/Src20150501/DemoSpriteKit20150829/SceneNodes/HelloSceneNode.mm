@@ -13,6 +13,12 @@
 @end
 
 
+/*
+ ·      场景（SKScene对象），用来提供SKView对象要渲染的内容。
+ ·      场景的内容被创建成树状的节点对象。场景是根节点。
+ ·      在场景由视图呈现时，它运行动作并模拟物理，然后渲染节点树。
+ ·      你可以通过子类化SKScene类创建自定义的场景。
+ */
 @implementation HelloSceneNode
 
 -(void)dealloc
@@ -73,6 +79,10 @@
 		///< 从父节点中删除。
 		SKAction *remove = [SKAction removeFromParent];
 		SKAction * moveSequence = [SKAction sequence:@[moveUp, zoom, pause, fadeAway, remove]];
+		
+		///< wait 动作是一个特殊的动作,它通常仅在序列中使用。这个动作只是等待一段时间,然后 不做任何事情就结束。等待动作用于控制序列的定时。
+		///< removeNode 动作是一个瞬时动作,所以它不花时间来执行。你可以看到,虽然这个动作是 序列的一部分,它不会出现在图 3-1 的时间轴上。作为瞬时动作,在淡入动作完成后它马上 开始和结束。然后序列也结束了。
+		
 		//[helloNode runAction:moveSequence];
 		[helloNode runAction:moveSequence completion:^{
 			
