@@ -18,3 +18,8 @@ def addFun2(a, b):
     "【加法】两数相加"
     sumExt = a + b
     return sumExt;
+
+def sumFun(a, b, c):
+    "【加法】两数相加"
+    sumExt = a + b + c
+    return sumExt;

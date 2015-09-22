@@ -1,7 +1,6 @@
 __author__ = 'yangfs'
 # -*- coding:utf-8 -*-
 
-# import demo02_fun.py
 from demo02_fun import *
 from function import *
 # from function import *
@@ -18,3 +17,6 @@ print "a + b = ", v;
 
 v = addFun3(1, 4);
 print "a + b = ", v;
+
+v = sumFun(1, 2, 3)
+print "a + b + c = ", v;
