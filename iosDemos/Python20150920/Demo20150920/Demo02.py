@@ -2,8 +2,9 @@
 #  -*- coding:utf-8 -*-
 
 # 【02 Python 变量类型】
-import time; # 导入时间模块
-# import Demo02_fun01.py
+#sys.path.insert(0, "../lib/python")
+#import time; # 导入时间模块
+import Demo02_fun01.py
 #import class20150922/fun01.py
 #from class20150922/Demo02_fun01 import *
 

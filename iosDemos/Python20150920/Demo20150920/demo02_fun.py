@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 # 【02 Python 函数模块调用】
-import time; # 导入时间模块
+#import time; # 导入时间模块
 
 '''
 unindent does not match any outer indentation level
@@ -18,6 +18,3 @@ def addFun2(a, b):
     "【加法】两数相加"
     sumExt = a + b
     return sumExt;
-
-
-
