@@ -1,8 +1,15 @@
-__author__ = 'yangfs'
 # -*- coding:utf-8 -*-
 
-from demo02_fun import *
-from function import *
+'''
+yangfs
+2015-09-22
+'''
+
+# from demo02_fun import *
+# from function import *
+from class20150920.demo02_fun import *
+from class20150920.function import *
+import sys
 # from function import *
 import time; # 导入时间模块
 
@@ -20,3 +27,7 @@ print "a + b = ", v;
 
 v = sumFun(1, 2, 3)
 print "a + b + c = ", v;
+
+print sys.path
+
+print dir()
