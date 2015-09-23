@@ -4,14 +4,16 @@
 yangfs
 2015-09-22
 '''
-
+#!/usr/bin/python
 # from demo02_fun import *
 # from function import *
 from class20150920.demo02_fun import *
 from class20150920.function import *
-import sys
+# import sys
+
 # from function import *
 import time; # 导入时间模块
+# sys.path.insert(0, "/Library/Python/2.7/site-packages");
 
 # 【2015-09-22 模块间函数调用】函数
 # print sys.path
@@ -28,6 +30,8 @@ print "a + b = ", v;
 v = sumFun(1, 2, 3)
 print "a + b + c = ", v;
 
-print sys.path
+
+# print sys.path
+
 
 print dir()
