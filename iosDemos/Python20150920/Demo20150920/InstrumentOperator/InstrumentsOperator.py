@@ -12,7 +12,7 @@ import time
 import subprocess
 import re
 
-from common import Common
+# from common import Common
 
 
 #from dbgp.client import brk
@@ -48,7 +48,8 @@ class Instruments(object):
         return sub_process
 
     def localExcCMD(self,cmd):
-    '''执行本地命令.
+        '''
+        执行本地命令.
         Args:
         cmd：命令行
         Returns:
@@ -63,8 +64,6 @@ class Instruments(object):
         os.system("kill -9 $(ps ux | grep instruments | grep -v grep | awk {'print $2'})")
         os.system("kill -9 $(ps ux | grep Instruments | grep -v grep | awk {'print $2'})")
 
-
-        
     def restartInstruments(self,jsfile):
         
         print("restart Instruments!")
@@ -109,20 +108,22 @@ def test2():
             udid = udid[0].replace('\n','')
         return udid
         
-    devid = getUUID()
-    appname = "com.ucweb.iphone"
-    jsfile_dir = '/Users/yanglong/buildbot/scripts/qmsinterceptor/resource/ios/monkey/uimonkey'
+    #devid = getUUID()
+    #appname = "com.ucweb.iphone"
+    #jsfile_dir = '/Users/yanglong/buildbot/scripts/qmsinterceptor/resource/ios/monkey/uimonkey'
 
     # 设备UUID
     devid = getUUID()
+    print devid
+    print "\n"
     # appname = "com.ucweb.iphone"
-    #appname = "com.ucweb.iphone.test"
-    appname = "Sooyo.UCWebViewTest"
+    appname = "com.ucweb.iphone"
+    # appname = "Sooyo.UCWebViewTest"
     #jsfile_dir = '/Users/yanglong/buildbot/scripts/qmsinterceptor/resource/ios/monkey/uimonkey'
     jsfile_dir = '/Users/yangfs/Desktop/E/20150920Python/InstrumentOperator'
     
     ins = Instruments(devid,appname,jsfile_dir,jsfile_dir)
-    ins.startInstruments("UIAutoMonkey.js")
+    ins.startInstruments("stressTest.js")
     ins.clearTraceFile()
     time.sleep(20)
        
