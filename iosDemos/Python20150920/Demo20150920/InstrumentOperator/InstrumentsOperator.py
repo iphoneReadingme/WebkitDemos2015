@@ -115,7 +115,10 @@ def test2():
     # 设备UUID
     devid = getUUID()
     print devid
-    print "\n"
+    print "\n有多台设备时，就无法启动自动测试，可以hardcode 设备UUID,解决此问题\n"
+
+    #有多台设备时，就无法启动自动测试，可以hardcode 设备UUID,解决此问题
+    devid = "c6304fd69fd20cb69176463d9405d54c1519c869"
     # appname = "com.ucweb.iphone"
     appname = "com.ucweb.iphone"
     # appname = "Sooyo.UCWebViewTest"
