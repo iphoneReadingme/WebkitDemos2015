@@ -12,7 +12,7 @@ function stress_main() {
     target.delay(20);
     try {
         target.frontMostApp().windows()[0].buttons()["PerformanceTest"].tap();
-	target.frontMostApp().actionSheet().buttons()["压力测试（多窗口、联网）"].tap();
+	target.frontMostApp().actionSheet().buttons()["小说定向测试"].tap();
         flag = true;
         while (flag) {
             UIALogger.logMessage("current app name:"+UIATarget.localTarget().frontMostApp().name());
